@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+<!-- <title>Boogle</title> -->
+  
+<div style = "text-align: right;">
+  <a href="/Boogle">Search the book you want</a>
+</div>
+
+<div style = "text-align: center">
+<h1>Welcome{user.nae}</h1>
+
+<lable>search the book in your shelf:</lable><br>
+
+<input id="my-text" type = "text" placeholder="Book/Author/Year" style="width:200px; height:20px;font-size:12pt;">
+<button id="btn"style="width:80px; height:25px;font-size:12pt;">Boogle</button>
+
+</div>
+
+<div id="results" style = "margin: 70px" width="800" height="400">
+</div>
+
+<script src="/static/js/mnn.js"></script>
+{% endblock %}
