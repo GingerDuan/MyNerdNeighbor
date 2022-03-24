@@ -13,7 +13,6 @@ app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 API_KEY = os.environ['GoogleBook_Key']
-# API_KEY = 'AIzaSyCNg1gcOesPKmO73lc_9lHZoSS2IyKwI4U'
 
 @app.route("/")
 def homepage():
