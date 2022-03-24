@@ -5,21 +5,26 @@
 <!-- <title>Boogle</title> -->
   
 <div style = "text-align: right;">
-  <a href="/Boogle">Search the book you want</a>
+  <a href="/Boogle/{{user.user_id}}">Search the book you want</a>
 </div>
 
-<div style = "text-align: center">
-<h1>Welcome{user.nae}</h1>
-
-<lable>search the book in your shelf:</lable><br>
-
-<input id="my-text" type = "text" placeholder="Book/Author/Year" style="width:200px; height:20px;font-size:12pt;">
-<button id="btn"style="width:80px; height:25px;font-size:12pt;">Boogle</button>
-
+<div style = "text-align: right">
+  <lable>search the book in your shelf:</lable><br>
+  <input id="my-text" type = "text" placeholder="Book/Author/Year">
+  <button id="btn">Boogle</button>
 </div>
 
-<div id="results" style = "margin: 70px" width="800" height="400">
+<h1 style = "text-align: center;">{{user.name}}'s Book Zone</h1>
+<div id="bookshelf" style = "margin: 70px" width="800" height="400">
+  <h3>You are live in {{user.zipcode}} neighbor</h3>
+  <h3>There are {balalal} books in your bookshelf</h3>
+  =======================================================
+  <div id="results" style = "margin: 70px" width="750" height="400">
 </div>
+ 
+</div>
+
+
 
 <script src="/static/js/mnn.js"></script>
 {% endblock %}

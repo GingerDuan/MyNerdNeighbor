@@ -1,6 +1,7 @@
 """Models for My Nerd Neighbor app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -13,39 +14,42 @@ class User(db.Model):
     user_id = db.Column(db.Integer,autoincrement=True,primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String, unique=True)
+    zipcode = db.Column(db.String)
     password = db.Column(db.String)
 
-    # ratings = a list of Rating objects
-
     def __repr__(self):
         return f'<User id user_id={self.user_id} Name name = {self.name} email={self.email}>'
 
-class BookShelf(db.Model):
+class Bookshelf(db.Model):
     """A Bookshlef pysically exits"""
-    __tablename__ = "bookshelves"
+    __tablename__ = "bookshelf"
 
     bookshelf_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    zipcode = db.Column(db.String)
-    user_id = db.Column(db.Integer,db.ForeignKey("User.user_id"))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"))
+
+    book = db.relationship("Book", backref="bookshelf")
+    user = db.relationship("User", backref="bookshelf")
 
     def __repr__(self):
-        return f'<User id user_id={self.user_id} Name name = {self.name} email={self.email}>'
+        return f'<Bookshelf id bookshelf_id={self.bookshelf_id} Location zipcode = {self.zipcode} Belong to user={self.user_id}>'
 
 class Book(db.Model):
     """A Book get from Google api"""
     
     __tablename__ = "books"
 
-    book_id = db.Column(db.Integer, primary_key=True)#from Google Book
-    bookshelf_id = db.Column(db.Integer,db.ForeignKey("BookShelf.bookshelf_id"))
-    ISBN_code = db.Column(db.String,unique=True)#from Google Book
-    status = db.Column(db.boolean)
+    book_id = db.Column(db.Integer, primary_key=True)
+    isbn = db.Column(db.String,unique=True)#from Google Book
+    bookshelf_id = db.Column(db.Integer,db.ForeignKey("bookshelf.bookshelf_id"))
+    title = db.Column(db.String)
+    pic = db.Column(db.String)
+    status = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return f'<Book book_id={self.book_id} title={book.title}>'
+        return f'<Book book_id={self.book_id} title={self.title} bookshelf={self.book}>'
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///user_profile", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///bookapp", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

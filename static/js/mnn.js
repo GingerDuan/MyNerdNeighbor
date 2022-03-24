@@ -32,11 +32,11 @@ function bookSearch(evt){
                 ${book.volumeInfo.subtitle}
                 <br>
                 by: ${book.volumeInfo.authors}
-                <button value = ${book.id}>put on my shelf</button>
+                <button id = "add_book" value = ${book.book_id}>put on my shelf</button>
                 <br>
                 <span style="display:inline-block;
                 overflow: hidden;
-                maxheight: 110px;">description:${book.volumeInfo.description}</span>
+                maxheight: 110px;">description:${book.volumeInfo.description} </span>
                 <br>
                 <button >I have read this book</button>
                 <button >I am reading this book</button>
@@ -53,11 +53,31 @@ function bookSearch(evt){
 let myText = document.getElementById("my-text");
 let btn = document.getElementById("btn");
 
-myText.addEventListener("keyup",e =>{
+myText.addEventListener("keyup",e => {
     e.preventDefault();
-    if(e.keyCode ===13){
+    if(e.keyCode === 13){
         bookSearch
         btn.click();
     }
 })
 btn.addEventListener("click",bookSearch);
+
+
+document.querySelector('#add_book').addEventListener('click', evt =>{
+    evt.preventDefault();
+
+    const book_id = documnet.querySelector('#add_book').value
+    
+    fetch('/Boogle', {
+        method: 'POST',
+        body: JSON.stringify(book_id),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+            disable
+        })
+
+})

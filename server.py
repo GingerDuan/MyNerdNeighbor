@@ -12,29 +12,46 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-API_KEY = os.environ["GoogleBook_Key"]
-
+API_KEY = os.environ['GoogleBook_Key']
+# API_KEY = 'AIzaSyCNg1gcOesPKmO73lc_9lHZoSS2IyKwI4U'
 
 @app.route("/")
 def homepage():
     """View homepage"""
+    
     return render_template("homepage.html")
 
-@app.route("/user_profile")
-def show_all_users():
-    """View all users"""
-    user = "ginger"
-    # users = crud.get_all_user()
+@app.route("/user_profile/<user_id>")
+def show_user_ownpage(user_id):
+    """View users ownpage"""
     
-    return render_template("user_profile.html")
+    user = crud.get_user_by_id(user_id)
+    
+    return render_template("user_profile.html",user=user)
 
-@app.route("/users/<user_id>")
-def user_profile(user_id):
-    """View user's profiles"""
+@app.route("/register", methods=["POST"])
+def register():
+    """Check if email exist. If not will allow user to register, create a new user."""
+    email = request.form.get("email")
+    name = request.form.get("name")
+    password = request.form.get("password")
+    zipcode = request.form.get("zipcode")
 
-    # user = crud.get_user_by_id(user_id)
+    user = crud.get_user_by_email(email)
+    
+    if user:
+        flash("You can't create an account with the same email, please try another one!")
+        return redirect("/")
+    else:
+        user = crud.create_user(email,name,password,zipcode)
+        new_user_id = user.user_id
 
-    return render_template("user_profile.html")
+        db.session.add(user)
+        db.session.commit()
+        flash("Account was created successfully!")
+        return redirect(f"/user_profile/{new_user_id}")
+
+    
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -44,37 +61,28 @@ def login():
 
     user = crud.get_user_by_email(email)
     if user.password == password: 
-        session['user'] = user.email
-        flash(f"Welcome back, {user.email}!")
+        
+        
+        session['user_email'] = user.email
+        flash(f"Welcome back, {user.name}!")
+        return redirect(f'/user_profile/{user.user_id}')
+
     else: 
-        flash("Sorry, passwords do not match!")
+        flash("Sorry, passwords or email do not match!")
+        return redirect("/")
 
-    return redirect("/")
-
-@app.route("/register", methods=["POST"])
-def register():
-    """Check if email exist. If not will allow user to register their email."""
-    email = request.form.get("email")
-    password = request.form.get("password")
-
-    user = crud.get_user_by_email(email)
-    
-    if user is None:
-        new_user = crud.create_user(email, password)
-        db.session.add(new_user)
-        db.session.commit()
-        flash("The account was created successfully!")
-    else: 
-        flash("You can't create an account with the same email, please try again!") 
-    
-    return redirect("/")
-
-@app.route("/Boogle")
-def view_all_movies():
+@app.route("/Boogle/")
+def book_finder():
     """Search for book in Google book"""
-
+    
     return render_template('Boogle.html')
-                        #    results=res_num)
+
+@app.route("/Boogle/<user_id>")
+def book_searcher(user_id):
+    """Search for book in Google book"""
+    user = crud.get_user_by_id(user_id)
+
+    return render_template('Boogle.html',user=user)
 
 @app.route("/search")
 def book_search():
@@ -88,12 +96,24 @@ def book_search():
 
     return jsonify(res.json())
 
+@app.route("/push_into_shelf",methods=["POST"])
+def book_adder(user_id):
+    """Put the book in the default shelf"""
+
+    book_id = request.json.get("book.id")
+    title =request.json.get("book.volumeInfo.title")
+    pic = request.json.get("book.volumeInfo.imageLinks.thumbnail")
+    bookshelf_id = crud.get_bookshelf_by_userid(user_id).bookshelf_id
+    
+    book = crud.create_book(title,book_id,pic,bookshelf_id)
+
+
 
 
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
-    # connect_to_db(app)
+    connect_to_db(app)
     app.run(host="0.0.0.0", debug=True)
 
 
