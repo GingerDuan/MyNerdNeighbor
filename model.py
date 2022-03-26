@@ -26,9 +26,10 @@ class Bookshelf(db.Model):
 
     bookshelf_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"))
+    # book_id = db.Column(db.Integer,db.ForeignKey("books.book_id"))
 
     book = db.relationship("Book", backref="bookshelf")
-    user = db.relationship("User", backref="bookshelf")
+   
 
     def __repr__(self):
         return f'<Bookshelf id bookshelf_id={self.bookshelf_id} Location zipcode = {self.zipcode} Belong to user={self.user_id}>'
@@ -39,14 +40,12 @@ class Book(db.Model):
     __tablename__ = "books"
 
     book_id = db.Column(db.Integer, primary_key=True)
-    isbn = db.Column(db.String,unique=True)#from Google Book
     bookshelf_id = db.Column(db.Integer,db.ForeignKey("bookshelf.bookshelf_id"))
-    title = db.Column(db.String)
-    pic = db.Column(db.String)
+    
     status = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return f'<Book book_id={self.book_id} title={self.title} bookshelf={self.book}>'
+        return f'<Book book_id={self.book_id} bookshelf={self.book}>'
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///bookapp", echo=True):

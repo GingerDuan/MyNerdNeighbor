@@ -5,7 +5,9 @@
 <!-- <title>Boogle</title> -->
   
 <div style = "text-align: right;">
-  <a href="/Boogle/{{user.user_id}}">Search the book you want</a>
+  <a href="/Boogle">Search the book you want</a>
+  <a href="/">Back to my homepage</a>
+  <a href="/logout">logout</a>
 </div>
 
 <div style = "text-align: right">
@@ -20,11 +22,14 @@
   <h3>There are {balalal} books in your bookshelf</h3>
   =======================================================
   <div id="results" style = "margin: 70px" width="750" height="400">
-</div>
+    {%for book_id_div in booklist%}
+    <span>{{book}}</span>
+    {%endfor%}
+  </div>
  
 </div>
 
 
 
-<script src="/static/js/mnn.js"></script>
+<!-- <script src="/static/js/user_page.js"></script> -->
 {% endblock %}

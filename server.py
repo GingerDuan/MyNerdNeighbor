@@ -17,16 +17,24 @@ API_KEY = os.environ['GoogleBook_Key']
 @app.route("/")
 def homepage():
     """View homepage"""
+    # if "user_id" in session:
+        
+    #     return redirect(f'/user_profile/{session["user_id"]}')
     
     return render_template("homepage.html")
 
-@app.route("/user_profile/<user_id>")
-def show_user_ownpage(user_id):
+@app.route("/user_profile/")
+def show_user_ownpage():
     """View users ownpage"""
     
-    user = crud.get_user_by_id(user_id)
+    if "user_id" not in session:
+        return redirect('/')
+    else:     
+        user = crud.get_user_by_id(session["user_id"])
+        booklist = crud.get_users_saved_booklist(session["user_id"])
+        return render_template("user_profile.html",user=user,booklist=booklist)
+        
     
-    return render_template("user_profile.html",user=user)
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -43,12 +51,18 @@ def register():
         return redirect("/")
     else:
         user = crud.create_user(email,name,password,zipcode)
-        new_user_id = user.user_id
-
+        bookshelf = crud.create_bookshelf(user.user_id)
+        
+        db.session.add(bookshelf)
         db.session.add(user)
         db.session.commit()
+
+        new_user_id = user.user_id
+
+        session['user_id'] = new_user_id
+
         flash("Account was created successfully!")
-        return redirect(f"/user_profile/{new_user_id}")
+        return redirect(f"/user_profile/")
 
     
 
@@ -62,26 +76,38 @@ def login():
     if user.password == password: 
         
         
-        session['user_email'] = user.email
+        session['user_id'] = user.user_id
+        
         flash(f"Welcome back, {user.name}!")
-        return redirect(f'/user_profile/{user.user_id}')
+        return redirect(f'/user_profile/')
 
     else: 
         flash("Sorry, passwords or email do not match!")
         return redirect("/")
 
-@app.route("/Boogle/")
+@app.route("/logout")
+def logout():
+    """Log user out, delete session"""
+    
+    del session['user_id']
+
+    return redirect('/')
+
+@app.route("/Boogle")
 def book_finder():
     """Search for book in Google book"""
-    
-    return render_template('Boogle.html')
-
-@app.route("/Boogle/<user_id>")
-def book_searcher(user_id):
-    """Search for book in Google book"""
-    user = crud.get_user_by_id(user_id)
-
+    if "user_id" in session:
+        user = crud.get_user_by_id(session["user_id"])
+    else:
+        user = None
     return render_template('Boogle.html',user=user)
+
+# @app.route("/Boogle/<user_id>")
+# def book_searcher(user_id):
+#     """Search for book in Google book"""
+#     user = crud.get_user_by_id(user_id)
+
+#     return render_template('Boogle.html',user=user)
 
 @app.route("/search")
 def book_search():
@@ -96,15 +122,16 @@ def book_search():
     return jsonify(res.json())
 
 @app.route("/push_into_shelf",methods=["POST"])
-def book_adder(user_id):
+def book_adder():
     """Put the book in the default shelf"""
 
-    book_id = request.json.get("book.id")
-    title =request.json.get("book.volumeInfo.title")
-    pic = request.json.get("book.volumeInfo.imageLinks.thumbnail")
-    bookshelf_id = crud.get_bookshelf_by_userid(user_id).bookshelf_id
+    book_id = request.json.get("book_id")
+    user_id = session["user_id"]
     
-    book = crud.create_book(title,book_id,pic,bookshelf_id)
+    crud.create_book_inshelf(book_id,user_id)
+
+
+    return {"success": True, "status": "You've added this book to your bookshelf!"}
 
 
 

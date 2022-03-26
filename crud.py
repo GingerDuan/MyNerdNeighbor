@@ -26,10 +26,10 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 #bookshelf
-def create_bookshelf(user_id,book_id):
+def create_bookshelf(user_id):
     """Create and return a bookshelf"""
 
-    bookshelf = Bookshelf(user_id=user_id,book_id=book_id)
+    bookshelf = Bookshelf(user_id=user_id)
 
     return bookshelf
 # def get_book_by_zipcode(zipcode):
@@ -39,22 +39,27 @@ def create_bookshelf(user_id,book_id):
 def get_bookshelf_by_userid(user_id):
     """Return a bookshelf by userid"""
 
-    return Bookshelf.query.get(user_id)
+    return Bookshelf.query.filter(Bookshelf.user_id == user_id).first()
     
 #book
-def create_book(book_id,title, pic,book_shelf):
+def create_book_inshelf(book_id,user_id):
     """Create and return a new book with zipcode."""
+    bookshelfvv =  get_bookshelf_by_userid(user_id)
+    savedbook= Book(book_id = book_id,bookshelf_id = bookshelfvv.bookshelf_id)
+    db.session.add(savedbook)
+    db.session.commit()
+    return savedbook
 
-    book= Book(book_id = book_id,title=title, pic=pic,book_shelf=book_shelf)
+#booklist
+def get_users_saved_booklist(user_id):
+    """get all the book that user saved => bookshelf!!"""
+    # booklist = []
+    saved_booklist_talbe = Bookshelf.query.filter(Bookshelf.user_id == user_id).all()
+    # for line in saved_booklist_talbe:
+    #     booklist.append(line[0])
 
-    return book
+    return saved_booklist_talbe
 
-# def create_list(score, movie, user):
-#     """Create and return a rating"""
-
-#     rating = Rating(score=score, movie = movie, user=user)
-
-#     return rating
 
 
 
