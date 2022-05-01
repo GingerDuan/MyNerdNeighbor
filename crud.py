@@ -8,6 +8,9 @@ def create_user(email, name, password,zipcode):
 
     user = User(email=email, name=name, password=password,zipcode=zipcode)
 
+    db.session.add(user)
+    db.session.commit()
+
     return user
 
 def get_users():
@@ -32,23 +35,26 @@ def create_bookshelf(user_id):
     bookshelf = Bookshelf(user_id=user_id)
 
     return bookshelf
+
 # def get_book_by_zipcode(zipcode):
 #     """Return all the book in the same zipcode"""
 
 #     return Book.query.get(zipcode)
+
 def get_bookshelf_by_userid(user_id):
     """Return a bookshelf by userid"""
 
     return Bookshelf.query.filter(Bookshelf.user_id == user_id).first()
     
 #book
-def create_book_inshelf(book_id,user_id):
-    """Create and return a new book with zipcode."""
-    bookshelfvv =  get_bookshelf_by_userid(user_id)
-    savedbook= Book(book_id = book_id,bookshelf_id = bookshelfvv.bookshelf_id)
-    db.session.add(savedbook)
+def create_book(title,cover, author):
+    """Create and return a new book."""
+    # bookshelfvv =  get_bookshelf_by_userid(user_id)
+    newbook= Book(title = title, author = author, cover = cover)
+    
+    db.session.add(newbook)
     db.session.commit()
-    return savedbook
+    return newbook
 
 #booklist
 def get_users_saved_booklist(user_id):

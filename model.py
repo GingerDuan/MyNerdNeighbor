@@ -18,7 +18,7 @@ class User(db.Model):
     password = db.Column(db.String)
 
     def __repr__(self):
-        return f'<User id user_id={self.user_id} Name name = {self.name} email={self.email}>'
+        return f'<User id user_id={self.user_id} name = {self.name} email={self.email}>'
 
 class Bookshelf(db.Model):
     """A Bookshlef pysically exits"""
@@ -26,24 +26,29 @@ class Bookshelf(db.Model):
 
     bookshelf_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"))
-    # book_id = db.Column(db.Integer,db.ForeignKey("books.book_id"))
+    # book_id = db.Column(db.Integer,db.ForeignKey("books.book_id")) don't need, one bookshelf t
 
     book = db.relationship("Book", backref="bookshelf")
    
 
     def __repr__(self):
-        return f'<Bookshelf id bookshelf_id={self.bookshelf_id} Location zipcode = {self.zipcode} Belong to user={self.user_id}>'
+        return f'<Bookshelf bookshelf_id={self.bookshelf_id} Belong to user={self.user_id}>'
 
 class Book(db.Model):
-    """A Book get from Google api"""
+    """A Book's information get from Google api"""
     
     __tablename__ = "books"
 
-    book_id = db.Column(db.Integer, primary_key=True)
-    bookshelf_id = db.Column(db.Integer,db.ForeignKey("bookshelf.bookshelf_id"))
-    
-    status = db.Column(db.Boolean, default=False)
+    book_id = db.Column(db.Integer,autoincrement=True,primary_key=True)
+    title = db.Column(db.String(100))
+    author = db.Column(db.String)
+    cover = db.Column(db.String)
+    available = db.Column(db.Boolean, default= False)
 
+    bookshelf_id = db.Column(db.Integer,db.ForeignKey("bookshelf.bookshelf_id"))
+
+    # bookshelf = db.relationship("Bookshelf", backref = 'book')
+    
     def __repr__(self):
         return f'<Book book_id={self.book_id} bookshelf={self.book}>'
 

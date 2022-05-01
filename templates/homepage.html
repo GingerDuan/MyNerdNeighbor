@@ -10,6 +10,7 @@
     <li><a href="/user_profile">Go to your homepage</a></li>
   </ul>
 
+  <div id = register>
   <h2>Create an Account</h2>
   <form action="/register" method="POST">
     <p>
@@ -32,7 +33,9 @@
       <input type="submit">
     </p>
   </form>
+</div>
 
+<div id = login>
   <h2>Log In</h2>
   <form action="/login" method="POST">
     <p>
@@ -47,5 +50,6 @@
       <input type="submit">
     </p>
   </form>
+</div>
 
 {% endblock %}

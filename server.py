@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-API_KEY = os.environ['GoogleBook_Key']
+# API_KEY = os.environ['GoogleBook_Key']
 
 @app.route("/")
 def homepage():
@@ -115,7 +115,7 @@ def book_search():
 
     keyword = request.args.get('keyword', '')
     url = 'https://www.googleapis.com/books/v1/volumes'
-    payload = {'q':keyword,'apikey': API_KEY}
+    payload = {'q':keyword}
     
     res = requests.get(url,params = payload)
 
