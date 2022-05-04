@@ -20,9 +20,15 @@ def homepage():
     # if "user_id" in session:
         
     #     return redirect(f'/user_profile/{session["user_id"]}')
-    
-    return render_template("homepage.html")
-
+     
+    if session:
+        user = crud.get_user_by_id(session["user_id"])
+        flash(f'Hi! {user.name} You are log in')
+        
+        return render_template("homepage.html",user = user)
+        
+    else:
+        return render_template("homepage.html")
 @app.route("/user_profile/")
 def show_user_ownpage():
     """View users ownpage"""
@@ -109,26 +115,41 @@ def book_finder():
 
 #     return render_template('Boogle.html',user=user)
 
+@app.route("/boogle2")
+def show_boogle():
+    return render_template('boogle2.html')
+
 @app.route("/search")
 def book_search():
     """Send the payload to javascript"""
 
     keyword = request.args.get('keyword', '')
+    title = request.args.get("title",'')
+    author = request.args.get('author','')
+    year = request.args.get("year",'')
+
     url = 'https://www.googleapis.com/books/v1/volumes'
-    payload = {'q':keyword}
+    payload = {'q':keyword,
+                'title' : title,
+                'author' : author,
+                'year' : year,
+                'startIndex':0,
+                'maxResults':20,}
     
     res = requests.get(url,params = payload)
+    data = res.json()
 
-    return jsonify(res.json())
+    return render_template('boogle_res.html', data = data,keyword=keyword)
+
 
 @app.route("/push_into_shelf",methods=["POST"])
 def book_adder():
-    """Put the book in the default shelf"""
+    """Put the book in the user's shelf"""
 
     book_id = request.json.get("book_id")
-    user_id = session["user_id"]
+    bookshelf_id = session["user_id"]
     
-    crud.create_book_inshelf(book_id,user_id)
+    crud.create_book(title,cover, author,bookshelf_id)
 
 
     return {"success": True, "status": "You've added this book to your bookshelf!"}

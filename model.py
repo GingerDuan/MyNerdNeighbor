@@ -29,7 +29,6 @@ class Bookshelf(db.Model):
     # book_id = db.Column(db.Integer,db.ForeignKey("books.book_id")) don't need, one bookshelf t
 
     book = db.relationship("Book", backref="bookshelf")
-   
 
     def __repr__(self):
         return f'<Bookshelf bookshelf_id={self.bookshelf_id} Belong to user={self.user_id}>'

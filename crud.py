@@ -47,10 +47,11 @@ def get_bookshelf_by_userid(user_id):
     return Bookshelf.query.filter(Bookshelf.user_id == user_id).first()
     
 #book
-def create_book(title,cover, author):
+def create_book(title,cover, author,bookshelf_id):
     """Create and return a new book."""
-    # bookshelfvv =  get_bookshelf_by_userid(user_id)
-    newbook= Book(title = title, author = author, cover = cover)
+    user_id = session['user_id']
+    bookshelf_id = get_bookshelf_by_userid(user_id)
+    newbook= Book(title = title, author = author, cover = cover,bookshelf_id = bookshelf_id ) #？
     
     db.session.add(newbook)
     db.session.commit()

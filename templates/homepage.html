@@ -6,10 +6,16 @@
 
   <h2></h2>
   <ul>
-    <li><a href="/Boogle">Find a book in Boogle!</a></li>
-    <li><a href="/user_profile">Go to your homepage</a></li>
+    <a href="/boogle2">Find a book in Boogle!</a></li>
   </ul>
+  <ul>
+    <a href="/user_profile">Go to your homepage</a></li>
+  </ul> 
 
+
+
+
+{%if "user_id" not in session%}
   <div id = register>
   <h2>Create an Account</h2>
   <form action="/register" method="POST">
@@ -51,5 +57,5 @@
     </p>
   </form>
 </div>
-
+{%endif%}
 {% endblock %}

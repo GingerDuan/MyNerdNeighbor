@@ -8,6 +8,7 @@ for (const bookButton of document.querySelectorAll('.add_book_btn')) {
     
     const formInputs = {
       book_id: bookButton.value
+      
     }
     console.log(formInputs)
     fetch('/push_into_shelf', {
