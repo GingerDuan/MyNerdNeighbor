@@ -1,13 +1,18 @@
 """CRUD operations for mnn."""
 
-from model import db, User, Book, Bookshelf, connect_to_db
+from model import db, User, Book, Shelf,Puting, connect_to_db
 
 #user
 def create_user(email, name, password,zipcode):
     """Create and return a new user."""
 
     user = User(email=email, name=name, password=password,zipcode=zipcode)
-
+    #creat four default shelf when user create account
+    user.shelves.append(Shelf(name='bookshelf'))
+    user.shelves.append(Shelf(name='to read'))
+    user.shelves.append(Shelf(name='reading'))
+    user.shelves.append(Shelf(name='have read'))
+    
     db.session.add(user)
     db.session.commit()
 
@@ -47,25 +52,25 @@ def get_bookshelf_by_userid(user_id):
     return Bookshelf.query.filter(Bookshelf.user_id == user_id).first()
     
 #book
-def create_book(title,cover, author,bookshelf_id):
+def create_book(bookshelf_id,user_id):
     """Create and return a new book."""
-    user_id = session['user_id']
-    bookshelf_id = get_bookshelf_by_userid(user_id)
-    newbook= Book(title = title, author = author, cover = cover,bookshelf_id = bookshelf_id ) #？
+    
+    
+    newbook= Book(bookshelf_id = bookshelf_id ) #？
     
     db.session.add(newbook)
     db.session.commit()
     return newbook
 
 #booklist
-def get_users_saved_booklist(user_id):
+def get_shelf_by_userid(user_id):
     """get all the book that user saved => bookshelf!!"""
     # booklist = []
-    saved_booklist_talbe = Bookshelf.query.filter(Bookshelf.user_id == user_id).all()
+    shelves = Shelf.query.filter(Shelf.user_id == user_id).all()
     # for line in saved_booklist_talbe:
     #     booklist.append(line[0])
 
-    return saved_booklist_talbe
+    return shelves
 
 
 

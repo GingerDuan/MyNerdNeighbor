@@ -5,26 +5,31 @@
 <!-- <title>Boogle</title> -->
   
 <div style = "text-align: right;">
-  <a href="/Boogle">Search the book you want</a>
+  <a href="/boogle2">Search the book you want</a>
   <a href="/">Back to my homepage</a>
   <a href="/logout">logout</a>
 </div>
 
-<div style = "text-align: right">
+<form method = "GET" action ="/search" style = "text-align: right">
   <lable>search the book in your shelf:</lable><br>
-  <input id="my-text" type = "text" placeholder="Book/Author/Year">
+  <input id="my-text" type = "text" name = "keyword" placeholder="Book/Author/Year">
   <button id="btn">Boogle</button>
-</div>
+</form>
+
 
 <h1 style = "text-align: center;">{{user.name}}'s Book Zone</h1>
 <div id="bookshelf" style = "margin: 70px" width="800" height="400">
   <h3>You are live in {{user.zipcode}} neighbor</h3>
   <h3>There are {balalal} books in your bookshelf</h3>
   =======================================================
-  <div id="results" style = "margin: 70px" width="750" height="400">
-    {%for book_id_div in booklist%}
-   
-    {%endfor%}
+  <div id="results" style = "margin: 20px" width="750" height="400">
+    {%for booklist in bookshelves%}
+    <div>{{booklist.name}}</div>
+      <!-- {%for booklist in bookshelves%}
+      <div>{{booklist.name}}</div> -->
+      
+      <!-- {% endfor %} -->
+    {% endfor %}
   </div>
  
 </div>

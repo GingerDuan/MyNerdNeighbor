@@ -17,39 +17,54 @@ class User(db.Model):
     zipcode = db.Column(db.String)
     password = db.Column(db.String)
 
-    def __repr__(self):
-        return f'<User id user_id={self.user_id} name = {self.name} email={self.email}>'
-
-class Bookshelf(db.Model):
-    """A Bookshlef pysically exits"""
-    __tablename__ = "bookshelf"
-
-    bookshelf_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"))
-    # book_id = db.Column(db.Integer,db.ForeignKey("books.book_id")) don't need, one bookshelf t
-
-    book = db.relationship("Book", backref="bookshelf")
+    shelves = db.relationship("Shelf", back_populates="user")
 
     def __repr__(self):
-        return f'<Bookshelf bookshelf_id={self.bookshelf_id} Belong to user={self.user_id}>'
+        return f'<user_id={self.user_id} name = {self.name} email={self.email}>'
+
+class Shelf(db.Model):
+    """A Booklist of I have/read/to read/reading/or anything"""
+    __tablename__ = 'shelf'
+
+    shelf_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"),nullable=False)
+    name = db.Column(db.String)
+
+    user = db.relationship("User", back_populates="shelves")
+    
+
+    def __repr__(self):
+        return f'<shelf_name={self.name} Belong to user={self.user.name}>'
+
+class Puting(db.Model):
+    """middle table with book and shelf"""
+    __tablename__ = "puting"
+
+    puting_id = db.Column(db.Integer,autoincrement=True, primary_key=True)
+    shelf_id = db.Column(db.Integer,db.ForeignKey("shelf.shelf_id"))
+    book_id = db.Column(db.Integer,db.ForeignKey("books.book_id"))
+    time = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
+    note = db.Column(db.Text,nullable=True)
+
+    book = db.relationship("Book", backref="puting")
+    shelf = db.relationship("Shelf", backref="puting") 
+
+    def __repr__(self):
+        return f'<pt={self.puting_id} shelf={self.shelf_id} book={self.book_id} time={self.time}>'
 
 class Book(db.Model):
-    """A Book's information get from Google api"""
+    """A Book's information first get from Google api"""
     
     __tablename__ = "books"
 
-    book_id = db.Column(db.Integer,autoincrement=True,primary_key=True)
+    book_id = db.Column(db.Integer,primary_key=True)
+    googlebook_id = db.Column(db.String)
     title = db.Column(db.String(100))
     author = db.Column(db.String)
-    cover = db.Column(db.String)
-    available = db.Column(db.Boolean, default= False)
-
-    bookshelf_id = db.Column(db.Integer,db.ForeignKey("bookshelf.bookshelf_id"))
-
-    # bookshelf = db.relationship("Bookshelf", backref = 'book')
+    cover = db.Column(db.String)   
     
     def __repr__(self):
-        return f'<Book book_id={self.book_id} bookshelf={self.book}>'
+        return f'<book_id={self.book_id} title={self.title} Googlebookid={self.googlebook_id}>'
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///bookapp", echo=True):

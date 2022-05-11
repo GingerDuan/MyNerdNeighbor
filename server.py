@@ -20,25 +20,30 @@ def homepage():
     # if "user_id" in session:
         
     #     return redirect(f'/user_profile/{session["user_id"]}')
-     
-    if session:
+    flash (session)
+    if "user_id" in session:
         user = crud.get_user_by_id(session["user_id"])
         flash(f'Hi! {user.name} You are log in')
         
         return render_template("homepage.html",user = user)
         
     else:
+        flash("You need log in XD")
         return render_template("homepage.html")
+
+
+
 @app.route("/user_profile/")
 def show_user_ownpage():
     """View users ownpage"""
     
     if "user_id" not in session:
         return redirect('/')
-    else:     
+    else:
         user = crud.get_user_by_id(session["user_id"])
-        booklist = crud.get_users_saved_booklist(session["user_id"])
-        return render_template("user_profile.html",user=user,booklist=booklist)
+        bookshelves = crud.get_shelf_by_userid(session["user_id"])
+        flash(session)
+        return render_template("user_profile.html",user=user,bookshelves=bookshelves)
         
     
 
@@ -57,9 +62,8 @@ def register():
         return redirect("/")
     else:
         user = crud.create_user(email,name,password,zipcode)
-        bookshelf = crud.create_bookshelf(user.user_id)
         
-        db.session.add(bookshelf)
+        
         db.session.add(user)
         db.session.commit()
 
@@ -79,16 +83,19 @@ def login():
     password = request.form.get("password")
 
     user = crud.get_user_by_email(email)
+    if user == None:
+        flash("Sorry, this email have not register yet!")
+        return redirect("/")
+
     if user.password == password: 
-        
-        
+               
         session['user_id'] = user.user_id
         
         flash(f"Welcome back, {user.name}!")
         return redirect(f'/user_profile/')
 
     else: 
-        flash("Sorry, passwords or email do not match!")
+        flash("Sorry, passwords do not match!")
         return redirect("/")
 
 @app.route("/logout")
@@ -146,10 +153,11 @@ def book_search():
 def book_adder():
     """Put the book in the user's shelf"""
 
-    book_id = request.json.get("book_id")
-    bookshelf_id = session["user_id"]
+    book_id = request.form.get("book_id")
+    user_id = session["user_id"]
     
-    crud.create_book(title,cover, author,bookshelf_id)
+    bookshelf_id = crud.get_bookshelf_by_userid(user_id)
+    crud.create_book(bookshelf_id,book_id)
 
 
     return {"success": True, "status": "You've added this book to your bookshelf!"}
