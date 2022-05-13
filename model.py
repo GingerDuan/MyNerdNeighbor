@@ -31,7 +31,7 @@ class Shelf(db.Model):
     name = db.Column(db.String)
 
     user = db.relationship("User", back_populates="shelves")
-    
+    #puting
 
     def __repr__(self):
         return f'<shelf_name={self.name} Belong to user={self.user.name}>'
@@ -61,7 +61,9 @@ class Book(db.Model):
     googlebook_id = db.Column(db.String)
     title = db.Column(db.String(100))
     author = db.Column(db.String)
-    cover = db.Column(db.String)   
+    cover = db.Column(db.String)  
+
+    #puting 
     
     def __repr__(self):
         return f'<book_id={self.book_id} title={self.title} Googlebookid={self.googlebook_id}>'

@@ -34,43 +34,41 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 #bookshelf
-def create_bookshelf(user_id):
+def create_shelf(user_id,name):
     """Create and return a bookshelf"""
 
-    bookshelf = Bookshelf(user_id=user_id)
+    shelf = Shelf(user_id=user_id,name = name)
 
-    return bookshelf
+    return shelf
 
 # def get_book_by_zipcode(zipcode):
 #     """Return all the book in the same zipcode"""
 
 #     return Book.query.get(zipcode)
 
-def get_bookshelf_by_userid(user_id):
+def get_shelf_by_userid(user_id):
     """Return a bookshelf by userid"""
 
-    return Bookshelf.query.filter(Bookshelf.user_id == user_id).first()
+    return Shelf.query.filter(Shelf.user_id == user_id).all()
     
 #book
-def create_book(bookshelf_id,user_id):
+def create_book(googlebook_id,title,author,cover):
     """Create and return a new book."""
     
     
-    newbook= Book(bookshelf_id = bookshelf_id ) #？
+    book= Book(googlebook_id = googlebook_id,title=title,author=author,cover=cover)
     
-    db.session.add(newbook)
+    db.session.add(book)
     db.session.commit()
-    return newbook
+    return book
 
 #booklist
-def get_shelf_by_userid(user_id):
-    """get all the book that user saved => bookshelf!!"""
-    # booklist = []
-    shelves = Shelf.query.filter(Shelf.user_id == user_id).all()
-    # for line in saved_booklist_talbe:
-    #     booklist.append(line[0])
+def create_puting(shelf_id,book_id,time,note):
+    """get a the book saved in shelf!!"""
+    
+    puting = Puting(shelf_id = shelf_id,book_id = book_id,time = time,note = note)
 
-    return shelves
+    return puting
 
 
 

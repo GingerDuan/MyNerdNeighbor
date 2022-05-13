@@ -141,7 +141,7 @@ def book_search():
                 'author' : author,
                 'year' : year,
                 'startIndex':0,
-                'maxResults':20,}
+                'maxResults':5,}
     
     res = requests.get(url,params = payload)
     data = res.json()
@@ -149,15 +149,19 @@ def book_search():
     return render_template('boogle_res.html', data = data,keyword=keyword)
 
 
-@app.route("/push_into_shelf",methods=["POST"])
+@app.route("/put_into_shelf",methods=["POST"])
 def book_adder():
     """Put the book in the user's shelf"""
 
-    book_id = request.form.get("book_id")
+    googlebook_id = request.form.get("googlebook_id")
     user_id = session["user_id"]
-    
-    bookshelf_id = crud.get_bookshelf_by_userid(user_id)
-    crud.create_book(bookshelf_id,book_id)
+    anybook = crud.get_book_by_googleid(googlebook_id)
+   
+    if anybook:
+        anybook
+    else:
+        crud.create_book(googlebook_id,user_id)
+        flash(googlebook_id)
 
 
     return {"success": True, "status": "You've added this book to your bookshelf!"}
