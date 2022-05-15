@@ -65,6 +65,12 @@ def get_book_by_googleid(googlebook_id):
 
     return book
 
+def get_book_by_bookid(book_id):
+
+    book = Book.query.filter_by(book_id = book_id).first()
+
+    return book
+
 
 
 #add book on shelf
@@ -75,7 +81,11 @@ def create_puting(shelf_id,book_id):
 
     return puting
 
+def get_puting_by_shelfid(shelf_id):
 
+    puting_q = Puting.query.filter_by(shelf_id = shelf_id).all()
+
+    return puting_q
 
 
 

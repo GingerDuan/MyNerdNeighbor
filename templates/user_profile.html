@@ -24,11 +24,13 @@
   =======================================================
   <div id="results" style = "margin: 20px" width="750" height="400">
     {%for booklist in bookshelves%}
-    <div style = "height:150">{{booklist.name}}</div>
-      <!-- {%for booklist in bookshelves%}
-      <div>{{booklist.name}}</div> -->
+    <h4 style = "height:150">{{booklist.name}}</h4>
+      {%for book in books%}
+      <img class="book_img" src="{{book.cover}}" width="128" height="182">
       
-      <!-- {% endfor %} -->
+      <div>{{book.title}}</div>
+      
+      {% endfor %}
     {% endfor %}
   </div>
  

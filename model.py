@@ -44,7 +44,7 @@ class Puting(db.Model):
     shelf_id = db.Column(db.Integer,db.ForeignKey("shelf.shelf_id"))
     book_id = db.Column(db.Integer,db.ForeignKey("books.book_id"))
     time = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
-    note = db.Column(db.Text)
+    note = db.Column(db.Text,nullable=True)
 
     book = db.relationship("Book", backref="puting")
     shelf = db.relationship("Shelf", backref="puting") 
@@ -63,7 +63,7 @@ class Book(db.Model):
     author = db.Column(db.String)
     cover = db.Column(db.String)  
 
-    #puting 
+#puting     
     
     def __repr__(self):
         return f'<book_id={self.book_id} title={self.title} Googlebookid={self.googlebook_id}>'

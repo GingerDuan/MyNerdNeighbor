@@ -40,12 +40,39 @@ def show_user_ownpage():
     """View users ownpage"""
     
     if "user_id" not in session:
+        flash("you did not log in")
         return redirect('/')
     else:
-        user = crud.get_user_by_id(session["user_id"])
-        bookshelves = crud.get_shelf_by_userid(session["user_id"])
-        flash(session)
-        return render_template("user_profile.html",user=user,bookshelves=bookshelves)
+        user_id = session["user_id"]
+        user = crud.get_user_by_id(user_id)
+
+        bookshelves = crud.get_shelf_by_userid(user_id)
+        
+        
+        
+        books = []
+        for shelf in bookshelves:
+
+            putings = crud.get_puting_by_shelfid(shelf.shelf_id)
+
+            for puting in putings:
+                
+                book_id = puting.book_id
+                book = crud.get_book_by_bookid(book_id)
+                books.append(book)
+
+            # if s == 1:
+            #     bookshelf = crud.get_puting_by_shelfid(shelf.shelf_id)
+            # if s == 2:
+            #     to_read = crud.get_puting_by_shelfid(shelf.shelf_id)
+            # if s == 3:
+            #     reading = crud.get_puting_by_shelfid(shelf.shelf_id)
+            # if s == 4:
+            #     have_read = crud.get_puting_by_shelfid(shelf.shelf_id)
+            
+            # s += 1
+        
+        return render_template("user_profile.html",user=user,bookshelves=bookshelves,books = books)
         
     
 
@@ -168,8 +195,8 @@ def book_adder():
     else:
         flash("you add a new book in datebase")
         title = request.json.get("title")
-        author = request.json.get("googlebook_id","")
-        cover = request.json.get("")
+        author = request.json.get("author","")
+        cover = request.json.get("cover","https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg")
         newbook = crud.create_book(googlebook_id,title,author,cover)
         db.session.add(newbook)
         db.session.commit()
