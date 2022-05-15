@@ -54,21 +54,27 @@ def get_shelf_by_userid(user_id):
 #book
 def create_book(googlebook_id,title,author,cover):
     """Create and return a new book."""
-    
-    
+
     book= Book(googlebook_id = googlebook_id,title=title,author=author,cover=cover)
     
-    db.session.add(book)
-    db.session.commit()
     return book
 
-#booklist
-def create_puting(shelf_id,book_id,time,note):
+def get_book_by_googleid(googlebook_id):
+
+    book = Book.query.filter_by(googlebook_id = googlebook_id).first()
+
+    return book
+
+
+
+#add book on shelf
+def create_puting(shelf_id,book_id):
     """get a the book saved in shelf!!"""
     
-    puting = Puting(shelf_id = shelf_id,book_id = book_id,time = time,note = note)
+    puting = Puting(shelf_id = shelf_id,book_id = book_id)
 
     return puting
+
 
 
 

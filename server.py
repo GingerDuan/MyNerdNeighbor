@@ -1,5 +1,7 @@
 """The server for app My Nerdy Nerighbor"""
 
+from multiprocessing import AuthenticationError
+# from turtle import title
 from flask import (Flask, render_template, request, flash, session,jsonify,
                    redirect)
 from model import connect_to_db, db           
@@ -153,19 +155,33 @@ def book_search():
 def book_adder():
     """Put the book in the user's shelf"""
 
-    googlebook_id = request.form.get("googlebook_id")
+    googlebook_id = request.json.get("googlebook_id")
     user_id = session["user_id"]
     anybook = crud.get_book_by_googleid(googlebook_id)
-   
+    shelf_id = 4 * (user_id-1) + 1
+
     if anybook:
-        anybook
+        flash("you have add this book")
+        puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id)
+        
+        return jsonify({"status": "This book has already in your bookshelf!"})
     else:
-        crud.create_book(googlebook_id,user_id)
-        flash(googlebook_id)
+        flash("you add a new book in datebase")
+        title = request.json.get("title")
+        author = request.json.get("googlebook_id","")
+        cover = request.json.get("")
+        newbook = crud.create_book(googlebook_id,title,author,cover)
+        db.session.add(newbook)
+        db.session.commit()
+        puting = crud.create_puting(shelf_id = shelf_id,book_id = newbook.book_id)
 
+    db.session.add(puting)
+    db.session.commit()
+    return jsonify({"status":googlebook_id })
+   
 
-    return {"success": True, "status": "You've added this book to your bookshelf!"}
-
+        
+        
 
 
 
