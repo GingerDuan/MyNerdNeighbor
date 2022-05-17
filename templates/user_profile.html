@@ -23,15 +23,15 @@
   <h3>There are {balalal} books in your bookshelf</h3>
   =======================================================
   <div id="results" style = "margin: 20px" width="750" height="400">
-    {%for booklist in bookshelves%}
-    <h4 style = "height:150">{{booklist.name}}</h4>
+    
+    <h4 style = "height:150">{{bookshelves[0].name}}</h4>
       {%for book in books%}
       <img class="book_img" src="{{book.cover}}" width="128" height="182">
       
       <div>{{book.title}}</div>
       
       {% endfor %}
-    {% endfor %}
+    
   </div>
  
 </div>

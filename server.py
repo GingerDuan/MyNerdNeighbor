@@ -187,24 +187,33 @@ def book_adder():
     anybook = crud.get_book_by_googleid(googlebook_id)
     shelf_id = 4 * (user_id-1) + 1
 
+
     if anybook:
-        flash("you have add this book")
+        
         puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id)
         
-        return jsonify({"status": "This book has already in your bookshelf!"})
-    else:
-        flash("you add a new book in datebase")
-        title = request.json.get("title")
-        author = request.json.get("author","")
-        cover = request.json.get("cover","https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg")
+        db.session.add(puting)
+        db.session.commit()
+        return anybook.book_id
+    else: 
+        url = f'https://www.googleapis.com/books/v1/volumes/{googlebook_id}'
+        
+        response = requests.get(url)
+        data = response.json()
+        
+        title = data['volumeInfo']['title']
+        author = data['volumeInfo']['authors'][0]
+        cover = data['volumeInfo']['imageLinks']['thumbnail']
+        
+        #cover = request.json.get("cover","https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg")
         newbook = crud.create_book(googlebook_id,title,author,cover)
         db.session.add(newbook)
         db.session.commit()
         puting = crud.create_puting(shelf_id = shelf_id,book_id = newbook.book_id)
 
-    db.session.add(puting)
-    db.session.commit()
-    return jsonify({"status":googlebook_id })
+        db.session.add(puting)
+        db.session.commit()
+        return jsonify({"status":googlebook_id })
    
 
         
