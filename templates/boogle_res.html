@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+
+  
+<div style = "text-align: right;">
+  {%if user is not none%}
+    <a href="/user_profile/">View your own page</a>
+  {%endif%}
+  <a href="/">Back to the homepage</a>
+</div>
+  
+<form method = "GET" action ="/search" style = "text-align: center">
+<h1>Boogle 2.0</h1>
+
+<lable>search the book you want:</lable><br>
+<div>
+<input id="s_key" type = "text" placeholder="keyword : title/author/year" name = "keyword" style="width:500px; height:25px;font-size:12pt;">
+<input type = "submit" value = "Boogle" class = "btn_primary">
+</div>
+
+</form>
+
+
+<div id="results" style = "margin: 70px" width="800" height="400">
+<h3>Results: we found {{data.totalItems}} results about "{{keyword}}"</h3>
+    {%for book in data['items']%}
+    <div class = "bookContainer" style = "margin-top: 20px;">
+
+        <div class = 'book_path'>
+            {%if 'imageLinks' in book['volumeInfo']%}
+                <img class="book_img" src="{{book.volumeInfo.imageLinks.thumbnail}}" width="128" height="182">
+            {%endif%}
+            {%if 'imageLinks' not in book['volumeInfo']%}
+                <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "128" height="182">
+            {%endif%}
+        </div>
+        <span class = 'bookinfo'>
+            <a class="book_title" href="{{book.volumeInfo.infoLink}}" target="_Blank">{{book.volumeInfo.title}}</a>
+                {%if 'subtitle' in book['volumeInfo']%}
+                    {{book.volumeInfo.subtitle}}<br>
+                {%endif%}
+                {%if 'authors' in book['volumeInfo']%}
+                    <div >{{book.volumeInfo.authors[0]}}</div>
+                {%endif%}
+                <div>
+                    <button type="button"  class = "add_book_btn" value ={{book.id}}> Add to my bookshelf</button>
+                </div>
+                
+                
+
+            <br>
+                <div>
+                    {%if 'description' in book['volumeInfo']%}
+                    Description:{{book.volumeInfo.description}}
+                    {%endif%}
+                </div>
+        </span>
+        </div>
+        ==========================================================================================
+    {%endfor%}
+ 
+    
+    
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -73,7 +73,7 @@ def get_book_by_bookid(book_id):
 
 
 
-#add book on shelf
+#puting
 def create_puting(shelf_id,book_id):
     """get a the book saved in shelf!!"""
     
@@ -87,8 +87,11 @@ def get_puting_by_shelfid(shelf_id):
 
     return puting_q
 
+def get_puting_by_shelfid_boookid(shelf_id,book_id):
 
+    puting = Puting.query.filter(Puting.shelf_id == shelf_id, Puting.book_id == book_id).first()
 
+    return puting
 
 if __name__ == '__main__':
     from server import app

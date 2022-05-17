@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+
+  
+<div style = "text-align: right;">
+  {%if user is not none%}
+    <a href="/user_profile/">View your own page</a>
+  {%endif%}
+  <a href="/">Back to the homepage</a>
+</div>
+  
+<form method = "GET" action ="/search" style = "text-align: center">
+<h1>Boogle 2.0</h1>
+
+<lable>search the book you want:</lable><br>
+<div>
+<input id="s_key" type = "text" placeholder="Keyword" name = "keyword" style="width:500px; height:25px;font-size:12pt;">
+</div>
+
+<!-- <div>title<br>
+  <input id="s_title" type = "text" placeholder="Booktitle" name = "intitle" style="width:300px; height:25px;font-size:12pt;">
+</div>
+
+<div>author<br>
+  <input id="s_author" type = "text" placeholder="Author" name = "inauthor" style="width:300px; height:25px;font-size:12pt;">
+</div>
+
+<div>ISBN<br>
+  <input id="s_isbn" type = "number" placeholder="ISBN" name = "isbn" style="width:300px; height:25px;font-size:12pt;">
+</div> -->
+
+
+<input type = "submit" value = "Boogle" class = "btn_primary">
+</div>
+</form>
+
+
+{% endblock %}

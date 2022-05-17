@@ -186,15 +186,18 @@ def book_adder():
     user_id = session["user_id"]
     anybook = crud.get_book_by_googleid(googlebook_id)
     shelf_id = 4 * (user_id-1) + 1
-
+    
 
     if anybook:
+        anyputing = crud.get_puting_by_shelfid_boookid(shelf_id,anybook.book_id)
+        if anyputing:
+            return jsonify({"status":"this book has already in your shelf" })
+        else:
+            puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id)
         
-        puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id)
-        
-        db.session.add(puting)
-        db.session.commit()
-        return anybook.book_id
+            db.session.add(puting)
+            db.session.commit()
+            return anybook
     else: 
         url = f'https://www.googleapis.com/books/v1/volumes/{googlebook_id}'
         
@@ -213,7 +216,7 @@ def book_adder():
 
         db.session.add(puting)
         db.session.commit()
-        return jsonify({"status":googlebook_id })
+        return jsonify({"status":f'{newbook.title} add in your shelf' })
    
 
         
