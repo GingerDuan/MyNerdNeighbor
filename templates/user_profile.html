@@ -26,7 +26,7 @@
     
     <h4 style = "height:150">{{bookshelves[0].name}}</h4>
       {%for book in books%}
-      <div>
+      <div id ={{book.book_id}}>
       <img class="book_img" src="{{book.cover}}" width="128" height="182">
       <button type="button"  class = "remove_book_btn" value ={{book.book_id}}>remove</button>
       <div>{{book.title}}</div>

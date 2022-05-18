@@ -177,6 +177,22 @@ def book_search():
 
     return render_template('boogle_res.html', data = data,keyword=keyword)
 
+@app.route("/remove_from_shelf",methods=["POST"])
+def book_remover():
+    """remove the book form the shelf"""
+
+    book_id = request.json.get("book_id")
+    user_id = session["user_id"]
+    shelf_id = 4 * user_id - 3
+    find_puting = crud.get_puting_by_shelfid_boookid(shelf_id,book_id)
+
+    db.session.delete(find_puting)
+    db.session.commit()
+
+    return jsonify({"status":"this book disappear" })
+
+
+
 
 @app.route("/put_into_shelf",methods=["POST"])
 def book_adder():
@@ -185,7 +201,8 @@ def book_adder():
     googlebook_id = request.json.get("googlebook_id")
     user_id = session["user_id"]
     anybook = crud.get_book_by_googleid(googlebook_id)
-    shelf_id = 4 * (user_id-1) + 1
+    shelf_id = 4 * (user_id-1) + 1 
+    #what is this? 
     
 
     if anybook:
@@ -197,7 +214,7 @@ def book_adder():
         
             db.session.add(puting)
             db.session.commit()
-            return anybook
+            return jsonify({"status":f'{anybook.title} add in your shelf' })
     else: 
         url = f'https://www.googleapis.com/books/v1/volumes/{googlebook_id}'
         
