@@ -23,12 +23,12 @@
 </form>
 
 
-<div id="results" style = "margin: 70px" width="800" height="400">
-<h3>Results: we found {{data.totalItems}} results about "{{keyword}}"</h3>
+<div id="results" class = "container" style = "margin-top: 30px ;">
+<h4>Results: we found {{data.totalItems}} results about "{{keyword}}"</h4>
     {%for book in data['items']%}
-    <div class = "bookContainer" style = "margin-top: 20px;">
+    <div class = "row bookContainer" style = "margin-top: 30px ;">
 
-        <div class = 'book_path'>
+        <div class = 'col-4 col-md-3 col-lg-2 col-md-xl-0.5 col-md-xl-0.25 book_path'>
             {%if 'imageLinks' in book['volumeInfo']%}
                 <img class="book_img" src="{{book.volumeInfo.imageLinks.thumbnail}}" width="128" height="182">
             {%endif%}
@@ -36,7 +36,8 @@
                 <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "128" height="182">
             {%endif%}
         </div>
-        <span class = 'bookinfo'>
+       
+        <div class = 'col-8 col-md-9 .col-lg-10 col-md-xl-11.5 col-md-xl-11.25 bookinfo'>
             <a class="book_title" href="{{book.volumeInfo.infoLink}}" target="_Blank">{{book.volumeInfo.title}}</a>
                 {%if 'subtitle' in book['volumeInfo']%}
                     {{book.volumeInfo.subtitle}}<br>
@@ -45,6 +46,7 @@
                     <div >{{book.volumeInfo.authors[0]}}</div>
                 {%endif%}
                 <div>
+                    <i type="button" class="bi bi-plus-square-dotted"></i>
                     <button type="button"  class = "add_book_btn" value ={{book.id}}> Add to my bookshelf</button>
                 </div>
                 
@@ -56,8 +58,9 @@
                     Description:{{book.volumeInfo.description}}
                     {%endif%}
                 </div>
-        </span>
         </div>
+        </div>
+  
         ==========================================================================================
     {%endfor%}
  

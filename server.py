@@ -19,10 +19,7 @@ app.jinja_env.undefined = StrictUndefined
 @app.route("/")
 def homepage():
     """View homepage"""
-    # if "user_id" in session:
-        
-    #     return redirect(f'/user_profile/{session["user_id"]}')
-    flash (session)
+    
     if "user_id" in session:
         user = crud.get_user_by_id(session["user_id"])
         flash(f'Hi! {user.name} You are log in')
@@ -32,8 +29,6 @@ def homepage():
     else:
         flash("You need log in XD")
         return render_template("homepage.html")
-
-
 
 @app.route("/user_profile/")
 def show_user_ownpage():
@@ -47,19 +42,30 @@ def show_user_ownpage():
         user = crud.get_user_by_id(user_id)
 
         bookshelves = crud.get_shelf_by_userid(user_id)
+               
+        books = []       
+        putings = crud.get_puting_by_shelfid(bookshelves[0].shelf_id)
+        for puting in putings:       
+            book = crud.get_book_by_bookid(puting.book_id)
+            books.append(book)
         
-        
-        
-        books = []
-        for shelf in bookshelves:
+        to_read_books = []
+        putings1 = crud.get_puting_by_shelfid(bookshelves[1].shelf_id)
+        for puting1 in putings1:
+            book = crud.get_book_by_bookid(puting1.book_id)
+            to_read_books.append(book)
 
-            putings = crud.get_puting_by_shelfid(shelf.shelf_id)
-
-            for puting in putings:
-                
-                book_id = puting.book_id
-                book = crud.get_book_by_bookid(book_id)
-                books.append(book)
+        reading_books = []
+        putings2 = crud.get_puting_by_shelfid(bookshelves[2].shelf_id)
+        for puting2 in putings2:
+            book = crud.get_book_by_bookid(puting2.book_id)
+            reading_books.append(book)
+        
+        have_read = []
+        putings3 = crud.get_puting_by_shelfid(bookshelves[3].shelf_id)
+        for puting3 in putings3:
+            book = crud.get_book_by_bookid(puting3.book_id)
+            have_read.append(book)
 
             # if s == 1:
             #     bookshelf = crud.get_puting_by_shelfid(shelf.shelf_id)
@@ -72,7 +78,7 @@ def show_user_ownpage():
             
             # s += 1
         
-        return render_template("user_profile.html",user=user,bookshelves=bookshelves,books = books)
+        return render_template("user_profile.html",user=user,bookshelves=bookshelves,books = books,to_read_books=to_read_books,reading_books=reading_books,have_read=have_read)
         
     
 
@@ -170,7 +176,7 @@ def book_search():
                 'author' : author,
                 'year' : year,
                 'startIndex':0,
-                'maxResults':5,}
+                'maxResults':30,}
     
     res = requests.get(url,params = payload)
     data = res.json()
@@ -223,8 +229,10 @@ def book_adder():
         
         title = data['volumeInfo']['title']
         author = data['volumeInfo']['authors'][0]
-        cover = data['volumeInfo']['imageLinks']['thumbnail']
-        
+        if 'imageLinks' in data['volumeInfo']:
+            cover = data['volumeInfo']['imageLinks']['thumbnail']
+        else:
+            cover = "https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg"
         #cover = request.json.get("cover","https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg")
         newbook = crud.create_book(googlebook_id,title,author,cover)
         db.session.add(newbook)
@@ -235,7 +243,14 @@ def book_adder():
         db.session.commit()
         return jsonify({"status":f'{newbook.title} add in your shelf' })
    
+@app.route("/neighbor")
+def show_ntighbor():
 
+    user_id = session["user_id"]
+    user = crud.get_user_by_id(user_id)
+
+    
+    return render_template('neighbor_library.html',user=user)
         
         
 

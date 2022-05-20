@@ -73,6 +73,11 @@ def get_book_by_bookid(book_id):
 
 
 
+
+
+
+
+
 #puting
 def create_puting(shelf_id,book_id):
     """get a the book saved in shelf!!"""
@@ -83,15 +88,46 @@ def create_puting(shelf_id,book_id):
 
 def get_puting_by_shelfid(shelf_id):
 
-    puting_q = Puting.query.filter_by(shelf_id = shelf_id).all()
+    putings = Puting.query.filter_by(shelf_id = shelf_id).order_by(Puting.time.desc())
+    
+    return putings
 
-    return puting_q
+def get_puting_by_putingid(puting_id):
+
+    putings = Puting.query.filter_by(puting_id = puting_id)
+
+    return putings
 
 def get_puting_by_shelfid_boookid(shelf_id,book_id):
 
     puting = Puting.query.filter(Puting.shelf_id == shelf_id, Puting.book_id == book_id).first()
 
     return puting
+
+def get_book_by_putingid(puting_id):
+
+    puting = get_puting_by_putingid(puting_id)
+    book = Book.query.filter_by(book_id = puting.book_id).all()
+    
+    return book
+
+def get_books_by_userid_in_zipcode(user_id):
+
+    user = User.query.get(user_id)
+    users = User.query.filter_by(user.zipcode).all()
+
+    puting_ids = []
+    for user_id in users.user_id:
+        
+        puting = Puting.query.filter_by(user_id)
+        puting_ids.append(puting)
+    
+    books =[]
+    for puting_id in puting_ids:
+        book = get_book_by_putingid(puting_id)
+        books.append(book)
+
+    return books
 
 if __name__ == '__main__':
     from server import app
