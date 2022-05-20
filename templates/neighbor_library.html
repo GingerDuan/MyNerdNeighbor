@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+<!-- <title>Boogle</title> -->
+  
+<div style = "text-align: right;">
+  <a href="/boogle2">Search the book you want</a>
+  <a href="/">Back to my homepage</a>
+  <a href="/logout">logout</a>
+</div>
+
+<form method = "GET" action ="/search" style = "text-align: right">
+  <lable>search the book in your shelf:</lable><br>
+  <input id="my-text" type = "text" name = "keyword" placeholder="Book/Author/Year">
+  <button id="btn">Boogle</button>
+</form>
+
+
+<h1 style = "text-align: center;">{{user.name}}'s Book Zone</h1>
+<div id="bookshelf" style = "margin: 70px" width="800" height="400">
+  <h3>You are live in {{user.zipcode}} neighbor</h3>
+  <h3>There are {balalal} books in your bookshelf</h3>
+  =======================================================
+  <div id="results" class = "container">
+    
+    <h4 style = "height:150">{{bookshelves[0].name}}</h4>
+      <div class = "row">
+      {%for book in books%}
+        
+          <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
+            <img class="book_img" src="{{book.cover}}" width="128" height="182">
+            <div>
+            <button type="button"  class = "remove_book_btn" value ={{book.book_id}}>remove</button>
+            </div>
+            <div>{{book.title}}</div>
+          </div>
+        
+      {% endfor %}
+      </div>
+  </div>
+ 
+</div>
+
+
+
+<!-- <script src="/static/js/user_page.js"></script> -->
+{% endblock %}
