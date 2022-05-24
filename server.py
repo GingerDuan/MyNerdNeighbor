@@ -248,9 +248,11 @@ def show_ntighbor():
 
     user_id = session["user_id"]
     user = crud.get_user_by_id(user_id)
+    zipusers = crud.get_users_in_zipcode(user_id)
+    neighbor_num = crud.get_users_amount_in_zipcode(user_id)
+    books = crud.get_books_in_zipcode(user_id)
 
-    
-    return render_template('neighbor_library.html',user=user)
+    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,books= books)
         
         
 

@@ -111,23 +111,36 @@ def get_book_by_putingid(puting_id):
     
     return book
 
-def get_books_by_userid_in_zipcode(user_id):
+def get_users_in_zipcode(user_id):
 
     user = User.query.get(user_id)
-    users = User.query.filter_by(user.zipcode).all()
+    zipusers = User.query.filter_by(zipcode = user.zipcode).all()
 
-    puting_ids = []
-    for user_id in users.user_id:
-        
-        puting = Puting.query.filter_by(user_id)
-        puting_ids.append(puting)
+    return zipusers
+
+def get_users_amount_in_zipcode(user_id):
     
-    books =[]
-    for puting_id in puting_ids:
-        book = get_book_by_putingid(puting_id)
-        books.append(book)
+    user = User.query.get(user_id)
+    neighbor_num = User.query.filter_by(zipcode = user.zipcode).count()
 
+    return neighbor_num
+
+def get_books_in_zipcode(user_id):
+
+    bookshelf_ids = []
+    zipusers = get_users_in_zipcode(user_id)
+
+    for user in zipusers:
+        bookshelf_ids.append((user.user_id * 4)-3)
+
+    books = []
+    for bookshelf_id in bookshelf_ids:
+        putings = Puting.query.filter_by(shelf_id=bookshelf_id).first()
+        books.append(putings.book)
+    
     return books
+
+
 
 if __name__ == '__main__':
     from server import app
