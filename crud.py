@@ -135,8 +135,9 @@ def get_books_in_zipcode(user_id):
 
     books = []
     for bookshelf_id in bookshelf_ids:
-        putings = Puting.query.filter_by(shelf_id=bookshelf_id).first()
-        books.append(putings.book)
+        putings = Puting.query.filter_by(shelf_id=bookshelf_id).all()
+        for puting in putings:
+            books.append(puting.book)
     
     return books
 
