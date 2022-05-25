@@ -242,9 +242,10 @@ def book_adder():
         db.session.add(puting)
         db.session.commit()
         return jsonify({"status":f'{newbook.title} add in your shelf' })
-   
-@app.route("/neighbor")
-def show_ntighbor():
+
+#neighborpage
+@app.route("/neighborlibrary")
+def show_ntighbor_books():
 
     user_id = session["user_id"]
     user = crud.get_user_by_id(user_id)
@@ -254,7 +255,16 @@ def show_ntighbor():
 
     return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,books= books)
         
-        
+@app.route("/neighbor")  
+def show_neighbor_puting():
+
+    user_id = session["user_id"]
+    user = crud.get_user_by_id(user_id)
+    zipusers = crud.get_users_in_zipcode(user_id)
+    neighbor_num = crud.get_users_amount_in_zipcode(user_id)
+    putings = crud.get_puting_in_zipcode(user_id)
+
+    return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
 
 
 

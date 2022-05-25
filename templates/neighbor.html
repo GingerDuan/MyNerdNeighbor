@@ -12,7 +12,7 @@
 </div>
   
 <form method = "GET" action ="/neighbor_search" style = "text-align: center">
-<h1>Boogle neighbor</h1>
+<h1>Boogle neighbor1.0</h1>
 
 <lable>search the book you want:</lable><br>
 <div>
@@ -22,6 +22,27 @@
 <input type = "submit" value = "Boogle" class = "btn_primary">
 </div>
 </form>
+
+
+<div id="results" class = "container">
+  <h4>There are {{neighbor_num}} nerds in your neighbor {{user.zipcode}}</h4>
+    <div>
+      {%for zipuser in zipusers%}
+      <div>{{zipuser.name}}</div>
+      {%endfor%}
+    </div>>
+
+
+  =============================================================<br>
+  {{putings}}
+  ##############################################################<br>
+  <div>
+    {%for puting in putings%}
+      <div>{{puting.shelf.user.name}} put {{puting.book.title}} at {{puting.time}}</div>
+    
+    {% endfor %}
+  </div>
+</div>
 
 
 {% endblock %}

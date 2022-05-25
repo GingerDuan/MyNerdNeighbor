@@ -141,6 +141,21 @@ def get_books_in_zipcode(user_id):
     
     return books
 
+def get_puting_in_zipcode(user_id):
+
+    bookshelf_ids = []
+    zipusers = get_users_in_zipcode(user_id)
+    for user in zipusers:
+        shelves = get_shelf_by_userid(user.user_id)
+        for shelf in shelves:
+            bookshelf_ids.append(shelf.shelf_id)
+    putings = []
+    for bookshelf_id in bookshelf_ids:
+        puting_in_shelf = Puting.query.filter_by(shelf_id=bookshelf_id).order_by(Puting.time.desc())
+        putings += puting_in_shelf
+        
+           
+    return putings
 
 
 if __name__ == '__main__':

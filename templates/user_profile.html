@@ -13,7 +13,7 @@
 <form method = "GET" action ="/search" style = "text-align: right">
   <lable>search the book in your shelf:</lable><br>
   <input id="my-text" type = "text" name = "keyword" placeholder="Book/Author/Year">
-  <button id="btn">Boogle</button>
+  <button id="btn" class="btn btn-primary btn-sm">Boogle</button>
 </form>
 
 
@@ -30,11 +30,12 @@
         
           <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
             <img class="book_img" src="{{book.cover}}" width="128" height="182">
+            <div>{{book.title}}</div>
             <div>
               <i type="button" class="bi bi-bookmark-x" value ={{book.book_id}}></i>
-            <button type="button"  class = "remove_book_btn" value ={{book.book_id}}>remove</button>
+              <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{book.book_id}}>remove</button>
             </div>
-            <div>{{book.title}}</div>
+            
           </div>
         
       {% endfor %}
@@ -47,8 +48,7 @@
           <div class = "col-5 col-sm-4.5 col-md-4 col-lg-3 col-xl-2 col-xxl-1 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
             <img class="book_img" src="{{book.cover}}" width="128" height="182">
             <div>
-              <i type="button" class="bi bi-bookmark-x" value ={{book.book_id}}></i>
-            <button type="button"  class = "remove_book_btn" value ={{book.book_id}}>remove</button>
+            <button type="button" class="btn btn-outline-warning remove_book_btn" value ={{book.book_id}}>remove</button>
             </div>
             <div>{{book.title}}</div>
           </div>
