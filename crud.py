@@ -149,15 +149,14 @@ def get_puting_in_zipcode(user_id):
         shelves = get_shelf_by_userid(user.user_id)
         for shelf in shelves:
             bookshelf_ids.append(shelf.shelf_id)
-    putings = []
-    for bookshelf_id in bookshelf_ids:
-        puting_in_shelf = Puting.query.filter_by(shelf_id=bookshelf_id).order_by(Puting.time.desc())
-        putings += puting_in_shelf
+    # putings = []
+    # for bookshelf_id in bookshelf_ids:
+        # puting_in_shelf = Puting.query.filter_by(shelf_id=bookshelf_id).order_by(Puting.time.desc())
+    putings = Puting.query.filter(Puting.shelf_id.in_(bookshelf_ids)).order_by(Puting.time.desc())
+        
+    
         
            
-    return putings
-
-
-if __name__ == '__main__':
+    return putingsif __name__ == '__main__':
     from server import app
     connect_to_db(app)
