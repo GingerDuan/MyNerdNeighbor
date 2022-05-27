@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+
+<h3>{{book.title}}</h3> 
+<h4>{{book.subtitle}}</h4>
+<img class="book_img" src="{{book.cover}}"  width="200" height="300">
+
+<div>by: {{book.author[0]}}<div>
+<div>{{book.google_link}}<div></div>
+{%if book%}
+Description:{{book.des}}
+{%endif%}
+
+</div>
+Hi {{user.name}}
+</div>
+===========================
+<!-- {%if putings%}
+  {%for puting in putings%}
+    {{puting.user.name}} own {{puting.book.title}}
+    ===========================
+    {{book}}
+  {%endfor%}
+{%endif%} -->
+{% endblock %}

@@ -41,10 +41,6 @@ def create_shelf(user_id,name):
 
     return shelf
 
-# def get_book_by_zipcode(zipcode):
-#     """Return all the book in the same zipcode"""
-
-#     return Book.query.get(zipcode)
 
 def get_shelf_by_userid(user_id):
     """Return a bookshelf by userid"""
@@ -104,6 +100,12 @@ def get_puting_by_shelfid_boookid(shelf_id,book_id):
 
     return puting
 
+def get_puting_by_bookid(book_id):
+
+    puting = Puting.query.filter_by(book_id = book_id).all()
+
+    return puting
+
 def get_book_by_putingid(puting_id):
 
     puting = get_puting_by_putingid(puting_id)
@@ -149,7 +151,7 @@ def get_puting_in_zipcode(user_id):
         shelves = get_shelf_by_userid(user.user_id)
         for shelf in shelves:
             bookshelf_ids.append(shelf.shelf_id)
-    # putings = []
+    putings = []
     # for bookshelf_id in bookshelf_ids:
         # puting_in_shelf = Puting.query.filter_by(shelf_id=bookshelf_id).order_by(Puting.time.desc())
     putings = Puting.query.filter(Puting.shelf_id.in_(bookshelf_ids)).order_by(Puting.time.desc())
@@ -157,6 +159,9 @@ def get_puting_in_zipcode(user_id):
     
         
            
-    return putingsif __name__ == '__main__':
+    return putings
+
+
+if __name__ == '__main__':
     from server import app
     connect_to_db(app)

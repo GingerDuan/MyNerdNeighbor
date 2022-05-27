@@ -150,12 +150,7 @@ def book_finder():
         user = None
     return render_template('Boogle.html',user=user)
 
-# @app.route("/Boogle/<user_id>")
-# def book_searcher(user_id):
-#     """Search for book in Google book"""
-#     user = crud.get_user_by_id(user_id)
 
-#     return render_template('Boogle.html',user=user)
 
 @app.route("/boogle2")
 def show_boogle():
@@ -166,15 +161,15 @@ def book_search():
     """Send the payload to javascript"""
 
     keyword = request.args.get('keyword', '')
-    title = request.args.get("title",'')
-    author = request.args.get('author','')
-    year = request.args.get("year",'')
+    # title = request.args.get("title",'')
+    # author = request.args.get('author','')
+    # year = request.args.get("year",'')
 
     url = 'https://www.googleapis.com/books/v1/volumes'
     payload = {'q':keyword,
-                'title' : title,
-                'author' : author,
-                'year' : year,
+                # 'title' : title,
+                # 'author' : author,
+                # 'year' : year,
                 'startIndex':0,
                 'maxResults':30,}
     
@@ -198,8 +193,6 @@ def book_remover():
     return jsonify({"status":"this book disappear" })
 
 
-
-
 @app.route("/put_into_shelf",methods=["POST"])
 def book_adder():
     """Put the book in the user's shelf"""
@@ -210,7 +203,6 @@ def book_adder():
     shelf_id = 4 * (user_id-1) + 1 
     #what is this? 
     
-
     if anybook:
         anyputing = crud.get_puting_by_shelfid_boookid(shelf_id,anybook.book_id)
         if anyputing:
@@ -266,7 +258,41 @@ def show_neighbor_puting():
 
     return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
 
+#bookpage
+@app.route("/book/<id>")
+def show_book_detail(id):
 
+    user_id = session["user_id"]
+    user = crud.get_user_by_id(user_id)
+
+    # googlebook_id = request.json.get("googlebook_id")
+    anybook = crud.get_book_by_googleid(id)
+    
+    url = f'https://www.googleapis.com/books/v1/volumes/{id}'
+    response = requests.get(url)
+    data = response.json()
+    
+    if anybook:
+        cover = anybook.cover
+        title = anybook.title
+        putings = crud.get_puting_by_bookid(anybook.book_id)
+
+    else: 
+        title = data['volumeInfo']['title']
+        putings = None
+        if 'imageLinks' in data['volumeInfo']:
+            cover = data['volumeInfo']['imageLinks']['thumbnail']
+        else:
+            cover = "https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg"
+    
+    author = data['volumeInfo']['authors']
+
+    book = {"title":title,"cover":cover,"author":author,"subtitle":data['volumeInfo']['subtitle'],"des":data['volumeInfo']['description'],"google_link":data['selfLink'],}
+    
+    
+
+
+    return render_template("bookpage.html",book=book,user=user,putings = putings)
 
 
 if __name__ == "__main__":

@@ -30,12 +30,12 @@
       {%for zipuser in zipusers%}
       <div>{{zipuser.name}}</div>
       {%endfor%}
-    </div>>
+    </div>
 
 
   =============================================================<br>
-  {{putings}}
-  ##############################################################<br>
+  <!-- {{putings}} -->
+  <!-- ##############################################################<br> -->
   <div>
     {%for puting in putings%}
       <div>{{puting.shelf.user.name}} put {{puting.book.title}} at {{puting.time}}</div>

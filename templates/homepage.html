@@ -9,6 +9,11 @@
 
   <h1>Welcome My Nerd Neighbor!</h1>
 
+  <img src ="https://i.etsystatic.com/32630501/r/il/5456f3/3631520225/il_794xN.3631520225_jh58.jpg"width = "300" height="300">
+  <!-- <img src ="https://cdn.dribbble.com/users/1044993/screenshots/5564939/media/7f2fd62c5832ca4558d6aefe3a7dc1c3.png"width = "300" height="300"> -->
+
+
+
   <h2></h2>
   <ul>
     <a href="/boogle2">Find a book in Boogle!</a></li>
@@ -23,7 +28,15 @@
     <a href="/neighbor">Go to your neighborbood page</a></li>
   </ul> 
 
-
+  <div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZ2luZ2VyZHVhbiIsImEiOiJjbDNjb2FxdHUwMGdkM2xvYzRmYmtvMWs5In0.A5gjtoYp8bieQkt6rk9Erg';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11'
+  });
+</script>
+<iframe width='100%' height='700px' src="https://api.mapbox.com/styles/v1/gingerduan/cl3nhrh0i000214lkhnhho7l4/draft.html?title=false&access_token=pk.eyJ1IjoiZ2luZ2VyZHVhbiIsImEiOiJjbDNjb2FxdHUwMGdkM2xvYzRmYmtvMWs5In0.A5gjtoYp8bieQkt6rk9Erg&zoomwheel=false#12/48.8665/2.3176" title="Basic" style="border:none;"></iframe>
 
 
 {%if "user_id" not in session%}

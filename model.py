@@ -18,6 +18,7 @@ class User(db.Model):
     password = db.Column(db.String)
 
     shelves = db.relationship("Shelf", back_populates="user")
+    #puting
 
     def __repr__(self):
         return f'<user_id={self.user_id} name = {self.name} email={self.email}>'
@@ -43,11 +44,13 @@ class Puting(db.Model):
     puting_id = db.Column(db.Integer,autoincrement=True, primary_key=True)
     shelf_id = db.Column(db.Integer,db.ForeignKey("shelf.shelf_id"))
     book_id = db.Column(db.Integer,db.ForeignKey("books.book_id"))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"))
     time = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     note = db.Column(db.Text,nullable=True)
 
     book = db.relationship("Book", backref="puting")
-    shelf = db.relationship("Shelf", backref="puting") 
+    shelf = db.relationship("Shelf", backref="puting")
+    user = db.relationship("User", backref="puting")
 
     def __repr__(self):
         return f'<pt={self.puting_id} shelf={self.shelf_id} book={self.book_id} time={self.time}>'

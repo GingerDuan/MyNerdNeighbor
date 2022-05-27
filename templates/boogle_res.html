@@ -29,23 +29,25 @@
     {%for book in data['items']%}
     <div class = "row bookContainer" style = "margin-top: 30px ;">
 
-        <div class = 'col-4 col-md-3 col-lg-2 col-md-xl-1 col-md-xl-1 book_path'>
+        <a href= "/book/{{book.id}}" class = 'col-4 col-md-3 col-lg-2 col-md-xl-1 book_path'>
             {%if 'imageLinks' in book['volumeInfo']%}
-                <img class="book_img" src="{{book.volumeInfo.imageLinks.thumbnail}}" width="128" height="182">
+                <img class="book_img" src="{{book.volumeInfo.imageLinks.thumbnail}}" value ={{book.id}} width="128" height="182">
             {%endif%}
-            {%if 'imageLinks' not in book['volumeInfo']%}
-                <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "128" height="182">
-            {%endif%}
-        </div>
-       
-        <div class = 'col-8 col-md-9 col-lg-10 col-md-xl-11 col-md-xl-11bookinfo'>
-            <div><a class="book_title" href="{{book.volumeInfo.infoLink}}" target="_Blank">{{book.volumeInfo.title}}</a>
-                {%if 'subtitle' in book['volumeInfo']%}
-                    {{book.volumeInfo.subtitle}}</div>
-                {%endif%}
 
+            {%if 'imageLinks' not in book['volumeInfo']%}
+                <img class="book_img" href= "#" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" value ={{book.id}} width = "138" height="172">
+            {%endif%}
+        </a>
+       
+        <div class = 'col-8 col-md-9 col-lg-10 col-md-xl-11 bookinfo'>
+            <div>
+                <a class="book_title" href="{{book.volumeInfo.infoLink}}" target="_Blank">{{book.volumeInfo.title}}</a>
+                {%if 'subtitle' in book['volumeInfo']%}
+                    {{book.volumeInfo.subtitle}}
+                {%endif%}
+            </div>
                 {%if 'authors' in book['volumeInfo']%}
-                    <div >{{book.volumeInfo.authors[0]}}</div>
+                    <div href= "/book/{{book.id}}> {{book.volumeInfo.authors[0]}}</div>
                 {%endif%}
                 <div>
                     <button type="button" class="btn btn-dark add_book_btn btn-sm" value ={{book.id}}> Add to my bookshelf</button>
