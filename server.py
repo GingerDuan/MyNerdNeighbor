@@ -6,6 +6,7 @@ from flask import (Flask, render_template, request, flash, session,jsonify,
                    redirect)
 from model import connect_to_db, db           
 from jinja2 import StrictUndefined
+from datetime import datetime
 import crud
 import os
 import requests
@@ -208,7 +209,7 @@ def book_adder():
         if anyputing:
             return jsonify({"status":"this book has already in your shelf" })
         else:
-            puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id)
+            puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id,user_id = user_id)
         
             db.session.add(puting)
             db.session.commit()
@@ -229,7 +230,7 @@ def book_adder():
         newbook = crud.create_book(googlebook_id,title,author,cover)
         db.session.add(newbook)
         db.session.commit()
-        puting = crud.create_puting(shelf_id = shelf_id,book_id = newbook.book_id)
+        puting = crud.create_puting(shelf_id = shelf_id,book_id = newbook.book_id,user_id=user_id)
 
         db.session.add(puting)
         db.session.commit()
@@ -281,16 +282,42 @@ def show_book_detail(id):
         title = data['volumeInfo']['title']
         putings = None
         if 'imageLinks' in data['volumeInfo']:
-            cover = data['volumeInfo']['imageLinks']['thumbnail']
+            if 'medium' in  data['volumeInfo']['imageLinks']:
+                cover =  data['volumeInfo']['imageLinks']['medium']
+            else:
+                cover = data['volumeInfo']['imageLinks']['thumbnail']
         else:
             cover = "https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg"
     
-    author = data['volumeInfo']['authors']
+    # author
+    if 'authors' in data['volumeInfo']:
+        authors = data['volumeInfo']['authors']
+    else:
+        authors = None
+    # subtitle
+    if 'subtitle' in data['volumeInfo']:
+        subtitle = data['volumeInfo']['subtitle']
+    else:
+        subtitle = None
+    #description
+    if 'description' in data['volumeInfo']:
+        des = data['volumeInfo']['description']
+    else:
+        des = None
+    #year
+    if 'publishedDate' in data['volumeInfo']:
+        time = data['volumeInfo']["publishedDate"]
+        if len(time) == 4:
+            year = data['volumeInfo']["publishedDate"]
+        elif len(time) < 8:
+            year = year = datetime.strptime(time,"%Y-%m").year
+        else:
+            year = datetime.strptime(time,"%Y-%m-%d").year
+    else:
+        year = None
 
-    book = {"title":title,"cover":cover,"author":author,"subtitle":data['volumeInfo']['subtitle'],"des":data['volumeInfo']['description'],"google_link":data['selfLink'],}
     
-    
-
+    book = {"title":title,"cover":cover,"authors":authors,"subtitle":subtitle,"des":des,"google_link":data['selfLink'],"year":year}
 
     return render_template("bookpage.html",book=book,user=user,putings = putings)
 

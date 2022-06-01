@@ -50,10 +50,10 @@ class Puting(db.Model):
 
     book = db.relationship("Book", backref="puting")
     shelf = db.relationship("Shelf", backref="puting")
-    user = db.relationship("User", backref="puting")
+    user = db.relationship("User", backref="puting",uselist = False)
 
     def __repr__(self):
-        return f'<pt={self.puting_id} shelf={self.shelf_id} book={self.book_id} time={self.time}>'
+        return f'<pt={self.puting_id} shelf={self.shelf_id} book={self.book_id} time={self.time} user = {self.user_id}>'
 
 class Book(db.Model):
     """A Book's information first get from Google api"""

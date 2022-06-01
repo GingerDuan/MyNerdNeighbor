@@ -3,25 +3,65 @@
 
 {% block body %}
 
-<h3>{{book.title}}</h3> 
-<h4>{{book.subtitle}}</h4>
+<h3>{{book.title}}({{book.year}})</h3> 
+{%if book.subtitle != None%}
+    <h4>{{book.subtitle}}</h4>
+{%endif%}
 <img class="book_img" src="{{book.cover}}"  width="200" height="300">
 
-<div>by: {{book.author[0]}}<div>
-<div>{{book.google_link}}<div></div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class ="author">
+    by: {%for author in book.authors%}
+    <span class="badge text-bg-primary">{{author}}</span>
+    {%endfor%}
+</div>
+<div>
+    <a class="book_title" href="{{book.google_link}}" target="_Blank">{{book.google_link}}</a>
+</div>
 {%if book%}
-Description:{{book.des}}
+Description:{{book.des|safe}}
 {%endif%}
 
 </div>
 Hi {{user.name}}
+
+</div>
+This is the putings: {{putings}}
+<div>
+    {%if putings%}   
+        {%for puting in putings%} 
+            {{puting.shelf.user.name}} have this book at {{puting.shelf.user.zipcode}}
+        {%endfor%}
+    {%else%}
+        not one have this book yet
+    {%endif%}
+
 </div>
 ===========================
-<!-- {%if putings%}
-  {%for puting in putings%}
-    {{puting.user.name}} own {{puting.book.title}}
-    ===========================
-    {{book}}
-  {%endfor%}
-{%endif%} -->
+
+
 {% endblock %}

@@ -26,33 +26,5 @@ bookButton.addEventListener('click',evt => {
   bookButton.disabled = true
   
 })
-}
+};
 
-// const get_googlebook_id_tobookpage = (evt) => {
-
-//   const formInputs = {
-//     googlebook_id: evt.target.value,  
-//   }
-//   console.log(formInputs)
-
-//   fetch('/book', {
-//           method: 'POST',
-//           body: JSON.stringify(formInputs),
-//           headers: {
-//             'Content-Type': 'application/json',              
-//           },
-//         })
-//           .then(response => response.json())
-//           .then(responseJson => {  
-                 
-//         });
-// };
-
-// for (const bookpath of document.querySelectorAll('.book_img')){
-//   bookpath.addEventListener('click',evt => {
-    
-//     get_googlebook_id_tobookpage(evt);
-//     bookpath.disabled = true
-//   })
-// }
-  

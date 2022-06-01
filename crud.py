@@ -75,10 +75,11 @@ def get_book_by_bookid(book_id):
 
 
 #puting
-def create_puting(shelf_id,book_id):
+def create_puting(shelf_id,book_id,user_id):
     """get a the book saved in shelf!!"""
-    
-    puting = Puting(shelf_id = shelf_id,book_id = book_id)
+
+
+    puting = Puting(shelf_id = shelf_id,book_id = book_id,user_id = user_id)
 
     return puting
 
