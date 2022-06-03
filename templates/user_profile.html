@@ -5,7 +5,7 @@
 <!-- <title>Boogle</title> -->
 
 
-<h1 style = "text-align: center;">{{user.name}}'s Book Zone</h1>
+<h1 style = "text-align: center;">{{user.name}}'s library</h1>
 <div id="bookshelf" style = "margin: 70px" width="800" height="400">
   <h3>You are live in {{user.zipcode}} neighbor</h3>
   <h3>There are {balalal} books in your bookshelf</h3>
@@ -17,7 +17,9 @@
       {%for book in books%}
         
           <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
-            <img class="book_img" src="{{book.cover}}" width="128" height="182">
+            <a href= "/book/{{book.googlebook_id}}">
+              <img class="book_img" src="{{book.cover}}" width="128" height="182">
+            </a>
             <div>{{book.title}}</div>
             <div>
               <i type="button" class="bi bi-bookmark-x" value ={{book.book_id}}></i>
@@ -34,9 +36,11 @@
       {%for book in to_read_books%}
         
           <div class = "col-5 col-sm-4.5 col-md-4 col-lg-3 col-xl-2 col-xxl-1 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
-            <img class="book_img" src="{{book.cover}}" width="128" height="182">
+            <a href= "/book/{{book.id}}">
+              <img class="book_img" src="{{book.cover}}" width="128" height="182">
+            </a>
             <div>
-            <button type="button" class="btn btn-outline-warning remove_book_btn" value ={{book.book_id}}>remove</button>
+              <button type="button" class="btn btn-outline-warning remove_book_btn" value ={{book.book_id}}>remove</button>
             </div>
             <div>{{book.title}}</div>
           </div>

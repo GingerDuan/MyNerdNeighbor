@@ -1,7 +1,6 @@
 """CRUD operations for mnn."""
 
 from model import db, User, Book, Shelf,Puting, connect_to_db
-
 #user
 def create_user(email, name, password,zipcode):
     """Create and return a new user."""
@@ -9,7 +8,7 @@ def create_user(email, name, password,zipcode):
     user = User(email=email, name=name, password=password,zipcode=zipcode)
     #creat four default shelf when user create account
     user.shelves.append(Shelf(name='bookshelf'))
-    user.shelves.append(Shelf(name='to read'))
+    user.shelves.append(Shelf(name='toread'))
     user.shelves.append(Shelf(name='reading'))
     user.shelves.append(Shelf(name='have read'))
     
@@ -75,11 +74,11 @@ def get_book_by_bookid(book_id):
 
 
 #puting
-def create_puting(shelf_id,book_id,user_id):
+def create_puting(shelf_id,book_id,user_id,note):
     """get a the book saved in shelf!!"""
 
 
-    puting = Puting(shelf_id = shelf_id,book_id = book_id,user_id = user_id)
+    puting = Puting(shelf_id = shelf_id,book_id = book_id,user_id = user_id,note=note)
 
     return puting
 
@@ -101,19 +100,25 @@ def get_puting_by_shelfid_boookid(shelf_id,book_id):
 
     return puting
 
-def get_puting_by_bookid(book_id):
+def get_puting_by_book_no_user(book_id,user_id):
 
-    puting = Puting.query.filter_by(book_id = book_id).all()
+    putings = Puting.query.filter(Puting.book_id == book_id,Puting.user_id != user_id).all()
 
-    return puting
+    return putings
 
-def get_book_by_putingid(puting_id):
+def get_puting_by_book_userid(book_id,user_id):
+    putings = Puting.query.filter(Puting.book_id == book_id, Puting.user_id == user_id).all()
 
-    puting = get_puting_by_putingid(puting_id)
-    book = Book.query.filter_by(book_id = puting.book_id).all()
+    return putings
+# def get_book_by_putingid(puting_id):
+
+#     puting = get_puting_by_putingid(puting_id)
+#     books = Book.query.filter_by(book_id = puting.book_id).all()
     
-    return book
+#     return books
 
+
+#get zipuser
 def get_users_in_zipcode(user_id):
 
     user = User.query.get(user_id)

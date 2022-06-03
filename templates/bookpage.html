@@ -2,38 +2,61 @@
 {% block title %}Boogle-MyNerdNeighbor{% endblock %}
 
 {% block body %}
+<div class="container">
+    <div class="row">
+        <h3>{{book.title}}({{book.year}})</h3> 
+        {%if book.subtitle != None%}
+            <h4>{{book.subtitle}}</h4>
+        {%endif%}
+    </div>
+    <div class="">
+        <img class="book_img" src="{{book.cover}}" width = "160" height="220">
+    </div>
 
-<h3>{{book.title}}({{book.year}})</h3> 
-{%if book.subtitle != None%}
-    <h4>{{book.subtitle}}</h4>
-{%endif%}
-<img class="book_img" src="{{book.cover}}"  width="200" height="300">
+    <!-- Test -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">to read</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">reading</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">have read</button>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLabel">Book track</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+            </button>
         </div>
         <div class="modal-body">
-          ...
+            <form>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Status:</label>
+                <input type="text" class="form-control" id="recipient-name" placeholder = data-bs-whatever>
+                <input type="radio" name="shipping" value="toread">
+                <label>to read</label>
+
+                <input type="radio" name="shipping" value="reading">
+                <label>reading</label>
+
+                <input type="radio" name="shipping" value="haveread">
+                <label>have read</label>
+            </div>
+            <div class="form-group">
+                <label for="message-text" class="col-form-label">comment:</label>
+                <textarea class="form-control" id="message-text" placeholder = "data-bs-whatever"></textarea>
+            </div>
+            </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id = "submit">Send message</button>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
+    </div> 
+
+    
+<!-- book detail -->
 <div class ="author">
     by: {%for author in book.authors%}
     <span class="badge text-bg-primary">{{author}}</span>
@@ -42,26 +65,46 @@
 <div>
     <a class="book_title" href="{{book.google_link}}" target="_Blank">{{book.google_link}}</a>
 </div>
+<div>
 {%if book%}
-Description:{{book.des|safe}}
+Description: {{book.des|safe}}
 {%endif%}
 
 </div>
-Hi {{user.name}}
-
-</div>
-This is the putings: {{putings}}
+========================================================
 <div>
-    {%if putings%}   
-        {%for puting in putings%} 
-            {{puting.shelf.user.name}} have this book at {{puting.shelf.user.zipcode}}
+Hi {{user.name}}
+<!-- This is the own putings: {{own_putings}} 
+This is others putings:{{others_putings}} -->
+</div>
+
+<div>
+    {%if others_putings%}   
+        {%for puting in others_putings%} 
+            {{puting.shelf.user.name}} have this book at 
+                {%if puting.user.zipcode == user.zipcode%}
+                 your neighborhood
+                {%else%}
+                {{puting.shelf.user.zipcode}}
+                {%endif%}
+            
         {%endfor%}
     {%else%}
         not one have this book yet
     {%endif%}
-
 </div>
-===========================
+
+    <div>
+        {%if own_putings%}   
+            {%for puting in own_putings%} 
+                You have this book at {{puting.time}}
+            {%endfor%}
+        {%else%}
+            you never meetup this book before
+        {%endif%}
+
+    </div>
+</div>
 
 
 {% endblock %}

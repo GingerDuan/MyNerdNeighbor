@@ -1,8 +1,11 @@
 const get_googlebook_id = (evt) => {
     
   const formInputs = {
-    googlebook_id: evt.target.value,   
+    googlebook_id: evt.target.value,
+    sheif_id:evt.target.name, 
+    note:document.querySelector("#note-text").value,
   }
+  console.log(evt.target)
   console.log(formInputs)
 
   fetch('/put_into_shelf', {
@@ -19,7 +22,7 @@ const get_googlebook_id = (evt) => {
           });
 };
 
-for (const bookButton of document.querySelectorAll('.add_book_btn')){
+for (const bookButton of document.querySelectorAll('.submit')){
 bookButton.addEventListener('click',evt => {
   
   get_googlebook_id(evt);
