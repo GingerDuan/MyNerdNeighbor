@@ -167,8 +167,8 @@ def book_search():
     isbn = request.args.get("isbn",'')
     inpublisher = request.args.get("publisher","")
 
-    url = 'https://www.googleapis.com/books/v1/volumes?'
-    payload = { 'q': q,
+    # url = 'https://www.googleapis.com/books/v1/volumes?'
+    payload = { 
                 'intitle' : intitle,
                 'inauthor' : author,
                 "isbn" : isbn,
@@ -176,11 +176,11 @@ def book_search():
                 'maxResults':30,
                 }
     
-    res = requests.get(f'https://www.googleapis.com/books/v1/volumes?q ={keyword}')
+    res = requests.get(f"https://www.googleapis.com/books/v1/volumes?q={keyword}+intitle:{intitle}")
     data = res.json()
 
     if 'totalItems' in data:
-        return render_template('boogle_res.html', intitle=intitle, payload=payload,data = data,keyword=q)
+        return render_template('boogle_res.html', intitle=intitle, payload=payload,data = data,keyword =keyword)
     else:
         return redirect("/boogle2")
 
