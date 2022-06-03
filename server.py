@@ -162,25 +162,25 @@ def book_search():
     """Send the request and get the api data"""
 
     keyword = request.args.get('keyword','')
-    intitle = request.args.get("title",'')
-    author = request.args.get('author','')
-    isbn = request.args.get("isbn",'')
-    inpublisher = request.args.get("publisher","")
+    # intitle = request.args.get("title",'')
+    # author = request.args.get('author','')
+    # isbn = request.args.get("isbn",'')
+    # inpublisher = request.args.get("publisher","")
 
-    # url = 'https://www.googleapis.com/books/v1/volumes?'
-    payload = { 
-                'intitle' : intitle,
-                'inauthor' : author,
-                "isbn" : isbn,
-                "inpublisher" : inpublisher,
+    url = 'https://www.googleapis.com/books/v1/volumes?'
+    payload = { "q":keyword,
+                # 'intitle' : intitle,
+                # 'inauthor' : author,
+                # "isbn" : isbn,
+                # "inpublisher" : inpublisher,
                 'maxResults':30,
                 }
     
-    res = requests.get(f"https://www.googleapis.com/books/v1/volumes?q={keyword}+intitle:{intitle}")
+    res = requests.get(url,params=payload)
     data = res.json()
 
     if 'totalItems' in data:
-        return render_template('boogle_res.html', intitle=intitle, payload=payload,data = data,keyword =keyword)
+        return render_template('boogle_res.html', payload=payload,data = data,keyword =keyword)
     else:
         return redirect("/boogle2")
 
@@ -207,7 +207,7 @@ def book_adder():
     """Put the book in the user's shelf"""
     user_id = session["user_id"]
 
-    shelf_name = request.json.get("shelf_id")
+    status_code = request.json.get("status")
     note = request.json.get("note")
     googlebook_id = request.json.get("googlebook_id")
     
@@ -215,7 +215,7 @@ def book_adder():
     
     # covert shelf_name to a number to right shelf_id
         
-    shelf_id = 4 * (user_id-1) + shelf_name
+    shelf_id = (4 * user_id)- int(status_code)
     #what is this? 
     
     if anybook:
