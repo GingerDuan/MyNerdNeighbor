@@ -66,7 +66,7 @@ class Book(db.Model):
     author = db.Column(db.String)
     cover = db.Column(db.String)  
 
-#puting     
+    #puting     
     
     def __repr__(self):
         return f'<book_id={self.book_id} title={self.title} Googlebookid={self.googlebook_id}>'

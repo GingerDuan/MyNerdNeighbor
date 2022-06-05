@@ -1,7 +1,7 @@
 const get_book_id = (evt) => {
     
     const formInputs = {
-      book_id: evt.target.value,
+      puting_id: evt.target.value,
       
     }
     console.log(formInputs)

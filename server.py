@@ -43,43 +43,13 @@ def show_user_ownpage():
         user = crud.get_user_by_id(user_id)
 
         bookshelves = crud.get_shelf_by_userid(user_id)
-               
-        books = []       
-        putings = crud.get_puting_by_shelfid(bookshelves[0].shelf_id)
-        for puting in putings:       
-            book = crud.get_book_by_bookid(puting.book_id)
-            books.append(book)
-        
-        to_read_books = []
-        putings1 = crud.get_puting_by_shelfid(bookshelves[1].shelf_id)
-        for puting1 in putings1:
-            book = crud.get_book_by_bookid(puting1.book_id)
-            to_read_books.append(book)
 
-        reading_books = []
-        putings2 = crud.get_puting_by_shelfid(bookshelves[2].shelf_id)
-        for puting2 in putings2:
-            book = crud.get_book_by_bookid(puting2.book_id)
-            reading_books.append(book)
+        own_putings = crud.get_puting_by_shelfid(bookshelves[0].shelf_id)
+        toread_putings = crud.get_puting_by_shelfid(bookshelves[1].shelf_id)
+        reading_putings = crud.get_puting_by_shelfid(bookshelves[2].shelf_id)
+        haveread_putings = crud.get_puting_by_shelfid(bookshelves[3].shelf_id)
         
-        have_read = []
-        putings3 = crud.get_puting_by_shelfid(bookshelves[3].shelf_id)
-        for puting3 in putings3:
-            book = crud.get_book_by_bookid(puting3.book_id)
-            have_read.append(book)
-
-            # if s == 1:
-            #     bookshelf = crud.get_puting_by_shelfid(shelf.shelf_id)
-            # if s == 2:
-            #     to_read = crud.get_puting_by_shelfid(shelf.shelf_id)
-            # if s == 3:
-            #     reading = crud.get_puting_by_shelfid(shelf.shelf_id)
-            # if s == 4:
-            #     have_read = crud.get_puting_by_shelfid(shelf.shelf_id)
-            
-            # s += 1
-        
-        return render_template("user_profile.html",user=user,bookshelves=bookshelves,books = books,to_read_books=to_read_books,reading_books=reading_books,have_read=have_read)
+        return render_template("user_profile.html",user=user,bookshelves=bookshelves,own_putings=own_putings,toread_putings=toread_putings,reading_putings=reading_putings,haveread_putings=haveread_putings)
         
     
 
@@ -191,10 +161,9 @@ def book_search():
 def book_remover():
     """remove the book form the shelf"""
 
-    book_id = request.json.get("book_id")
-    user_id = session["user_id"]
-    shelf_id = 4 * user_id - 3
-    find_puting = crud.get_puting_by_shelfid_boookid(shelf_id,book_id)
+    puting_id = request.json.get("puting_id")
+    
+    find_puting = crud.get_puting_by_putingid(puting_id)
 
     db.session.delete(find_puting)
     db.session.commit()

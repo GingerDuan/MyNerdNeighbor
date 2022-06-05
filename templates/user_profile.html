@@ -14,16 +14,16 @@
     
     <h4 style = "height:150">{{bookshelves[0].name}}</h4>
       <div class = "row">
-      {%for book in books%}
+      {%for puting in own_putings%}
         
-          <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
-            <a href= "/book/{{book.googlebook_id}}">
-              <img class="book_img" src="{{book.cover}}" width="128" height="182">
+          <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+            <a href= "/book/{{puting.book.googlebook_id}}">
+              <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
             </a>
-            <div>{{book.title}}</div>
+            <div>{{puting.book.title}}</div>
             <div>
-              <i type="button" class="bi bi-bookmark-x" value ={{book.book_id}}></i>
-              <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{book.book_id}}>remove</button>
+              <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+              <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
             </div>
             
           </div>
@@ -33,51 +33,57 @@
 
       <h4 style = "height:150">{{bookshelves[1].name}}</h4>
       <div class = "row">
-      {%for book in to_read_books%}
+      {%for puting in toread_putings%}
         
-          <div class = "col-5 col-sm-4.5 col-md-4 col-lg-3 col-xl-2 col-xxl-1 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
-            <a href= "/book/{{book.googlebook_id}}">
-              <img class="book_img" src="{{book.cover}}" width="128" height="182">
-            </a>
-            <div>
-              <button type="button" class="btn btn-outline-warning remove_book_btn" value ={{book.book_id}}>remove</button>
-            </div>
-            <div>{{book.title}}</div>
-          </div>
+      <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+        <a href= "/book/{{puting.book.googlebook_id}}">
+          <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+        </a>
+        <div>{{puting.book.title}}</div>
+        <div>
+          <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+        </div>
+        
+      </div>
         
       {% endfor %}
       </div>
 
       <h4 style = "height:150">{{bookshelves[2].name}}</h4>
       <div class = "row">
-      {%for book in reading_books%}
+      {%for puting in reading_putings%}
         
-          <div class = "col-5 col-sm-4.5 col-md-4 col-lg-3 col-xl-2 col-xxl-1 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
-            <a href= "/book/{{book.googlebook_id}}">
-              <img class="book_img" src="{{book.cover}}" width="128" height="182">
-            </a>
-            <div>
-              <button type="button" class="btn btn-outline-warning remove_book_btn" value ={{book.book_id}}>remove</button>
-            </div>
-            <div>{{book.title}}</div>
-          </div>
+      <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+        <a href= "/book/{{puting.book.googlebook_id}}">
+          <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+        </a>
+        <div>{{puting.book.title}}</div>
+        <div>
+          <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+        </div>
+        
+      </div>
         
       {% endfor %}
       </div>
 
       <h4 style = "height:150">{{bookshelves[3].name}}</h4>
       <div class = "row">
-      {%for book in have_read%}
+      {%for puting in haveread_putings%}
         
-          <div class = "col-5 col-sm-4.5 col-md-4 col-lg-3 col-xl-2 col-xxl-1 "id ={{book.book_id}} style = "margin-bottom: 10px ;">
-            <a href= "/book/{{book.googlebook_id}}">
-              <img class="book_img" src="{{book.cover}}" width="128" height="182">
-            </a>
-            <div>
-              <button type="button" class="btn btn-outline-warning remove_book_btn" value ={{book.book_id}}>remove</button>
-            </div>
-            <div>{{book.title}}</div>
-          </div>
+      <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+        <a href= "/book/{{puting.book.googlebook_id}}">
+          <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+        </a>
+        <div>{{puting.book.title}}</div>
+        <div>
+          <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+        </div>
+        
+      </div>
         
       {% endfor %}
       </div>

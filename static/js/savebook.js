@@ -5,7 +5,6 @@ const get_googlebook_id = (evt) => {
     status:document.querySelector('input[name="status"]:checked').value, 
     note:document.querySelector("#note-text").value,
   }
-  console.log(evt.target)
   console.log(formInputs)
 
   fetch('/put_into_shelf', {

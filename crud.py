@@ -67,12 +67,6 @@ def get_book_by_bookid(book_id):
     return book
 
 
-
-
-
-
-
-
 #puting
 def create_puting(shelf_id,book_id,user_id,note):
     """get a the book saved in shelf!!"""
@@ -90,7 +84,7 @@ def get_puting_by_shelfid(shelf_id):
 
 def get_puting_by_putingid(puting_id):
 
-    putings = Puting.query.filter_by(puting_id = puting_id)
+    putings = Puting.query.filter_by(puting_id = puting_id).first()
 
     return putings
 

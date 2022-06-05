@@ -81,23 +81,58 @@ This is others putings:{{others_putings}} -->
 <div>
     {%if others_putings%}   
         {%for puting in others_putings%} 
-            {{puting.shelf.user.name}} have this book at 
-                {%if puting.user.zipcode == user.zipcode%}
-                 your neighborhood
-                {%else%}
-                {{puting.shelf.user.zipcode}}
-                {%endif%}
-            
+            <div>    
+                <!-- Who? -->
+                {{puting.shelf.user.name}} 
+                <!-- Action: -->
+                    {%if puting.shelf_id % 4 == 1  %}
+                        own this book 
+                    {%endif%}
+                    {%if puting.shelf_id % 4 == 2  %}
+                        want to read this book 
+                    {%endif%}
+                    {%if puting.shelf_id % 4 == 3  %}
+                        is reading book 
+                    {%endif%}
+                    {%if puting.shelf_id % 4 == 0  %}
+                        have read this book 
+                    {%endif%}
+                    and said {{puting.note}}
+                <!-- location condition-->
+                    {%if puting.user.zipcode == user.zipcode%}
+                        your neighborhood
+                    {%else%}
+                        {{puting.shelf.user.zipcode}}
+                    {%endif%}
+            </div>
         {%endfor%}
     {%else%}
-        not one have this book yet
+        not other user have this book yet
     {%endif%}
 </div>
 
     <div>
         {%if own_putings%}   
             {%for puting in own_putings%} 
-                You have this book at {{puting.time}}
+                <div>You
+                {%if puting.shelf_id % 4 == 1  %}
+                 own this book at {{puting.time}}
+                {%endif%}
+                {%if puting.shelf_id % 4 == 2  %}
+                want to read this book at {{puting.time}}
+                {%endif%}
+                {%if puting.shelf_id % 4 == 3  %}
+                is reading book at {{puting.time}}
+                {%endif%}
+                {%if puting.shelf_id % 4 == 0  %}
+                have read this book at {{puting.time}}
+                {%endif%}
+                and said {{puting.note}}
+                </div>
+            
+            
+            
+            
             {%endfor%}
         {%else%}
             you never meetup this book before

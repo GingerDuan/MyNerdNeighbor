@@ -38,6 +38,33 @@
   <!-- ##############################################################<br> -->
   <div>
     {%for puting in putings%}
+
+    <div>    
+      <!-- Who? -->
+      {{puting.shelf.user.name}} 
+      <!-- Action: -->
+          {%if puting.shelf_id % 4 == 1  %}
+              own 
+          {%endif%}
+          {%if puting.shelf_id % 4 == 2  %}
+              want to read  
+          {%endif%}
+          {%if puting.shelf_id % 4 == 3  %}
+              is reading 
+          {%endif%}
+          {%if puting.shelf_id % 4 == 0  %}
+              have read 
+          {%endif%}
+          <!-- Book title -->
+          '{{puting.book.title}}'
+          and said {{puting.note}}
+      <!-- location condition-->
+          {%if puting.user.zipcode == user.zipcode%}
+              your neighborhood
+          {%else%}
+              {{puting.shelf.user.zipcode}}
+          {%endif%}
+  </div>
       <div>{{puting.shelf.user.name}} put {{puting.book.title}} at {{puting.time}}</div>
     
     {% endfor %}
