@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+<!-- <title>Boogle</title> -->
+  
+<div style = "text-align: right;">
+  {%if user is not none%}
+    <a href="/user_profile/">View your own page</a>
+  {%endif%}
+  <a href="/">Back to the homepage</a>
+</div>
+  
+<div style = "text-align: center">
+<h1>Boogle 1.0</h1>
+
+<lable>search the book you want:</lable><br>
+
+<input id="my-text" type = "text" placeholder="Book/Author/Year" style="width:300px; height:25px;font-size:12pt;">
+<button id="btn"style="width:80px; height:25px;font-size:12pt;">Boogle</button>
+</div>
+
+<div id="results" style = "margin: 70px" width="800" height="400">
+</div>
+<script src="/static/js/savebook.js"></script>
+<script src="/static/js/booksearch.js"></script>
+
+{% endblock %}

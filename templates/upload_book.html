@@ -1,0 +1,34 @@
+
+
+
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+<!-- <title>Boogle</title> -->
+  
+<div style = "text-align: right;">
+  {%if user is not none%}
+    <a href="/user_profile/">View your own page</a>
+  {%endif%}
+  <a href="/">Back to the homepage</a>
+</div>
+<div class="container"></div>
+
+<div class="row">
+    <label for="upload">Can not find the book you want? Add your book in our database!</label>
+    <form name = "upload" action="/pro_upload" method="post" enctype="multipart/form-data">
+        <input type="file" name = "my_file" class="type">
+        <input type="submit" class="type">
+    </form>
+</div>
+
+
+
+
+
+
+<script src="/static/js/savebook.js"></script>
+<script src="/static/js/booksearch.js"></script>
+
+{% endblock %}
