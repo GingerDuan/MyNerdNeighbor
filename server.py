@@ -8,6 +8,7 @@ from model import connect_to_db, db
 from jinja2 import StrictUndefined
 from datetime import datetime
 import crud
+import cloudinary.uploader
 import os
 import requests
 
@@ -15,7 +16,10 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-# API_KEY = os.environ['googlebookapi_key']
+CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
+CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
+CLOUD_NAME ="my-nerd-neighbor"
+API_KEY = os.environ['googlebookapi_key']
 
 @app.route("/")
 def homepage():
@@ -154,7 +158,10 @@ def book_search():
     else:
         return redirect("/boogle2")
 
+@app.route("/search_detail")
+def search_detail():
 
+    return render_template("boogle_detail.html")
     
 
 @app.route("/remove_from_shelf",methods=["POST"])
@@ -219,6 +226,7 @@ def book_adder():
         db.session.commit()
         return jsonify({"status":f'{newbook.title} add in your shelf' })
 
+
 #neighborpage
 @app.route("/neighborlibrary")
 def show_ntighbor_books():
@@ -241,6 +249,27 @@ def show_neighbor_puting():
     putings = crud.get_puting_in_zipcode(user_id)
 
     return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
+
+#upload new book
+@app.route("/upload")
+def book_upload_page():
+
+    return render_template('upload_book.html')
+
+@app.route("/pro_upload", methods =['POST'])
+def book_uploader():
+
+    my_file = request.files["my_file"]    result = cloudinary.uploader.upload(my_file,
+                                        api_key=CLOUDINARY_KEY,
+                                        api_secret=CLOUDINARY_SECRET,
+                                        cloud_name=CLOUD_NAME)
+    img_url = result['secure_url']
+    print(img_url)
+
+    # db.session.add(img_url)
+    # db.session.commit()
+
+    return redirect("/")
 
 #bookpage
 @app.route("/book/<id>")

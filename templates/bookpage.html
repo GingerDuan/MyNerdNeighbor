@@ -58,9 +58,11 @@
     
 <!-- book detail -->
 <div class ="author">
-    by: {%for author in book.authors%}
-    <span class="badge text-bg-primary">{{author}}</span>
-    {%endfor%}
+    {%if book.authors%}
+        by: {%for author in book.authors%}
+        <span class="badge text-bg-primary">{{author}}</span>
+        {%endfor%}
+    {%endif%}
 </div>
 <div>
     <a class="book_title" href="{{book.google_link}}" target="_Blank">{{book.google_link}}</a>
@@ -68,6 +70,7 @@
 <div>
 {%if book%}
 Description: {{book.des|safe}}
+<!-- Smma  -->
 {%endif%}
 
 </div>

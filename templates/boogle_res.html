@@ -21,8 +21,8 @@
 
 </div>
 
-{{payload}}
-</form>
+<!-- {{payload}} -->
+
 
 
 <div id="results" class = "container">
@@ -42,12 +42,12 @@
             </a>
                 {%endif%}
         
-       
-        <div class = 'col-8 col-md-9 col-lg-10 col-md-xl-11 bookinfo'>
+        
+        <div class = 'col-8 col-md-9 col-lg-10 col-md-xl-11 bookinfo'style = "text-align:left">
             <div>
                 <a class="book_title" href="{{book.volumeInfo.infoLink}}" target="_Blank">{{book.volumeInfo.title}}</a>
                 {%if 'subtitle' in book['volumeInfo']%}
-                    {{book.volumeInfo.subtitle}}
+                    <div>{{book.volumeInfo.subtitle}}</div>
                 {%endif%}
             </div>
                 {%if 'authors' in book['volumeInfo']%}
