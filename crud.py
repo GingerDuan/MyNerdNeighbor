@@ -54,6 +54,13 @@ def create_book(googlebook_id,title,author,cover):
     
     return book
 
+def create_a_new_book(title,author,cover,date,publisher,description):
+    """Create and return a new book."""
+
+    book= Book(title=title,author=author,cover=cover,date=date,publisher=publisher,description=description)
+    
+    return book
+
 def get_book_by_googleid(googlebook_id):
 
     book = Book.query.filter_by(googlebook_id = googlebook_id).first()

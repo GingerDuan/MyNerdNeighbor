@@ -5,19 +5,19 @@
 <div class="container">
     <!-- title -->
     <div class="title_group row">
-        {%if anybook%}
-            <h3>{{anybook.title}}
-                </h3>
-        {%else%}
-            <h3>{{book.title}}
-                    {%if year != None%}
+        {%if book != None %}
+            <h3>{{book.title}}{%if year != None%}
                         ({{year}})
                     {%endif%}</h3> 
+                </h3>
+                {%if 'subtitle' in book%}
+                    <h4>{{book.subtitle}}</h4>
+                {%endif%}
+        {%else%}
+            <h3>{{anybook.title}}              
         {%endif%}
             <!-- subtitle -->
-        {%if 'subtitle' in book%}
-            <h4>{{book.subtitle}}</h4>
-        {%endif%}
+        
     </div>
     <!-- bookcover -->
     <div class="book_path">
@@ -57,10 +57,17 @@
     <!-- Model -->
     <div class="model_set">
         <!-- Model button -->
-        <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{data.id}}> Add to my bookshelf</button>                    
-        <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{data.id}}>to read</button>
-        <button type="button" class="btn btn-secondary reading_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="reading" value ={{data.id}}>reading</button>
-        <button type="button" class="btn btn-secondary have_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="haveread" value ={{data.id}}>have read</button>
+        {%if anybook%}
+            <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{anybook.book_id}}> Add to my bookshelf</button>                    
+            <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{anybook.book_id}}>to read</button>
+            <button type="button" class="btn btn-secondary reading_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="reading" value ={{anybook.book_id}}>reading</button>
+            <button type="button" class="btn btn-secondary have_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="haveread" value ={{anybook.book_id}}>have read</button>
+        {%else%}
+            <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{data.id}}> Add to my bookshelf</button>                    
+            <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{data.id}}>to read</button>
+            <button type="button" class="btn btn-secondary reading_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="reading" value ={{data.id}}>reading</button>
+            <button type="button" class="btn btn-secondary have_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="haveread" value ={{data.id}}>have read</button>
+        {%endif%}
         <!-- Model box -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -105,20 +112,67 @@
     
 <!-- book detail -->
 <div class ="author">
-    {%if 'authors' in book%}
-        by: {%for author in book.authors%}
-        <span class="badge text-bg-primary">{{author}}</span>
-        {%endfor%}
+    {%if book%}
+        {%if 'authors' in book%}
+            by: {{book.authors}}
+            {%for author in book.authors%}
+            <span class="badge text-bg-primary">{{author}}</span>
+                {%endfor%}
+        {%endif%}
+    {%else%}
+        {%if anybook.author != None %}
+            
+                <span class="badge text-bg-primary">{{anybook.author}}</span>
+                
+        {%endif%}
     {%endif%}
 </div>
-<div>
-    <a class="book_title" href="{{data.selfLink}}" target="_Blank">{{data.selfLink}}</a>
+
+<div class="year">
+    {%if book%}
+        {%if book.publishedDate %}
+            Published Date: {{book.publishedDate}}
+        
+        {%endif%}
+    {%else%}
+        {%if anybook.date %}
+            Published Date: {{anybook.date}}
+            
+        {%endif%}
+    {%endif%}
 </div>
-<div>
-{%if 'description' in book%}
-    Description: {{book.description|safe}}
-<!-- Smma  -->
-{%endif%}
+<div class="publisher">
+    {%if book%}
+        {%if book.publisher %}
+            Publisher: {{book.publisher}}
+        {%endif%}
+    {%else%}
+        {%if anybook.publisher %}
+            Publisher: {{anybook.publisher}}
+            
+        {%endif%}
+    {%endif%}
+
+</div>
+
+{%if book%}
+        <div class="selfLink">
+            <a class="book_title" href="{{data.selfLink}}" target="_Blank">{{data.selfLink}}</a>
+        </div>
+    {%endif%}
+
+<div class="description">
+    {%if book%}
+        {%if "description" in book %}
+            Description: {{book.description|safe}}
+        <!-- Smma  -->
+        {%endif%}
+    {%else%}
+        {%if anybook.description %}
+            Description: {{anybook.description}}
+            
+        {%endif%}
+    {%endif%}
 
 </div>
 ========================================================

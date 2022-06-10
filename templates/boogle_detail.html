@@ -2,7 +2,7 @@
 {% block title %}Boogle-MyNerdNeighbor{% endblock %}
 
 {% block body %}
-<!-- <title>Boogle</title> -->
+
   
 <div style = "text-align: right;">
   {%if user is not none%}
@@ -11,18 +11,62 @@
   <a href="/">Back to the homepage</a>
 </div>
   
-<div style = "text-align: center">
-<h1>Boogle 1.0</h1>
+<form method = "GET" action ="/search" style = "text-align: center">
+<h1>Boogle 2.0</h1>
 
-<lable>search the book you want:</lable><br>
+<lable>search any book you want:</lable><br>
+<div>
+  <input id="s_key" type = "text" placeholder="keyword" name = "keyword" style="width:500px; height:40px;font-size:12pt;">
+  
+  <input id="title" type = "text" placeholder="title" name = "title" style="width:300px; height:40px;font-size:12pt;">
+  <input id="aaa" type = "text" placeholder="author" name = "aaa" style="width:300px; height:40px;font-size:12pt;">
+  <input id="publisher" type = "text" placeholder="publisher" name = "publisher" style="width:300px; height:40px;font-size:12pt;">
+  <input id="isbn" type = "text" placeholder="isbn" name = "isbn" style="width:300px; height:40px;font-size:12pt;">
 
-<input id="my-text" type = "text" placeholder="Book/Author/Year" style="width:300px; height:25px;font-size:12pt;">
-<button id="btn"style="width:80px; height:25px;font-size:12pt;">Boogle</button>
+
+
+  <button type="submit" class="btn btn-dark">Boogle</button>
+
 </div>
 
-<div id="results" style = "margin: 70px" width="800" height="400">
+<form class="row" style = "text-align: center">
+  
+  <div class="col-auto" style = "text-align: center">
+    <label for="inputPassword2" >ISBN</label>
+    <input type="keyward" class="form-control" id="inputPassword2" placeholder="isbn" style="width:500px;">
+    <button type="submit" class="btn btn-primary mb-3">Boogle</button>
+  </div>
+</form>
+
+<form class="row g-8" >
+  <div class="col-auto">
+    <label for="staticEmail2" class="visually-hidden">Email</label>
+    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
+  </div>
+  <div class="col-auto">
+    <label for="inputPassword2" class="visually-hidden">Password</label>
+    <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+  </div>
+</form>
+<!-- <div>title<br>
+  <input id="s_title" type = "text" placeholder="Booktitle" name = "intitle" style="width:300px; height:25px;font-size:12pt;">
 </div>
-<script src="/static/js/savebook.js"></script>
-<script src="/static/js/booksearch.js"></script>
+
+<div>author<br>
+  <input id="s_author" type = "text" placeholder="Author" name = "inauthor" style="width:300px; height:25px;font-size:12pt;">
+</div>
+
+<div>ISBN<br>
+  <input id="s_isbn" type = "number" placeholder="ISBN" name = "isbn" style="width:300px; height:25px;font-size:12pt;">
+</div> -->
+
+
+<!-- <button type = "submit" class = "btn btn_primary">Boogle</button> -->
+</div>
+</form>
+
 
 {% endblock %}

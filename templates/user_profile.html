@@ -17,7 +17,12 @@
       {%for puting in own_putings%}
         
           <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
-            <a href= "/book/{{puting.book.googlebook_id}}">
+              {%if puting.book.googlebook_id == None%}
+                <a href= "/book/{{puting.book.book_id}}">
+              {%else%}
+                <a href= "/book/{{puting.book.googlebook_id}}">
+              {%endif%}
+
               {%if puting.book.cover != None %}
               <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
               {%else%}
@@ -40,7 +45,11 @@
       {%for puting in toread_putings%}
         
       <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
-        <a href= "/book/{{puting.book.googlebook_id}}">
+        {%if puting.book.googlebook_id == None %}
+          <a href= "/book/{{puting.book.book_id}}">
+        {%else%}
+          <a href= "/book/{{puting.book.googlebook_id}}">
+        {%endif%}
           <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
         </a>
         <div>{{puting.book.title}}</div>
@@ -93,7 +102,39 @@
       </div>
 
 
+{%for bookshelf in bookshelves %}
+  <div class="row shelf">  
+    <h3>{{bookshelf.name}}</h3>
+    <h3>There are {balalal} books in your bookshelf</h3>
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 row-cols-xl-8 g-4">
+  {%for puting in bookshelf.puting|reverse  %}
+  <div class="col">
+  
+    <div class="card w-100" style="max-width: 9rem;">
+      {%if puting.book.googlebook_id == None%}
+        <a href= "/book/{{puting.book.book_id}}">
+      {%else%}
+        <a href= "/book/{{puting.book.googlebook_id}}">
+      {%endif%}
 
+      {%if puting.book.cover != None %}
+        <img class="book_img card-img-top" src="{{puting.book.cover}}" width="128" height="182">
+      {%else%}
+        <img class="book_img card-img-top" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width="128" height="182">
+      {%endif%}
+            </a>
+      <!-- <img src="{{puting.book.cover}}" class="card-img-top" alt="..."> -->
+      <div class="card-body">
+        <p class="card-text" style="font-size : 14px";>{{puting.book.title}}</p>
+        <p class="card-text"></p>
+      </div>
+    </div>  
+   
+  </div>
+  {%endfor%}
+</div>
+  </div>
+{%endfor%}
 
 
 
@@ -102,73 +143,9 @@
  
 </div>
 
-<div class ="container">
-<div class="row row-cols-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-12 g-4">
-  <div class="col">
-    <div class="card">
-      <img src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://books.google.com/books/publisher/content?id=RQ6xDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE71_gdEY_bkROFcaxjAgIWaVjmIhFWFjiCHh9YO4YfU3aFcMKythy_8kUZFGVfc8tQEhRZVS0mb2Jk8y4XY-KVvqUegXfBMcngh4YuHdIaPxgZIoJSEkiSoB2Ox3Y0pC5sqnA8-t&source=gbs_api" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+
+
+
 
 <!-- <script src="/static/js/user_page.js"></script> -->
 {% endblock %}

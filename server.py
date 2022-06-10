@@ -259,7 +259,7 @@ def book_upload_page():
     return render_template('create_book.html')
 
 @app.route("/pro_upload2", methods =['POST'])
-def book_uploader():
+def book_uploaderr():
 
     my_file = request.files["my_file"]    
     result = cloudinary.uploader.upload(my_file,
@@ -268,16 +268,26 @@ def book_uploader():
                                         cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
     
+    authors = []
     title = request.form.get("title")
-    author = request.form.get("author")
-    date = request.form.get("datae")
+    author = request.form.get("authors")
+    if "+" in author:
+        authors = author.split("+")
+    else:
+        authors.append(str(author))
+    
+
+    date = request.form.get("time")
+    
     publisher = request.form.get("publisher")
-    newbook = crud.create_book(title=title,author=author,cover=img_url,date=date,publisher= publisher)
+    des = request.form.get("des")
+
+    newbook = crud.create_a_new_book(title=title,author=authors,cover=img_url,date=date,publisher= publisher,description = des)
     db.session.add(newbook)
 
     db.session.commit()
-
-    return redirect(f"/book/{gid}")
+    
+    return redirect(f"/book/{newbook.book_id}")
 
 @app.route("/pro_upload", methods =['POST'])
 def book_uploader():
@@ -313,6 +323,9 @@ def show_book_detail(id):
 
     if len(id) < 6:
         anybook = crud.get_book_by_bookid(id)
+        book = None
+        year = None
+        data = None
 
     else:
         anybook = crud.get_book_by_googleid(id)
