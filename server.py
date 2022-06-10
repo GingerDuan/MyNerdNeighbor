@@ -56,6 +56,27 @@ def show_user_ownpage():
         
         return render_template("user_profile.html",user=user,bookshelves=bookshelves,own_putings=own_putings,toread_putings=toread_putings,reading_putings=reading_putings,haveread_putings=haveread_putings)
         
+
+@app.route("/user_shelves/")
+def show_user_library():
+    """View users ownpage"""
+    
+    if "user_id" not in session:
+        flash("you did not log in")
+        return redirect('/')
+    else:
+        user_id = session["user_id"]
+        user = crud.get_user_by_id(user_id)
+
+        bookshelves = crud.get_shelf_by_userid(user_id)
+
+        own_putings = crud.get_puting_by_shelfid(bookshelves[0].shelf_id)
+        toread_putings = crud.get_puting_by_shelfid(bookshelves[1].shelf_id)
+        reading_putings = crud.get_puting_by_shelfid(bookshelves[2].shelf_id)
+        haveread_putings = crud.get_puting_by_shelfid(bookshelves[3].shelf_id)
+        
+        return render_template("user_library.html",user=user,bookshelves=bookshelves,own_putings=own_putings,toread_putings=toread_putings,reading_putings=reading_putings,haveread_putings=haveread_putings)
+        
     
 
 @app.route("/register", methods=["POST"])

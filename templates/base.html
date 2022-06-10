@@ -1,24 +1,26 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>
-      My Nerd Neighbor
-      {% block title %}{% endblock %}
-    </title>
-    <!-- Load Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
-  <!-- Load our stylesheet -->
-  <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>
+        My Nerd Neighbor
+        {% block title %}{% endblock %}
+      </title>
+      <!-- Load Bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+      <!-- Bootstrap Icons -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+      
+      <script src="https://kit.fontawesome.com/bd837098b3.js" crossorigin="anonymous"></script>
+      <!-- Load our stylesheet -->
+      <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script>
+      <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
 
 
     {% block head %}{% endblock %}
   </head>
-  <body>
+  <body >
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
@@ -53,7 +55,7 @@
                 User
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/user_profile">bookshelf</a></li>
+                <li><a class="dropdown-item" href="/user_shelves">bookshelf</a></li>
                 <li><a class="dropdown-item" href="#">book tracker</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/logout">log out</a></li>
@@ -84,12 +86,14 @@
     {% block body %}{% endblock %}
 
     {% block after_body %}{% endblock %}
+    <script src="/static/css/styling.css"></script>
+
     <script src="/static/js/savebook.js"></script>
     <script src="/static/js/remove_book.js"></script>
     <script src="/static/js/book_traking.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    <script src="/static/css/styling.css"></script>
+    
     
   </body>
 </html>
