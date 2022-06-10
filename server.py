@@ -24,16 +24,17 @@ API_KEY = os.environ['googlebookapi_key']
 @app.route("/")
 def homepage():
     """View homepage"""
+
     
-    if "user_id" in session:
-        user = crud.get_user_by_id(session["user_id"])
-        flash(f'Hi! {user.name} You are log in')
+    # if "user_id" in session:
+    #     user = crud.get_user_by_id(session["user_id"])
+    #     flash(f'Hi! {user.name} You are log in')
         
-        return render_template("homepage.html",user = user)
+    #     return render_template("homepage.html",user = user)
         
-    else:
-        flash("You need log in XD")
-        return render_template("homepage.html")
+    # else:
+    #     flash("You need log in XD")
+    return render_template("homepage.html")
 
 @app.route("/user_profile/")
 def show_user_ownpage():
@@ -185,14 +186,15 @@ def book_adder():
 
     status_code = request.json.get("status")
     note = request.json.get("note")
-    googlebook_id = request.json.get("googlebook_id")
-    
-    anybook = crud.get_book_by_googleid(googlebook_id)
+    g_id = request.json.get("googlebook_id")
+    if len(g_id) > 5:
+        anybook = crud.get_book_by_googleid(g_id)
+    else:
+        anybook = crud.get_book_by_bookid(g_id)
     
     # covert shelf_name to a number to right shelf_id
-        
+    #status_code 0have read 1reading 2to read 3Iown this book
     shelf_id = (4 * user_id)- int(status_code)
-    #what is this? 
     
     if anybook:
         anyputing = crud.get_puting_by_shelfid_boookid(shelf_id,anybook.book_id)
@@ -205,7 +207,7 @@ def book_adder():
             db.session.commit()
             return jsonify({"status":f'{anybook.title} add in your shelf' })
     else: 
-        url = f'https://www.googleapis.com/books/v1/volumes/{googlebook_id}'
+        url = f'https://www.googleapis.com/books/v1/volumes/{g_id}'
         
         response = requests.get(url)
         data = response.json()
@@ -215,9 +217,9 @@ def book_adder():
         if 'imageLinks' in data['volumeInfo']:
             cover = data['volumeInfo']['imageLinks']['thumbnail']
         else:
-            cover = "https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg"
-        #cover = request.json.get("cover","https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg")
-        newbook = crud.create_book(googlebook_id,title,author,cover)
+            cover = None
+        
+        newbook = crud.create_book(googlebook_id=g_id,title=title,author=author,cover=cover)
         db.session.add(newbook)
         db.session.commit()
         puting = crud.create_puting(shelf_id = shelf_id,book_id = newbook.book_id,user_id=user_id,note=note)
@@ -250,26 +252,57 @@ def show_neighbor_puting():
 
     return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
 
-#upload new book
+#create a new book
 @app.route("/upload")
 def book_upload_page():
 
-    return render_template('upload_book.html')
+    return render_template('create_book.html')
 
-@app.route("/pro_upload", methods =['POST'])
+@app.route("/pro_upload2", methods =['POST'])
 def book_uploader():
 
-    my_file = request.files["my_file"]    result = cloudinary.uploader.upload(my_file,
+    my_file = request.files["my_file"]    
+    result = cloudinary.uploader.upload(my_file,
                                         api_key=CLOUDINARY_KEY,
                                         api_secret=CLOUDINARY_SECRET,
                                         cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
-    print(img_url)
+    
+    title = request.form.get("title")
+    author = request.form.get("author")
+    date = request.form.get("datae")
+    publisher = request.form.get("publisher")
+    newbook = crud.create_book(title=title,author=author,cover=img_url,date=date,publisher= publisher)
+    db.session.add(newbook)
 
-    # db.session.add(img_url)
-    # db.session.commit()
+    db.session.commit()
 
-    return redirect("/")
+    return redirect(f"/book/{gid}")
+
+@app.route("/pro_upload", methods =['POST'])
+def book_uploader():
+
+    my_file = request.files["my_file"]    
+    result = cloudinary.uploader.upload(my_file,
+                                        api_key=CLOUDINARY_KEY,
+                                        api_secret=CLOUDINARY_SECRET,
+                                        cloud_name=CLOUD_NAME)
+    img_url = result['secure_url']
+    
+    gid = request.form.get("gid")
+    book = crud.get_book_by_googleid(gid)
+    
+    if book != None:
+        book.cover = img_url
+    else:
+        title = request.form.get("title")
+        author = request.form.get("author")
+        newbook = crud.create_book(googlebook_id=gid,title=title,author=author,cover=img_url)
+        db.session.add(newbook)
+
+    db.session.commit()
+
+    return redirect(f"/book/{gid}")
 
 #bookpage
 @app.route("/book/<id>")
@@ -278,16 +311,30 @@ def show_book_detail(id):
     user_id = session["user_id"]
     user = crud.get_user_by_id(user_id)
 
-    # googlebook_id = request.json.get("googlebook_id")
-    anybook = crud.get_book_by_googleid(id)
-    
-    url = f'https://www.googleapis.com/books/v1/volumes/{id}'
-    response = requests.get(url)
-    data = response.json()
-    
+    if len(id) < 6:
+        anybook = crud.get_book_by_bookid(id)
+
+    else:
+        anybook = crud.get_book_by_googleid(id)
+        
+        url = f'https://www.googleapis.com/books/v1/volumes/{id}'
+        response = requests.get(url)
+        data = response.json()
+        book = data['volumeInfo']
+
+        #year
+        if 'publishedDate' in book:
+            time = book["publishedDate"]
+            if len(time) == 4:
+                year = book["publishedDate"]
+            elif len(time) < 8:
+                year = year = datetime.strptime(time,"%Y-%m").year
+            else:
+                year = datetime.strptime(time,"%Y-%m-%d").year
+        else:
+            year = None
+
     if anybook:
-        cover = anybook.cover
-        title = anybook.title
 
         if crud.get_puting_by_book_userid(anybook.book_id,user_id):
             own_putings = crud.get_puting_by_book_userid(anybook.book_id,user_id)
@@ -302,44 +349,9 @@ def show_book_detail(id):
     else: 
         own_putings = None
         others_putings = None
-        title = data['volumeInfo']['title']
-        putings = None
-        if 'imageLinks' in data['volumeInfo']:
-            cover = data['volumeInfo']['imageLinks']['thumbnail']
-        else:
-            cover = "https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg"
-    
-    # author
-    if 'authors' in data['volumeInfo']:
-        authors = data['volumeInfo']['authors']
-    else:
-        authors = None
-    # subtitle
-    if 'subtitle' in data['volumeInfo']:
-        subtitle = data['volumeInfo']['subtitle']
-    else:
-        subtitle = None
-    #description
-    if 'description' in data['volumeInfo']:
-        des = data['volumeInfo']['description']
-    else:
-        des = None
-    #year
-    if 'publishedDate' in data['volumeInfo']:
-        time = data['volumeInfo']["publishedDate"]
-        if len(time) == 4:
-            year = data['volumeInfo']["publishedDate"]
-        elif len(time) < 8:
-            year = year = datetime.strptime(time,"%Y-%m").year
-        else:
-            year = datetime.strptime(time,"%Y-%m-%d").year
-    else:
-        year = None
 
-    
-    book = {"title":title,"cover":cover,"authors":authors,"subtitle":subtitle,"des":des,"google_link":data['selfLink'],"year":year}
-
-    return render_template("bookpage.html",book=book,user=user,own_putings = own_putings,others_putings=others_putings)
+    return render_template("bookpage.html",anybook = anybook, book=book,year=year,data=data,
+    own_putings = own_putings,others_putings=others_putings,user=user)
 
 
 if __name__ == "__main__":

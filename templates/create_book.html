@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+<!-- <title>Boogle</title> -->
+<div class="container">
+    <label for="book_uploader"><H3>Upload an new book to MNN's database!</H3></label>
+    <form id="book_uploader" action="/pro_puload2" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="book_title" class="form-label">Book title</label>
+      <input type="title" class="form-control" id="book_title" aria-describedby="titleHelp">
+      <div id="titleHelp" class="form-text">What's your book's name?</div>
+    </div>
+    <div class="mb-3">
+      <label for="authors" class="form-label">Author</label>
+      <input type="author" class="form-control" id="authors">
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Publish Date</label>
+        <input type="date" class="form-control" id="date">
+    </div>
+    <div class="mb-3">
+        <label for="publisher" class="form-label">Publisher</label>
+        <input type="publisher" class="form-control" id="publisher">
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Upload a book cover<small class="text-muted"> or leave blank, we will set a default cover for you</small></label>
+        <input class="form-control" type="file" name = "my_file" id="formFile">
+      </div>
+    <div class="form-group">
+        <label for="book_des">Description</label>
+        <textarea class="form-control" id="book_des" rows="10"></textarea>
+      </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+
+
+
+
+<script src="/static/js/savebook.js"></script>
+<script src="/static/js/booksearch.js"></script>
+
+{% endblock %}

@@ -18,16 +18,20 @@
         
           <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
             <a href= "/book/{{puting.book.googlebook_id}}">
+              {%if puting.book.cover != None %}
               <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+              {%else%}
+              <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width="128" height="182">
+              {%endif%}
             </a>
             <div>{{puting.book.title}}</div>
             <div>
               <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
               <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
             </div>
-            
+             
           </div>
-        
+         
       {% endfor %}
       </div>
 
@@ -98,7 +102,73 @@
  
 </div>
 
-
+<div class ="container">
+<div class="row row-cols-3 row-cols-md-4 row-cols-lg-6 row-cols-xl-12 g-4">
+  <div class="col">
+    <div class="card">
+      <img src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="https://books.google.com/books/publisher/content?id=RQ6xDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE71_gdEY_bkROFcaxjAgIWaVjmIhFWFjiCHh9YO4YfU3aFcMKythy_8kUZFGVfc8tQEhRZVS0mb2Jk8y4XY-KVvqUegXfBMcngh4YuHdIaPxgZIoJSEkiSoB2Ox3Y0pC5sqnA8-t&source=gbs_api" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 <!-- <script src="/static/js/user_page.js"></script> -->
 {% endblock %}

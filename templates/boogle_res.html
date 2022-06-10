@@ -30,22 +30,22 @@
     {%for book in data['items']%}
     <div class = "row bookContainer" style = "margin-top: 30px ;">
 
+            
+        <a href= "/book/{{book.id}}" class = 'col-4 col-md-3 col-lg-2 col-md-xl-1 book_path'>
             {%if 'imageLinks' in book['volumeInfo']%}
-            <a href= "/book/{{book.id}}" class = 'col-4 col-md-3 col-lg-2 col-md-xl-1 book_path'>
                 <img class="book_img" src="{{book.volumeInfo.imageLinks.thumbnail}}" width="128" height="182">
-            </a>
+            {%else%}
+            <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "138" height="172">
             {%endif%}
-
-            {%if 'imageLinks' not in book['volumeInfo']%}
-            <a href= "/book/{{book.id}}" class = 'col-4 col-md-3 col-lg-2 col-md-xl-1 book_path'>
-                <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "138" height="172">
-            </a>
-                {%endif%}
+        </a>
         
         
         <div class = 'col-8 col-md-9 col-lg-10 col-md-xl-11 bookinfo'style = "text-align:left">
-            <div>
+            <div class = "title_group">
                 <a class="book_title" href="{{book.volumeInfo.infoLink}}" target="_Blank">{{book.volumeInfo.title}}</a>
+                {%if 'publishedDate' in book['volumeInfo']%}
+                    ({{book.volumeInfo.publishedDate}})  
+                {%endif%}
                 {%if 'subtitle' in book['volumeInfo']%}
                     <div>{{book.volumeInfo.subtitle}}</div>
                 {%endif%}
@@ -59,7 +59,7 @@
                    </div><br>
                 {%endif%}
 
-                <div>
+                <div class="model_set">
                     <!-- Model button -->
                     <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{book.id}}> Add to my bookshelf</button>                    
                     <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{book.id}}>to read</button>
@@ -105,18 +105,7 @@
                         </div>
                     </div> 
                 </div>
-                    <!-- <input type="radio" name="status" value="standard">
-                    <label>want to</label>
                   
-                    <input type="radio" name="status" value="expedited">
-                    <label>reading</label>
-
-                    <input type="radio" name="status" value="expedited">
-                    <label>finished</label> -->
-                  
-
-            
-               
                     {%if 'description' in book['volumeInfo']%}
                     <div class = ellip-block>Description:{{book.volumeInfo.description}}</div>
                     {%endif%}

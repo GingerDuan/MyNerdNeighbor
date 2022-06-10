@@ -65,7 +65,10 @@ class Book(db.Model):
     title = db.Column(db.String(100))
     author = db.Column(db.String)
     cover = db.Column(db.String)  
-
+    date = db.Column(db.String)
+    publisher = db.Column(db.String)
+    description = db.Column(db.Text)  
+    
     #puting     
     
     def __repr__(self):
