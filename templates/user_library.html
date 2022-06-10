@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %}Boogle-MyNerdNeighbor{% endblock %}
+
+{% block body %}
+<!-- <title>Boogle</title> -->
+
+
+<h1 style = "text-align: center;">{{user.name}}'s library</h1>
+<div id="bookshelf" style = "margin: 70px" width="800" height="400">
+  <h3>You are live in {{user.zipcode}} neighbor</h3>
+  <h3>There are {balalal} books in your bookshelf</h3>
+  =======================================================
+  <div id="results" class = "container">
+    
+    <h4 style = "height:150">{{bookshelves[0].name}}</h4>
+      <div class = "row">
+      {%for puting in own_putings%}
+        
+          <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+              {%if puting.book.googlebook_id == None%}
+                <a href= "/book/{{puting.book.book_id}}">
+              {%else%}
+                <a href= "/book/{{puting.book.googlebook_id}}">
+              {%endif%}
+
+              {%if puting.book.cover != None %}
+              <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+              {%else%}
+              <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width="128" height="182">
+              {%endif%}
+            </a>
+            <div>{{puting.book.title}}</div>
+            <div>
+              <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+              <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+            </div>
+             
+          </div>
+         
+      {% endfor %}
+      </div>
+
+      <h4 style = "height:150">{{bookshelves[1].name}}</h4>
+      <div class = "row">
+      {%for puting in toread_putings%}
+        
+      <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+        {%if puting.book.googlebook_id == None %}
+          <a href= "/book/{{puting.book.book_id}}">
+        {%else%}
+          <a href= "/book/{{puting.book.googlebook_id}}">
+        {%endif%}
+          <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+        </a>
+        <div>{{puting.book.title}}</div>
+        <div>
+          <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+        </div>
+        
+      </div>
+        
+      {% endfor %}
+      </div>
+
+      <h4 style = "height:150">{{bookshelves[2].name}}</h4>
+      <div class = "row">
+      {%for puting in reading_putings%}
+        
+      <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+        <a href= "/book/{{puting.book.googlebook_id}}">
+          <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+        </a>
+        <div>{{puting.book.title}}</div>
+        <div>
+          <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+        </div>
+        
+      </div>
+        
+      {% endfor %}
+      </div>
+
+      <h4 style = "height:150">{{bookshelves[3].name}}</h4>
+      <div class = "row">
+      {%for puting in haveread_putings%}
+        
+      <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+        <a href= "/book/{{puting.book.googlebook_id}}">
+          <img class="book_img" src="{{puting.book.cover}}" width="128" height="182">
+        </a>
+        <div>{{puting.book.title}}</div>
+        <div>
+          <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+        </div>
+        
+      </div>
+        
+      {% endfor %}
+      </div>
+
+
+{%for bookshelf in bookshelves %}
+  <div class="row shelf">  
+    <h3>{{bookshelf.name}}</h3>
+    <h3>There are {balalal} books in your bookshelf</h3>
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 row-cols-xl-8 g-4">
+  {%for puting in bookshelf.puting|reverse  %}
+  <div class="col">
+  
+    <div class="card w-100" style="max-width: 9rem;">
+      {%if puting.book.googlebook_id == None%}
+        <a href= "/book/{{puting.book.book_id}}">
+      {%else%}
+        <a href= "/book/{{puting.book.googlebook_id}}">
+      {%endif%}
+
+      {%if puting.book.cover != None %}
+        <img class="book_img card-img-top" src="{{puting.book.cover}}" width="128" height="182">
+      {%else%}
+        <img class="book_img card-img-top" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width="128" height="182">
+      {%endif%}
+            </a>
+      <!-- <img src="{{puting.book.cover}}" class="card-img-top" alt="..."> -->
+      <div class="card-body">
+        <p class="card-text" style="font-size : 14px";>{{puting.book.title}}</p>
+        <p class="card-text"></p>
+      </div>
+    </div>  
+   
+  </div>
+  {%endfor%}
+</div>
+  </div>
+{%endfor%}
+
+
+
+
+  </div>
+ 
+</div>
+
+
+<!-- Testing2 -->
+
+
+<!-- <script src="/static/js/user_page.js"></script> -->
+{% endblock %}
