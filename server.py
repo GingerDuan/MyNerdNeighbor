@@ -106,7 +106,10 @@ def register():
         flash("Account was created successfully!")
         return redirect(f"/user_profile/")
 
-    
+@app.route("/login_page")
+def login_page():
+
+    return render_template("login.html")    
 
 @app.route("/login", methods=["POST"])
 def login():
