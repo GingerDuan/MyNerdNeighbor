@@ -3,48 +3,57 @@
 
 {% block body %}
 
-  
+<header>
+    <h1></h1>
+    <p></p>
+    <p></p>
+</header>  
 <div style = "text-align: right;">
   {%if user is not none%}
     <a href="/user_profile/">View your own page</a>
   {%endif%}
   <a href="/">Back to the homepage</a>
 </div>
-  
-<form method = "GET" action ="/search" style = "text-align: center">
-<h1>Boogle 2.0</h1>
+<div class="container mb-10">
+  <form class= "mb-10" method = "GET" action ="/search" style = "text-align: center">
+    <h1>Boogle 2.0</h1>
 
-<lable>search any book you want:</lable><br>
-<div>
-  <input id="s_key" type = "text" placeholder="keyword" name = "keyword" style="width:500px; height:40px;font-size:12pt;">
-  
-  <!-- <input id="title" type = "text" placeholder="title" name = "title" style="width:300px; height:40px;font-size:12pt;">
-  <input id="aaa" type = "text" placeholder="author" name = "aaa" style="width:300px; height:40px;font-size:12pt;">
-  <input id="publisher" type = "text" placeholder="publisher" name = "publisher" style="width:300px; height:40px;font-size:12pt;">
-  <input id="isbn" type = "text" placeholder="isbn" name = "isbn" style="width:300px; height:40px;font-size:12pt;"> -->
+    <lable for="s_key">search any book you want:</lable><br>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <input id="s_key" class="form-control" type = "text" placeholder="keyword" name = "keyword" >
+      </div>     
+      <div class="col-1">
+        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        
+      </div>
+      <div class="col"><button type="submit" class="col btn btn-dark">Boogle</button></div>
 
-
-
-  <button type="submit" class="btn btn-dark">Boogle</button>
-
-</div>
-
-<!-- <div>title<br>
-  <input id="s_title" type = "text" placeholder="Booktitle" name = "intitle" style="width:300px; height:25px;font-size:12pt;">
-</div>
-
-<div>author<br>
-  <input id="s_author" type = "text" placeholder="Author" name = "inauthor" style="width:300px; height:25px;font-size:12pt;">
-</div>
-
-<div>ISBN<br>
-  <input id="s_isbn" type = "number" placeholder="ISBN" name = "isbn" style="width:300px; height:25px;font-size:12pt;">
-</div> -->
-
-
-<!-- <button type = "submit" class = "btn btn_primary">Boogle</button> -->
-</div>
-</form>
-
+      <div class="col">
+        
+      </div>
+      <p>
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Link with href
+        </a>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Button with data-bs-target
+        </button>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        </div>
+      </div>
+      
+      
+    </div>
+  </form>
+</div> 
 
 {% endblock %}

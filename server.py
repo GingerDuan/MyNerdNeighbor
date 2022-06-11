@@ -26,15 +26,15 @@ def homepage():
     """View homepage"""
 
     
-    # if "user_id" in session:
-    #     user = crud.get_user_by_id(session["user_id"])
-    #     flash(f'Hi! {user.name} You are log in')
+    if "user_id" in session:
+        user = crud.get_user_by_id(session["user_id"])
+        flash(f'Hi! {user.name} You are log in')
         
-    #     return render_template("homepage.html",user = user)
+        return render_template("homepage.html",user = user)
         
-    # else:
-    #     flash("You need log in XD")
-    return render_template("homepage.html")
+    else:
+        flash("You need log in XD")
+        return render_template("homepage.html")
 
 @app.route("/user_profile/")
 def show_user_ownpage():

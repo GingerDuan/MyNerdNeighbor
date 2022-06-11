@@ -16,7 +16,7 @@
       <div class = "row">
       {%for puting in own_putings%}
         
-          <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id ={{puting.puting_id}} style = "margin-bottom: 10px ;">
+          <div class = "col-6 col-md-4 col-lg-3 col-xl-2 "id = style = "margin-bottom: 10px ;">
               {%if puting.book.googlebook_id == None%}
                 <a href= "/book/{{puting.book.book_id}}">
               {%else%}
@@ -31,7 +31,7 @@
             </a>
             <div>{{puting.book.title}}</div>
             <div>
-              <i type="button" class="bi bi-bookmark-x" value ={{puting.book.book_id}}></i>
+          
               <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
             </div>
              
@@ -101,16 +101,16 @@
       {% endfor %}
       </div>
 
-
+<!-- books in cards -->
 {%for bookshelf in bookshelves %}
   <div class="row shelf">  
     <h3>{{bookshelf.name}}</h3>
     <h3>There are {balalal} books in your bookshelf</h3>
 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 row-cols-xl-8 g-4">
   {%for puting in bookshelf.puting|reverse  %}
-  <div class="col">
+  <div class="col " id ={{puting.puting_id}}>
   
-    <div class="card w-100" style="max-width: 9rem;">
+    <div class="card w-100" style="max-width: 8rem;">
       {%if puting.book.googlebook_id == None%}
         <a href= "/book/{{puting.book.book_id}}">
       {%else%}
@@ -124,12 +124,15 @@
       {%endif%}
             </a>
       <!-- <img src="{{puting.book.cover}}" class="card-img-top" alt="..."> -->
-      <div class="card-body">
+      
+    </div>  
+   <div class="card-body">
         <p class="card-text" style="font-size : 14px";>{{puting.book.title}}</p>
+        <div>
+          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
+        </div>
         <p class="card-text"></p>
       </div>
-    </div>  
-   
   </div>
   {%endfor%}
 </div>
