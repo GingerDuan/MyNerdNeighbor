@@ -4,7 +4,7 @@ from multiprocessing import AuthenticationError
 # from turtle import title
 from flask import (Flask, render_template, request, flash, session,jsonify,
                    redirect)
-from model import connect_to_db, db           
+from model import Book, Puting, connect_to_db, db           
 from jinja2 import StrictUndefined
 from datetime import datetime
 import crud
@@ -141,16 +141,6 @@ def logout():
 
     return redirect('/')
 
-# @app.route("/Boogle")
-# def book_finder():
-#     """Search for book in Google book"""
-#     if "user_id" in session:
-#         user = crud.get_user_by_id(session["user_id"])
-#     else:
-#         user = None
-#     return render_template('Boogle.html',user=user)
-
-
 
 @app.route("/boogle2")
 def show_boogle():
@@ -237,7 +227,11 @@ def book_adder():
         data = response.json()
         
         title = data['volumeInfo']['title']
-        author = data['volumeInfo']['authors'][0]
+        if 'authors' in data['volumeInfo']:
+            author = data['volumeInfo']['authors'][0]
+        else:
+            author = None
+
         if 'imageLinks' in data['volumeInfo']:
             cover = data['volumeInfo']['imageLinks']['thumbnail']
         else:
@@ -254,7 +248,7 @@ def book_adder():
 
 
 #neighborpage
-@app.route("/neighborlibrary")
+@app.route("/neighbor")
 def show_ntighbor_books():
 
     user_id = session["user_id"]
@@ -262,19 +256,26 @@ def show_ntighbor_books():
     zipusers = crud.get_users_in_zipcode(user_id)
     neighbor_num = crud.get_users_amount_in_zipcode(user_id)
     books = crud.get_books_in_zipcode(user_id)
+    putings = crud.get_puting_in_zipcode(user_id)
 
-    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,books= books)
-        
-@app.route("/neighbor")  
-def show_neighbor_puting():
+    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings,books=books)
+
+@app.route("/neighbor_search",methods=["POST"])
+def find_book_in_neighbor():
 
     user_id = session["user_id"]
     user = crud.get_user_by_id(user_id)
     zipusers = crud.get_users_in_zipcode(user_id)
     neighbor_num = crud.get_users_amount_in_zipcode(user_id)
+    books = crud.get_books_in_zipcode(user_id)
     putings = crud.get_puting_in_zipcode(user_id)
 
-    return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
+    keyword = request.form.get("keyword")
+    zipbooks = crud.get_books_in_zipcode(user_id)
+    putings_res = [book for book in zipbooks if keyword in book.title]
+
+    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings,books=books,putings_res = putings_res)
+
 
 #create a new book
 @app.route("/upload")
@@ -292,21 +293,17 @@ def book_uploaderr():
                                         cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
     
-    authors = []
+    
+    
     title = request.form.get("title")
     author = request.form.get("authors")
-    if "+" in author:
-        authors = author.split("+")
-    else:
-        authors.append(str(author))
-    
 
     date = request.form.get("time")
     
     publisher = request.form.get("publisher")
     des = request.form.get("des")
 
-    newbook = crud.create_a_new_book(title=title,author=authors,cover=img_url,date=date,publisher= publisher,description = des)
+    newbook = crud.create_a_new_book(title=title,author=author,cover=img_url,date=date,publisher= publisher,description = des)
     db.session.add(newbook)
 
     db.session.commit()
@@ -342,15 +339,14 @@ def book_uploader():
 @app.route("/book/<id>")
 def show_book_detail(id):
 
-    user_id = session["user_id"]
-    user = crud.get_user_by_id(user_id)
-
+    #when book user's create
     if len(id) < 6:
         anybook = crud.get_book_by_bookid(id)
         book = None
         year = None
         data = None
 
+    #when book from googlebook
     else:
         anybook = crud.get_book_by_googleid(id)
         
@@ -371,21 +367,35 @@ def show_book_detail(id):
         else:
             year = None
 
-    if anybook:
+    #when user log in 
+    if "user_id" in session:
+   
+        user_id = session["user_id"]
+        user = crud.get_user_by_id(user_id)
 
-        if crud.get_puting_by_book_userid(anybook.book_id,user_id):
-            own_putings = crud.get_puting_by_book_userid(anybook.book_id,user_id)
-        else:
+        if anybook:
+
+                if crud.get_puting_by_book_userid(anybook.book_id,user_id):
+                    own_putings = crud.get_puting_by_book_userid(anybook.book_id,user_id)
+                else:
+                    own_putings = None
+
+                if crud.get_puting_by_book_no_user(anybook.book_id,user_id):
+                    others_putings = crud.get_puting_by_book_no_user(anybook.book_id,user_id)
+                else:
+                    others_putings = None
+
+        else: 
             own_putings = None
-
-        if crud.get_puting_by_book_no_user(anybook.book_id,user_id):
-            others_putings = crud.get_puting_by_book_no_user(anybook.book_id,user_id)
-        else:
             others_putings = None
 
-    else: 
+    #when guest hanging out
+    else:
         own_putings = None
         others_putings = None
+        user = None
+
+    
 
     return render_template("bookpage.html",anybook = anybook, book=book,year=year,data=data,
     own_putings = own_putings,others_putings=others_putings,user=user)

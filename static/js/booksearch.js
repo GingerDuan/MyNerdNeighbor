@@ -1,9 +1,10 @@
-function bookSearch(){
+function bookSearch(evt){
     
+    evt.preventDefault()
+    const keyword = document.getElementById('s_key').value;
+    
+    const url = `/neighbor_search?keyword=${keyword}`;
 
-    const keyword = document.querySelector('#my-text').value;
-    // const url = `https://www.googleapis.com/books/v1/volumes?q=${keyword}`;
-    const url= `/search?keyword=${keyword}`;
     fetch(url)
         .then(response => response.json())
         .then(apiResponse => {
@@ -13,57 +14,28 @@ function bookSearch(){
             
             
             
-            results.innerHTML = ''
+            
                 results.insertAdjacentHTML('beforeend',
-            `<h2>Result</h2>
-            <div>We found ${apiResponse.totalItems} books about "${keyword}"</div>`)
+            `<h3>Result</h3>
+            <div>We found ${apiResponse.totalItems} books about "${keyword}"</div>
+            <div>
+           ${putings_res}
+            </div>
+            `)
 
-            for (const book of apiResponse.items){
-                let img = `<img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width="128" height="130">`
-                
-                if (book.volumeInfo.imageLinks){
-                    img = `<img class="book_img" src="${book.volumeInfo.imageLinks.thumbnail} width="128" height="182">`
-                }
-                results.insertAdjacentHTML('beforeend',
-                `<div class = "bookContainer" style = "margin: 15px">
-
-                <span class = "bookPic">
-                ${img}
-                </span>
-                <span class = "bookText">
-                <a class="book_title" href="${book.volumeInfo.infoLink}" target="_Blank">${book.volumeInfo.title}</a>
-                ${book.volumeInfo.subtitle}
-                <br>
-                by: ${book.volumeInfo.authors}
-                <button id=add_book class = "add_book_btn" value = ${book.id}>put on my shelf</button>
-                <br>
-                <span style="display:inline-block;
-                overflow: hidden;
-                maxheight: 110px;">description:${book.volumeInfo.description} </span>
-                <br>
-                <button >I have read this book</button>
-                <button >I am reading this book</button>
-                <button >Add to want to list</button>
-                </span></div>`);
+            
               
-              }   
-              add_btn_listerners();                    
+                 
+            //   add_btn_listerners();                    
         });
 }
 
-// evt.preventDefault()
+
 
 // document.querySelector('#search').addEventListener('submit',bookSearch);
 
-let myText = document.getElementById("my-text");
-let btn = document.getElementById("btn");
+// let myText = document.getElementById("");
+let seform = document.getElementById("nei_search");
 
-myText.addEventListener("keyup",e => {
-    e.preventDefault();
-    if(e.keyCode === 13){
-        bookSearch
-        btn.click();
-    }
-})
-btn.addEventListener("click",bookSearch);
+seform.addEventListener("submit",bookSearch);
 

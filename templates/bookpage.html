@@ -114,15 +114,17 @@
 <div class ="author">
     {%if book%}
         {%if 'authors' in book%}
-            by: {{book.authors}}
+            by: 
             {%for author in book.authors%}
             <span class="badge text-bg-primary">{{author}}</span>
                 {%endfor%}
         {%endif%}
     {%else%}
         {%if anybook.author != None %}
+            by:
+        <span class="badge text-bg-primary">{{anybook.author}}</span>
             
-                <span class="badge text-bg-primary">{{anybook.author}}</span>
+               
                 
         {%endif%}
     {%endif%}
@@ -177,7 +179,7 @@
 </div>
 ========================================================
 <div>
-Hi {{user.name}}
+
 <!-- This is the own putings: {{own_putings}} 
 This is others putings:{{others_putings}} -->
 </div>
