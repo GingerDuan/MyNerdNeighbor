@@ -255,26 +255,23 @@ def show_ntighbor_books():
     user = crud.get_user_by_id(user_id)
     zipusers = crud.get_users_in_zipcode(user_id)
     neighbor_num = crud.get_users_amount_in_zipcode(user_id)
-    books = crud.get_books_in_zipcode(user_id)
-    putings = crud.get_puting_in_zipcode(user_id)
+    
+    putings = crud.get_own_putings_in_zipcode(user_id)
 
-    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings,books=books)
+    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
 
-@app.route("/neighbor_search",methods=["POST"])
+@app.route("/neighbor_search",methods=["GET"])
 def find_book_in_neighbor():
 
     user_id = session["user_id"]
-    user = crud.get_user_by_id(user_id)
-    zipusers = crud.get_users_in_zipcode(user_id)
-    neighbor_num = crud.get_users_amount_in_zipcode(user_id)
-    books = crud.get_books_in_zipcode(user_id)
-    putings = crud.get_puting_in_zipcode(user_id)
+    
 
-    keyword = request.form.get("keyword")
+    keyword = request.args.get("keyword")
     zipbooks = crud.get_books_in_zipcode(user_id)
-    putings_res = [book for book in zipbooks if keyword in book.title]
+    putings_res = [book.title for book in zipbooks if keyword in book.title]
 
-    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings,books=books,putings_res = putings_res)
+    return jsonify({"putings":putings_res})
+
 
 
 #create a new book

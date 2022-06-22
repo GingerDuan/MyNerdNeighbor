@@ -150,6 +150,21 @@ def get_books_in_zipcode(user_id):
     
     return books
 
+def get_own_putings_in_zipcode(user_id):
+
+    bookshelf_ids = []
+    zipusers = get_users_in_zipcode(user_id)
+
+    for user in zipusers:
+        bookshelf_ids.append((user.user_id * 4)-3)
+
+    own_putings = []
+    for bookshelf_id in bookshelf_ids:
+        putings = Puting.query.filter_by(shelf_id=bookshelf_id).all()
+        own_putings += putings
+    
+    return own_putings
+
 def get_puting_in_zipcode(user_id):
 
     bookshelf_ids = []

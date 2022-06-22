@@ -1,27 +1,32 @@
 function bookSearch(evt){
     
+
+
     evt.preventDefault()
-    const keyword = document.getElementById('s_key').value;
+    let keyword = document.getElementById('sss_key').value;
     
     const url = `/neighbor_search?keyword=${keyword}`;
+    console.log(keyword)
+    
 
     fetch(url)
         .then(response => response.json())
         .then(apiResponse => {
-            console.log(apiResponse)
-            const results = document.querySelector('#results')
+            
+
+            const putings = apiResponse.putings
+            const results = document.querySelector('#n_results')
                 
             
             
             
             
-                results.insertAdjacentHTML('beforeend',
+                results.innerHTML=
             `<h3>Result</h3>
-            <div>We found ${apiResponse.totalItems} books about "${keyword}"</div>
+            <div>We found ${putings.length} books about "${keyword}"</div>
             <div>
-           ${putings_res}
-            </div>
-            `)
+           ${putings}
+            </div>`
 
             
               

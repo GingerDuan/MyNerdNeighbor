@@ -8,14 +8,14 @@
 <form id ="nei_search" method = "GET" action ="/neighbor_search" style = "text-align: center">
   <h1>Boogle neighbor1.0</h1>
   
-  <lable>search the book you want:</lable><br>
-  <div>
-  <input id="s_key" type = "text" placeholder="Keyword" name = "keyword" style="width:500px; height:25px;font-size:12pt;">
+  <label>search the book you want:</label><br>
+    
+      <input id="sss_key" name = "keyword" style="width:500px; height:25px;font-size:12pt;">
+    
+    
+      <input id=“nei_btn” type = "submit" value = "Boogle" class = "btn btn-secondary">
   </div>
-  
-  <input id=“nei_btn” type = "submit" value = "Boogle" class = "btn btn-secondary">
-  </div>
-  </form>
+</form>
 
 
 <h2 style = "text-align: center;">{{user.name}}'s neighbor</h2>
@@ -29,7 +29,7 @@
     
     <div class="col-8">
       <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4" style="min-width: 7rem;">
-        {%for puting in putings|reverse  %}
+        {%for puting in putings %}
         <div class="col " id ={{puting.puting_id}}>
         
           <div class="card w-100" >
@@ -60,40 +60,9 @@
       </div>
 </div>
 
-<div id="results" class="col-4 card">puy search results here</div> 
+<div id="n_results" class="col-4 card">puy search results here</div> 
 
 
-</div>
-
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 row-cols-xl-8 g-4">
-  {%for puting in putings|reverse  %}
-  <div class="col " id ={{puting.puting_id}}>
-  
-    <div class="card w-100" style="max-width: 8rem;">
-      {%if puting.book.googlebook_id == None%}
-        <a href= "/book/{{puting.book.book_id}}">
-      {%else%}
-        <a href= "/book/{{puting.book.googlebook_id}}">
-      {%endif%}
-
-      {%if puting.book.cover != None %}
-        <img class="book_img card-img-top" src="{{puting.book.cover}}" width="128" height="182">
-      {%else%}
-        <img class="book_img card-img-top" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg">
-      {%endif%}
-            </a>
-      <!-- <img src="{{puting.book.cover}}" class="card-img-top" alt="..."> -->
-      
-    </div>  
-   <div class="card-body">
-        <p class="card-text" style="font-size : 14px";>{{puting.book.title}}</p>
-        <div>
-          <button type="button" class="btn btn-outline-dark remove_book_btn btn-sm" value ={{puting.puting_id}}>remove</button>
-        </div>
-        <p class="card-text"></p>
-      </div>
-  </div>
-  {%endfor%}
 </div>
 
 
