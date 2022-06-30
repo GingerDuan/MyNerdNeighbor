@@ -8,56 +8,60 @@
     <p></p>
     <p></p>
 </header>  
-<div style = "text-align: right;">
-  {%if user is not none%}
-    <a href="/user_profile/">View your own page</a>
-  {%endif%}
-  <a href="/">Back to the homepage</a>
-</div>
-<div class="container mb-10">
-  <form class= "mb-10" method = "GET" action ="/search" style = "text-align: center">
-    <div>
-      <img src="/static/pic/Boogle_logo.png" alt="" width="250" height="125">
-    </div>
-    
-    
 
+<div class="container mb-10">
+
+  <form class= "mb-10" method = "GET" action ="/search" style = "text-align: center">
+    <div><img src="/static/pic/Boogle.png" alt="" width="380" height="200"></div>
+      
     <lable for="s_key">search any book you want:</lable><br>
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
         <input id="s_key" class="form-control" type = "text" placeholder="keyword" name = "keyword" >
       </div>     
-      <div class="col-1">
-        
-      </div>
+      
     </div>
     <div class="row">
       <div class="col">
         
       </div>
       <div class="col"><button type="submit" class="col btn btn-dark">Boogle</button></div>
-
+  </form>
       <div class="col">
         
       </div>
-      <p>
+      <br>
+      <br>
+      <div>
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-          Link with href
+          Search by ISBN
         </a>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-          Button with data-bs-target
-        </button>
-      </p>
+      </div>
+
       <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-          Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        <div class="card card-body" style="max-width: 40rem;">
+          <form action="/search_isbn" method="GET">
+            <label for="isbn">ISBN</label>
+            <div class="row">
+              <div class="col-4"></div>
+
+              <div class="col-3" style = "text-align: center">
+                <input class="form-control " type="text" placeholder="ISBN" name="isbn">
+              </div>
+
+              <div class="col-1" style = "text-align: center">
+                <input class= "btn btn-secondary" type="submit">
+              </div>
+              <div class="col-4"></div>
+
+            </div>
+            
+          </form>
         </div>
       </div>
+</div>
       
-      
-    </div>
-  </form>
-</div> 
+    
 
 {% endblock %}

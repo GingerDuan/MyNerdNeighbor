@@ -10,25 +10,23 @@
   {%endif%}
   <a href="/">Back to the homepage</a>
 </div>
-  
-<form method = "GET" class = "container" action ="/search" style = "text-align: center">
-<h1>Boogle 2.0</h1>
 
-<lable>search the book you want:</lable><br>
-<div class="row">
-    <div class="col-3"></div>
-    <div class="col-5">
-      <input id="s_key" class="form-control" type = "text" placeholder="keyword:title/author/year" name = "keyword" >
-    </div>     
-    <div class="col-1">
-      <button type="submit" class="col btn btn-dark">Boogle</button>
-    </div>
-  </div>
+<div class="container">
+  <form method = "GET" class = "container" action ="/search" style = "text-align: center">
+    <h1>Boogle 2.0</h1>
 
-
-<!-- {{payload}} -->
-
-
+    <lable>search the book you want:</lable><br>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-5">
+          <input id="s_key" class="form-control" type = "text" placeholder="keyword:title/author/year" name = "keyword" >
+        </div>     
+        <div class="col-1">
+          <button type="submit" class="col btn btn-dark">Boogle</button>
+        </div>
+      </div>
+  </form>
+</div>
 
 <div id="results" class = "container">
 <h4>Results: we found {{data.totalItems}} results about "{{keyword}}"</h4>
@@ -147,7 +145,7 @@
       </div>
     
     </div>
-</div>
+
   
 
 {% endblock %}

@@ -33,7 +33,7 @@ def homepage():
         return render_template("homepage.html",user = user)
         
     else:
-        flash("You need log in XD")
+        flash("Hi there, welcome to my nerd nrighbor!")
         return render_template("homepage.html")
 
 @app.route("/user_profile/")
@@ -48,13 +48,8 @@ def show_user_ownpage():
         user = crud.get_user_by_id(user_id)
 
         bookshelves = crud.get_shelf_by_userid(user_id)
-
-        own_putings = crud.get_puting_by_shelfid(bookshelves[0].shelf_id)
-        toread_putings = crud.get_puting_by_shelfid(bookshelves[1].shelf_id)
-        reading_putings = crud.get_puting_by_shelfid(bookshelves[2].shelf_id)
-        haveread_putings = crud.get_puting_by_shelfid(bookshelves[3].shelf_id)
         
-        return render_template("user_profile.html",user=user,bookshelves=bookshelves,own_putings=own_putings,toread_putings=toread_putings,reading_putings=reading_putings,haveread_putings=haveread_putings)
+        return render_template("user_profile.html",user=user,bookshelves=bookshelves)
         
 
 @app.route("/user_shelves/")
@@ -69,15 +64,13 @@ def show_user_library():
         user = crud.get_user_by_id(user_id)
 
         bookshelves = crud.get_shelf_by_userid(user_id)
+        
+        return render_template("user_library.html",user=user,bookshelves=bookshelves)
+        
+@app.route("/register")
+def sign_in_page():
 
-        own_putings = crud.get_puting_by_shelfid(bookshelves[0].shelf_id)
-        toread_putings = crud.get_puting_by_shelfid(bookshelves[1].shelf_id)
-        reading_putings = crud.get_puting_by_shelfid(bookshelves[2].shelf_id)
-        haveread_putings = crud.get_puting_by_shelfid(bookshelves[3].shelf_id)
-        
-        return render_template("user_library.html",user=user,bookshelves=bookshelves,own_putings=own_putings,toread_putings=toread_putings,reading_putings=reading_putings,haveread_putings=haveread_putings)
-        
-    
+    return render_template("register.html")
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -91,7 +84,7 @@ def register():
     
     if user:
         flash("You can't create an account with the same email, please try another one!")
-        return redirect("/")
+        return redirect("/register")
     else:
         user = crud.create_user(email,name,password,zipcode)
         
@@ -131,7 +124,7 @@ def login():
 
     else: 
         flash("Sorry, passwords do not match!")
-        return redirect("/")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():
@@ -151,10 +144,68 @@ def book_search():
     """Send the request and get the api data"""
 
     keyword = request.args.get('keyword','')
+
+    url = 'https://www.googleapis.com/books/v1/volumes?'
+    payload = { "q":keyword,'maxResults':30,}
+    
+    res = requests.get(url,params=payload)
+    data = res.json()
+
+    if 'totalItems' in data:
+        return render_template('boogle_res.html', payload=payload,data = data,keyword =keyword)
+    else:
+        flash("you need type something")
+        return redirect("/boogle2")
+
+@app.route("/search_author")
+def author_search():
+    """Send the request and get the api data"""
+    
+    keyword = request.args.get('keyword','')
+    author = request.args.get('author','')
+
+    url = 'https://www.googleapis.com/books/v1/volumes?'
+    payload = { "q":keyword,
+                "inauthor":author,
+                'maxResults':30,
+                }
+    
+    res = requests.get(url,params=payload)
+    data = res.json()
+
+    if 'totalItems' in data:
+        return render_template('boogle_res.html', payload=payload,data = data,keyword =keyword)
+    else:
+        flash("you need type something")
+        return redirect("/boogle2")
+
+@app.route("/search_isbn")
+def isbn_search():
+    """Send the request and get the api data"""
+
+    isbn = request.args.get("isbn",'')
+    
+    url = f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&maxResults:30'
+    
+    
+    res = requests.get(url)
+    data = res.json()
+
+    if 'totalItems' in data:
+        return render_template('boogle_res.html',data = data,keyword=isbn)
+    else:
+        flash(f"you need type something {isbn}")
+        return redirect("/boogle2")
+
+@app.route("/search_publisher")
+def publisher_search():
+    """Send the request and get the api data"""
+
+    keyword = request.args.get('keyword','')
     # intitle = request.args.get("title",'')
     # author = request.args.get('author','')
     # isbn = request.args.get("isbn",'')
-    # inpublisher = request.args.get("publisher","")
+    inpublisher = request.args.get("publisher","")
 
     url = 'https://www.googleapis.com/books/v1/volumes?'
     payload = { "q":keyword,
@@ -171,12 +222,8 @@ def book_search():
     if 'totalItems' in data:
         return render_template('boogle_res.html', payload=payload,data = data,keyword =keyword)
     else:
+        flash("you need type something")
         return redirect("/boogle2")
-
-@app.route("/search_detail")
-def search_detail():
-
-    return render_template("boogle_detail.html")
     
 
 @app.route("/remove_from_shelf",methods=["POST"])
