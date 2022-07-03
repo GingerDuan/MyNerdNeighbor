@@ -3,48 +3,55 @@
 
 {% block body %}
 
-<section class="vh-100">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-6 text-black">
+<section class="h-100 h-custom" style="background-color: #F4F1DE;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <img src="/static/pic/反.jpg"
+            class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+            alt="Sample photo">
+          <div class="card-body p-4 p-md-5">
+            <h4 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Log in</h4>
 
-        <div class="px-5 ms-xl-4">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1004.14 723.66" width = "80" height="80"><defs><style>.cls-1,.cls-3,.cls-5{fill:#fff;}.cls-1,.cls-2,.cls-3,.cls-4{stroke:#000;stroke-miterlimit:10;}.cls-1{stroke-width:10px;}.cls-2{fill:#a67538;}.cls-2,.cls-3,.cls-4{stroke-width:40px;}</style></defs><g id="Layer_1" data-name="Layer 1"><path class="cls-1" d="M830.61,136.83" transform="translate(-174.26 -12.17)"/><polyline class="cls-2" points="616.88 629.17 984 621.47 980.18 97.8 922.81 76.61"/><polyline class="cls-2" points="474.8 603.25 54.73 628.17 20.93 125.38 84.94 100.01"/><line class="cls-3" x1="46.1" y1="602.21" x2="124.18" y2="539.28"/><line class="cls-3" x1="979.18" y1="602.21" x2="925.64" y2="530.71"/><path class="cls-4" d="M621.89,638H794C717.49,453.12,621.89,638,621.89,638Z" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M702.37,159.52l.26,15,7.56,420.63c138.19-215.94,388.49-48.4,388.49-48.4V88.78c-266-122.87-401.53-7.45-401.53-7.45Z" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M681.44,159.35l.41,14.72,11.49,413.42C539.65,382.27,287,559.15,287,559.15L265.91,109.46c271-133.79,417.36-27.15,417.36-27.15Z" transform="translate(-174.26 -12.17)"/><ellipse class="cls-5" cx="764.5" cy="501.06" rx="212.05" ry="202.6"/><path d="M938.76,330.63c51.61,0,100,19.2,136.39,54.07,35.89,34.42,55.65,80.07,55.65,128.53s-19.76,94.11-55.65,128.54c-36.34,34.86-84.78,54.06-136.39,54.06s-100-19.2-136.39-54.06c-35.89-34.43-55.66-80.08-55.66-128.54s19.77-94.11,55.66-128.53c36.34-34.87,84.78-54.07,136.39-54.07m0-40c-128.16,0-232,99.66-232,222.6s103.89,222.6,232,222.6,232-99.66,232-222.6-103.89-222.6-232-222.6Z" transform="translate(-174.26 -12.17)"/><ellipse class="cls-5" cx="294.13" cy="497.9" rx="212.05" ry="202.6"/><path d="M468.39,327.47c51.61,0,100.05,19.2,136.39,54.07,35.89,34.43,55.66,80.07,55.66,128.53s-19.77,94.11-55.66,128.54c-36.34,34.86-84.78,54.06-136.39,54.06S368.34,673.47,332,638.61c-35.89-34.43-55.66-80.08-55.66-128.54S296.11,416,332,381.54c36.34-34.87,84.78-54.07,136.39-54.07m0-40c-128.15,0-232,99.67-232,222.6s103.9,222.6,232.05,222.6S700.44,633,700.44,510.07s-103.89-222.6-232.05-222.6Z" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M767.21,202.38c118.55-61.61,275.33,7.7,275.33,7.7" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M618.4,213.93c-118.54-61.61-275.33,7.7-275.33,7.7" transform="translate(-174.26 -12.17)"/><rect class="cls-5" x="695.51" y="490.01" width="141.11" height="37.89"/><polygon points="836.62 490.01 695.51 490.01 695.51 527.9 836.62 527.9 836.62 490.01 836.62 490.01"/><rect class="cls-5" x="234.55" y="490.01" width="141.11" height="37.89"/><polygon points="375.66 490.01 234.55 490.01 234.55 527.9 375.66 527.9 375.66 490.01 375.66 490.01"/></g></svg>
-          <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">  Log in</h3>
+            <form class="px-md-2" action="/login" method="POST">
+
+              
+
+              <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
+                
+
+                <div class="col-md-8">
+                  
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example1q">Email</label>
+                    <input type="text" id="form1Example1q" name = "email" class="form-control" />
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example1q">Password</label>
+                    <input type="password" id="form4Example1q" name = "password" class="form-control" />
+                  </div>
+
+                  
+                </div>
+              </div>
+
+            
+              <button type="submit" class="btn btn-success btn-lg mb-1">Login</button>
+
+              <p>Don't have an account? <a href="/register" class="link">Register here</a></p>
+              <div style = "text-align: right;">
+                <svg style = "text-align: right;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1004.14 723.66" width = "80" height="80"><defs><style>.cls-1,.cls-3,.cls-5{fill:#fff;}.cls-1,.cls-2,.cls-3,.cls-4{stroke:#000;stroke-miterlimit:10;}.cls-1{stroke-width:10px;}.cls-2{fill:#a67538;}.cls-2,.cls-3,.cls-4{stroke-width:40px;}</style></defs><g id="Layer_1" data-name="Layer 1"><path class="cls-1" d="M830.61,136.83" transform="translate(-174.26 -12.17)"/><polyline class="cls-2" points="616.88 629.17 984 621.47 980.18 97.8 922.81 76.61"/><polyline class="cls-2" points="474.8 603.25 54.73 628.17 20.93 125.38 84.94 100.01"/><line class="cls-3" x1="46.1" y1="602.21" x2="124.18" y2="539.28"/><line class="cls-3" x1="979.18" y1="602.21" x2="925.64" y2="530.71"/><path class="cls-4" d="M621.89,638H794C717.49,453.12,621.89,638,621.89,638Z" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M702.37,159.52l.26,15,7.56,420.63c138.19-215.94,388.49-48.4,388.49-48.4V88.78c-266-122.87-401.53-7.45-401.53-7.45Z" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M681.44,159.35l.41,14.72,11.49,413.42C539.65,382.27,287,559.15,287,559.15L265.91,109.46c271-133.79,417.36-27.15,417.36-27.15Z" transform="translate(-174.26 -12.17)"/><ellipse class="cls-5" cx="764.5" cy="501.06" rx="212.05" ry="202.6"/><path d="M938.76,330.63c51.61,0,100,19.2,136.39,54.07,35.89,34.42,55.65,80.07,55.65,128.53s-19.76,94.11-55.65,128.54c-36.34,34.86-84.78,54.06-136.39,54.06s-100-19.2-136.39-54.06c-35.89-34.43-55.66-80.08-55.66-128.54s19.77-94.11,55.66-128.53c36.34-34.87,84.78-54.07,136.39-54.07m0-40c-128.16,0-232,99.66-232,222.6s103.89,222.6,232,222.6,232-99.66,232-222.6-103.89-222.6-232-222.6Z" transform="translate(-174.26 -12.17)"/><ellipse class="cls-5" cx="294.13" cy="497.9" rx="212.05" ry="202.6"/><path d="M468.39,327.47c51.61,0,100.05,19.2,136.39,54.07,35.89,34.43,55.66,80.07,55.66,128.53s-19.77,94.11-55.66,128.54c-36.34,34.86-84.78,54.06-136.39,54.06S368.34,673.47,332,638.61c-35.89-34.43-55.66-80.08-55.66-128.54S296.11,416,332,381.54c36.34-34.87,84.78-54.07,136.39-54.07m0-40c-128.15,0-232,99.67-232,222.6s103.9,222.6,232.05,222.6S700.44,633,700.44,510.07s-103.89-222.6-232.05-222.6Z" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M767.21,202.38c118.55-61.61,275.33,7.7,275.33,7.7" transform="translate(-174.26 -12.17)"/><path class="cls-3" d="M618.4,213.93c-118.54-61.61-275.33,7.7-275.33,7.7" transform="translate(-174.26 -12.17)"/><rect class="cls-5" x="695.51" y="490.01" width="141.11" height="37.89"/><polygon points="836.62 490.01 695.51 490.01 695.51 527.9 836.62 527.9 836.62 490.01 836.62 490.01"/><rect class="cls-5" x="234.55" y="490.01" width="141.11" height="37.89"/><polygon points="375.66 490.01 234.55 490.01 234.55 527.9 375.66 527.9 375.66 490.01 375.66 490.01"/></g></svg>
+              </div>
+            </form>
+
+          </div>
         </div>
-
-        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
-          
-          <form style="width: 23rem;" action="/login" method="POST">
-
-            <div class="form-outline mb-4">
-              <input name="email" type="email" id="form2Example18" class="form-control form-control-lg" />
-              <label class="form-label" for="form2Example18">Email address</label>
-            </div>
-
-            <div class="form-outline mb-4">
-              <input name="password" type="password" id="form2Example28" class="form-control form-control-lg" />
-              <label class="form-label" for="form2Example28">Password</label>
-            </div>
-
-            <div class="pt-1 mb-4">
-              <button type="submit" class="btn btn-success btn-lg btn-block" type="button">Login</button>
-            </div>
-
-            <!-- <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p> -->
-            <p>Don't have an account? <a href="/register" class="link-info">Register here</a></p>
-
-          </form>
-
-        </div>
-
-      </div>
-      <div class="col-sm-6 px-0 d-none d-sm-block">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img3.webp"
-          alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
       </div>
     </div>
   </div>
 </section>
+
 
 {% endblock %}

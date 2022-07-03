@@ -2,17 +2,48 @@
 {% block title %}My Nerd Neighbor{% endblock %}
 
 {% block body %}
-<div style = "text-align: right;">
-  <a href="/logout">logout</a>
-</div>
+
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://pixabay.com/get/ga614424c3349d1a2aeb96635deeed93a7ff22d95829b2cccd3bd472291bf854ea5aa420eed978140440346a92e7f2ac7410eef02c3338ff32215df0bbc4a88eb30bb3a62db2e981c67abc8fa0da6ea04_1920.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Some representative placeholder content for the first slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://cdn.pixabay.com/photo/2016/01/27/04/32/books-1163695_960_720.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second slide label</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://pixabay.com/get/g6efdcb0c1cc4bfd1f6478e5c33be6a46af60790660c7b82375e9cd2e7dd8e1acbf559ea0d49af829c9702b079e6628c9c2d4e948ef6e0c349e6f8c34c514651d8e0a888ad8d12e1bc88700171771f4ed_1920.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third slide label</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> 
+
 
   <div style = "text-align: center;">
-    <img  src="/static/pic/My nerd neighbor.png">
-      
-        
-        <!-- <img src ="https://cdn.dribbble.com/users/1044993/screenshots/5564939/media/7f2fd62c5832ca4558d6aefe3a7dc1c3.png"width = "300" height="300"> -->
-
-
 
         <h2></h2>
         <ul>
@@ -37,14 +68,8 @@
         </ul>
   </div>
   <div id='map' style='width: 400px; height: 300px;'></div>
-<!-- <script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoiZ2luZ2VyZHVhbiIsImEiOiJjbDNjb2FxdHUwMGdkM2xvYzRmYmtvMWs5In0.A5gjtoYp8bieQkt6rk9Erg';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11'
-  });
-</script> -->
-<!-- <iframe width='100%' height='700px' src="https://api.mapbox.com/styles/v1/gingerduan/cl3nhrh0i000214lkhnhho7l4/draft.html?title=false&access_token=pk.eyJ1IjoiZ2luZ2VyZHVhbiIsImEiOiJjbDNjb2FxdHUwMGdkM2xvYzRmYmtvMWs5In0.A5gjtoYp8bieQkt6rk9Erg&zoomwheel=false#12/48.8665/2.3176" title="Basic" style="border:none;"></iframe> -->
+
+
 
 
 {%if "user_id" not in session%}

@@ -330,12 +330,15 @@ def book_upload_page():
 @app.route("/pro_upload2", methods =['POST'])
 def book_uploaderr():
 
-    my_file = request.files["my_file"]    
-    result = cloudinary.uploader.upload(my_file,
+    my_file = request.files["my_file"]
+    if my_file == None:
+        img_url = "https://cdn.pixabay.com/photo/2014/04/02/16/21/book-307045_960_720.png"    
+    else:
+        result = cloudinary.uploader.upload(my_file,
                                         api_key=CLOUDINARY_KEY,
                                         api_secret=CLOUDINARY_SECRET,
                                         cloud_name=CLOUD_NAME)
-    img_url = result['secure_url']
+        img_url = result['secure_url']
     
     
     

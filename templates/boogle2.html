@@ -1,65 +1,81 @@
 {% extends 'base.html' %}
 {% block title %}Boogle-MyNerdNeighbor{% endblock %}
 
-{% block body %}
+{% block body %} 
 
-<header>
-    <h1></h1>
-    <p></p>
-    <p></p>
-</header>  
 
-<div class="container mb-10">
 
-  <form class= "mb-10" method = "GET" action ="/search" style = "text-align: center">
-    <div><img src="/static/pic/Boogle.png" alt="" width="380" height="200"></div>
-      
-    <lable for="s_key">search any book you want:</lable><br>
+  <div class="container" style = "margin-top:180px; margin-bottom:80px">
+    <form method = "GET" class = "container" action ="/search" style = "text-align: center">
+      <div style = "margin-bottom:40px;"><img src="/static/pic/Boogle.png" href="/boogle2" width="350" height="180"></div>
+  
+      <lable>search the book you want:</lable><br>
+      <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <input id="key" class="form-control" type = "text" placeholder="keyword:title/author/year" name = "keyword" >
+          </div>     
+          <div class="col-1">
+            <button type="submit" class="col btn btn-dark">Boogle</button>
+          </div>
+        </div>
+    </form>
+  </div>
+
+<div style="text-align:center;"><hr></div>
+  <div style = "margin-bottom:350px">
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
-        <input id="s_key" class="form-control" type = "text" placeholder="keyword" name = "keyword" >
-      </div>     
-      
+      <div style = "margin-bottom:10px; text-align: center;">
+        <a class="btn btn-success" data-bs-toggle="collapse" href="#isbnbox" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Search by ISBN code
+        </a>
+
+        
+        
+      </div>
+
+      <div class="collapse" id="isbnbox" style = "text-align: center;">
+          <div class="card card-body" style="max-width: 30rem; text-align: center"> 
+            <form action="/search_isbn" method="GET" style="text-align: center">
+
+                <div class="row">
+                  <div class="col-9"><input class="form-control " type="text" placeholder="ISBN" name="isbn"> </div>
+                  <div class="col-1"><input class= "btn btn-secondary" type="submit"></div>
+                  <a href="/user_profile" >what is ISBN?</a>
+                </div>
+        
+            </form>
+          </div>
+          <br>
+        </div>
+      </div>
     </div>
     <div class="row">
-      <div class="col">
-        
-      </div>
-      <div class="col"><button type="submit" class="col btn btn-dark">Boogle</button></div>
-  </form>
-      <div class="col">
-        
-      </div>
-      <br>
-      <br>
-      <div>
-        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-          Search by ISBN
+      <div class="col-3"></div>
+      <div class="col-6">
+      <div style = "margin-bottom:10px; text-align: center;">
+        <a class="btn btn-info" data-bs-toggle="collapse" href="#authorbox" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Search by author
         </a>
       </div>
 
-      <div class="collapse" id="collapseExample">
-        <div class="card card-body" style="max-width: 40rem;">
-          <form action="/search_isbn" method="GET">
-            <label for="isbn">ISBN</label>
-            <div class="row">
-              <div class="col-4"></div>
+      <div class="collapse" id="authorbox" style = "text-align: center;">
+          <div class="card card-body" style="max-width: 30rem; text-align: center"> 
+            <form action="/search_isbn" method="GET" style="text-align: center">
 
-              <div class="col-3" style = "text-align: center">
-                <input class="form-control " type="text" placeholder="ISBN" name="isbn">
-              </div>
-
-              <div class="col-1" style = "text-align: center">
-                <input class= "btn btn-secondary" type="submit">
-              </div>
-              <div class="col-4"></div>
-
-            </div>
-            
-          </form>
+                <div class="row">
+                  <div class="col-9"><input class="form-control " type="text" placeholder="author name" name="author"> </div>
+                  <div class="col-1"><input class= "btn btn-secondary" type="submit"></div>
+                  
+                </div>
+        </div>
+            </form>
         </div>
       </div>
+    </div>
+  </div>
 </div>
       
     

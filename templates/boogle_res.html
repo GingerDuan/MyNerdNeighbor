@@ -3,22 +3,15 @@
 
 {% block body %}
 
-  
-<div style = "text-align: right;">
-  {%if user is not none%}
-    <a href="/user_profile/">View your own page</a>
-  {%endif%}
-  <a href="/">Back to the homepage</a>
-</div>
 
-<div class="container">
+<div class="container" style = "margin-top:110px; margin-bottom:80px">
   <form method = "GET" class = "container" action ="/search" style = "text-align: center">
-    <h1>Boogle 2.0</h1>
+    <div><img src="/static/pic/Boogle.png" href="/boogle2" width="320" height="160"></div>
 
     <lable>search the book you want:</lable><br>
     <div class="row">
-        <div class="col-3"></div>
-        <div class="col-5">
+        <div class="col-2"></div>
+        <div class="col-7">
           <input id="s_key" class="form-control" type = "text" placeholder="keyword:title/author/year" name = "keyword" >
         </div>     
         <div class="col-1">
@@ -28,17 +21,17 @@
   </form>
 </div>
 
-<div id="results" class = "container">
+<div id="results" class = "container" style = "margin-bottom: 60px;">
 <h4>Results: we found {{data.totalItems}} results about "{{keyword}}"</h4>
     {%for book in data['items']%}
-    <div class = "row bookContainer" style = "margin-top: 30px ;">
+    <div class = "row bookContainer" style = "margin-top: 30px;">
 
             
         <a href= "/book/{{book.id}}" class = 'col-4 col-md-3 col-lg-2 col-md-xl-1 book_path'>
             {%if 'imageLinks' in book['volumeInfo']%}
                 <img class="book_img" src="{{book.volumeInfo.imageLinks.thumbnail}}" width="128" height="182">
             {%else%}
-            <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "138" height="172">
+            <img class="book_img" src="https://cdn.pixabay.com/photo/2014/04/02/16/21/book-307045_960_720.png" width = "138" height="172">
             {%endif%}
         </a>
         
@@ -113,13 +106,14 @@
                     <div class = ellip-block>Description:{{book.volumeInfo.description}}</div>
                     {%endif%}
                 
+        
         </div>
-        </div>
+</div>
   
         
     {%endfor%}
- 
-    <!-- <div class="card mb-3" >
+    <hr>
+    <div class="card mb-3" >
         <div class="row g-0">
           <div class="col-md-4">
             <img src="..." class="img-fluid rounded-start" alt="...">
@@ -132,11 +126,11 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <div class="card">
         
-        <div class="card-body">
+        <div class="card-body" style="text-align:center;">
           <h5 class="card-title">Cannot find the book you want?</h5>
           <p class="card-text">Search by details catagroy(author/isbn/title) or Create a book on your one</p>
           <a href="/search_detail" class="btn btn-primary">Parameter Searching</a>

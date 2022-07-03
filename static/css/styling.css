@@ -1,22 +1,21 @@
-/* .card-columns {
-  @include media-breakpoint-only(lg) {
-    column-count: 4;
-  }
-  @include media-breakpoint-only(xl) {
-    column-count: 5;
-  }
-} */
 
+
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Quando', serif;
+}
 
 body{
+  font-family: 'Signika', sans-serif;
+  font-size:medium;
   margin-top:20px;
   text-align: left;
   background-color: #F4F1DE;    
 }
 
-.main-body {
-  padding: 15px;
+.container-fluid{
+  padding: 0ch;
 }
+
 .card {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }

@@ -2,168 +2,187 @@
 {% block title %}Boogle-MyNerdNeighbor{% endblock %}
 
 {% block body %}
-<div class="container">
-    <!-- title -->
-    <div class="title_group row">
-        {%if book != None %}
-            <h3>{{book.title}}{%if year != None%}
-                        ({{year}})
-                    {%endif%}</h3> 
-                </h3>
-                {%if 'subtitle' in book%}
-                    <h4>{{book.subtitle}}</h4>
+<div class="container" >
+    <div class="row" style = "margin-top:150px;">
+        <!-- book info mix -->
+        <div id="book_info" class="col-9">
+            <!-- title -->
+            <div class="title_group row" style = "margin-top:10px;">
+                {%if book != None %}
+                    <h3>{{book.title}}
+                        {%if year != None%}
+                                ({{year}})
+                            {%endif%}
+                    </h3> 
+                    <!-- subtitle -->        
+                    {%if 'subtitle' in book%}
+                        <h4>{{book.subtitle}}</h4>
+                    {%endif%}
+                <!-- user made book page -->
+                {%else%}
+                    <h3>{{anybook.title}}              
                 {%endif%}
-        {%else%}
-            <h3>{{anybook.title}}              
-        {%endif%}
-            <!-- subtitle -->
-        
-    </div>
-    <!-- bookcover -->
-    <div class="book_path">
-        {%if anybook%}
-            {%if anybook.cover%}
-                <img class="book_img" src="{{anybook.cover}}" width = "160" height="220">
-            {%else%}
-                <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "160" height="220">
-                <div>
-                    <label for="upload">Google don't have a cover for this book, want to upload a cover path to our data base?</label>
-                    <form name = "upload" action="/pro_upload" method="post" enctype="multipart/form-data">
-                        <input type="file" name = "my_file" class="type">
-                        <input type="hidden" name = "gid" class="type" value={{data.id}}>
-                        <input type="hidden" name = "title" class="type" value={{book.title}}>
-                        <input type="submit" class="type" value = "submit">
-                    </form>
-                </div>
-            {%endif%}
-        {%elif 'imageLinks' in book%}
-            <img class="book_img" src="{{book.imageLinks.thumbnail}}" width = "160" height="220">
-        {%else%}
-            <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "160" height="220">
-            <div>
-                <label for="upload">Google don't have a cover for this book, want to upload a cover path to our data base?</label>  
-                <form name = "upload" action="/pro_upload" method="post" enctype="multipart/form-data">
-                    <input type="file" name = "my_file" class="type">
-                    <input type="hidden" name = "gid" class="type" value={{data.id}}>
-                    <input type="hidden" name = "title" class="type" value={{book.title}}>
-                    <input type="submit" class="type" value = "submit">
-                </form>
+                    
+                
             </div>
-        {%endif%}
-        <!-- bookcover_uploader -->
-        
-    </div>
+                
+            <!-- book detail -->
+            <div class ="author">
+                {%if book%}
+                    {%if 'authors' in book%}
+                        by: 
+                        {%for author in book.authors%}
+                        <span class="badge text-bg-primary">{{author}}</span>
+                            {%endfor%}
+                    {%endif%}
+                {%else%}
+                    {%if anybook.author != None %}
+                        by:
+                    <span class="badge text-bg-primary">{{anybook.author}}</span>
+                        
+                        
+                            
+                    {%endif%}
+                {%endif%}
+            </div>
 
-    <!-- Model -->
-    <div class="model_set">
-        <!-- Model button -->
-        {%if anybook%}
-            <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{anybook.book_id}}> Add to my bookshelf</button>                    
-            <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{anybook.book_id}}>to read</button>
-            <button type="button" class="btn btn-secondary reading_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="reading" value ={{anybook.book_id}}>reading</button>
-            <button type="button" class="btn btn-secondary have_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="haveread" value ={{anybook.book_id}}>have read</button>
-        {%else%}
-            <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{data.id}}> Add to my bookshelf</button>                    
-            <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{data.id}}>to read</button>
-            <button type="button" class="btn btn-secondary reading_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="reading" value ={{data.id}}>reading</button>
-            <button type="button" class="btn btn-secondary have_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="haveread" value ={{data.id}}>have read</button>
-        {%endif%}
-        <!-- Model box -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Keep book on track</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
+            <div class="year">
+                {%if book%}
+                    {%if "publishedDate" in book %}
+                        Published Date: {{book.publishedDate}}
+                    
+                    {%endif%}
+                {%else%}
+                    {%if anybook.date %}
+                        Published Date: {{anybook.date}}
+                        
+                    {%endif%}
+                {%endif%}
+            </div>
+            <div class="publisher">
+                {%if book%}
+                    {%if book.publisher %}
+                        Publisher: {{book.publisher}}
+                    {%endif%}
+                {%else%}
+                    {%if anybook.publisher %}
+                        Publisher: {{anybook.publisher}}
+                        
+                    {%endif%}
+                {%endif%}
+
+            </div>
+
+            {%if book%}
+                    <div class="selfLink">
+                        <a class="book_title" href="{{data.selfLink}}" target="_Blank">{{data.selfLink}}</a>
                     </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group" id="status">
-                            <label for="recipient-name" class="col-form-label">Status:</label>
-                            <input id="own" type="radio" name="status" value=3>
-                            <label>I own this book</label>
+                {%endif%}
 
-                            <input id="toread" type="radio" name="status" value=2>
-                            <label>to read</label>
-            
-                            <input id="reading" type="radio" name="status" value=1>
-                            <label>reading</label>
-            
-                            <input id="haveread" type="radio" name="status" value=0>
-                            <label>have read</label>
+
+                    <!-- Model -->
+                <div class="model_set">
+                    <!-- Model button -->
+                    {%if anybook%}
+                        <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{anybook.book_id}}> Add to my bookshelf</button>                    
+                        <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{anybook.book_id}}>to read</button>
+                        <button type="button" class="btn btn-secondary reading_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="reading" value ={{anybook.book_id}}>reading</button>
+                        <button type="button" class="btn btn-secondary have_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="haveread" value ={{anybook.book_id}}>have read</button>
+                    {%else%}
+                        <button type="button" class="btn btn-dark add_book_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="own" value ={{data.id}}> Add to my bookshelf</button>                    
+                        <button type="button" class="btn btn-secondary to_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="toread" value ={{data.id}}>to read</button>
+                        <button type="button" class="btn btn-secondary reading_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="reading" value ={{data.id}}>reading</button>
+                        <button type="button" class="btn btn-secondary have_read_btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="haveread" value ={{data.id}}>have read</button>
+                    {%endif%}
+                    <!-- Model box -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Keep book on track</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group" id="status">
+                                        <label for="recipient-name" class="col-form-label">Status:</label>
+                                        <input id="own" type="radio" name="status" value=3>
+                                        <label>I own this book</label>
+
+                                        <input id="toread" type="radio" name="status" value=2>
+                                        <label>to read</label>
+                        
+                                        <input id="reading" type="radio" name="status" value=1>
+                                        <label>reading</label>
+                        
+                                        <input id="haveread" type="radio" name="status" value=0>
+                                        <label>have read</label>
+                                    </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Leave commnet or add some notes:</label>
+                                    <textarea class="form-control" id="note-text"></textarea>
+                                </div>
+                                </form>
+                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary submit" data-bs-dismiss="modal" id="submit">Submit</button>
+                                </div>
+                            </div>
                         </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Leave commnet or add some notes:</label>
-                        <textarea class="form-control" id="note-text"></textarea>
+                    </div> 
+                </div> 
+
                     </div>
-                    </form>
-                </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary submit" data-bs-dismiss="modal" id="submit">Submit</button>
+
+
+
+            <div id="book_info" class="col-1"> 
+            <!-- bookcover -->
+            <div class="book_path" style = "text-align: right">
+                {%if anybook%}
+                    {%if anybook.cover%}
+                        <img class="book_img" src="{{anybook.cover}}" width = "160" height="220">
+                    {%else%}
+                        <img class="book_img" src="https://cdn.pixabay.com/photo/2014/04/02/16/21/book-307045_960_720.png" width = "160" height="220">
+                        <div>
+                            <label for="upload">Google don't have a cover for this book, want to upload a cover path to our data base?</label>
+                            <form name = "upload" action="/pro_upload" method="post" enctype="multipart/form-data">
+                                <input type="file" name = "my_file" class="type">
+                                <input type="hidden" name = "gid" class="type" value={{data.id}}>
+                                <input type="hidden" name = "title" class="type" value={{book.title}}>
+                                <input type="submit" class="type" value = "submit">
+                            </form>
+                        </div>
+                    {%endif%}
+                {%elif 'imageLinks' in book%}
+                    <img class="book_img" src="{{book.imageLinks.thumbnail}}" width = "160" height="220">
+                {%else%}
+                    <img class="book_img" src="https://icon-library.com/images/book-icon-png/book-icon-png-28.jpg" width = "160" height="220">
+                    <div>
+                        <label for="upload">Google don't have a cover for this book, want to upload a cover path to our data base?</label>  
+                        <form name = "upload" action="/pro_upload" method="post" enctype="multipart/form-data">
+                            <input type="file" name = "my_file" class="type">
+                            <input type="hidden" name = "gid" class="type" value={{data.id}}>
+                            <input type="hidden" name = "title" class="type" value={{book.title}}>
+                            <input type="submit" class="type" value = "submit">
+                        </form>
                     </div>
-                </div>
+                {%endif%}
+                <!-- bookcover_uploader -->
+                
             </div>
-        </div> 
-    </div> 
+        </div>
+
+    </div>
+    
+   
 
     
-<!-- book detail -->
-<div class ="author">
-    {%if book%}
-        {%if 'authors' in book%}
-            by: 
-            {%for author in book.authors%}
-            <span class="badge text-bg-primary">{{author}}</span>
-                {%endfor%}
-        {%endif%}
-    {%else%}
-        {%if anybook.author != None %}
-            by:
-        <span class="badge text-bg-primary">{{anybook.author}}</span>
-            
-               
-                
-        {%endif%}
-    {%endif%}
-</div>
 
-<div class="year">
-    {%if book%}
-        {%if "publishedDate" in book %}
-            Published Date: {{book.publishedDate}}
-        
-        {%endif%}
-    {%else%}
-        {%if anybook.date %}
-            Published Date: {{anybook.date}}
-            
-        {%endif%}
-    {%endif%}
-</div>
-<div class="publisher">
-    {%if book%}
-        {%if book.publisher %}
-            Publisher: {{book.publisher}}
-        {%endif%}
-    {%else%}
-        {%if anybook.publisher %}
-            Publisher: {{anybook.publisher}}
-            
-        {%endif%}
-    {%endif%}
-
-</div>
-
-{%if book%}
-        <div class="selfLink">
-            <a class="book_title" href="{{data.selfLink}}" target="_Blank">{{data.selfLink}}</a>
-        </div>
-    {%endif%}
-
-<div class="description">
+<div class="description" style="margin-top:15px;margin-right: 10px;">
     {%if book%}
         {%if "description" in book %}
             Description: {{book.description|safe}}
