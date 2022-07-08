@@ -45,7 +45,7 @@ class Puting(db.Model):
     shelf_id = db.Column(db.Integer,db.ForeignKey("shelf.shelf_id"))
     book_id = db.Column(db.Integer,db.ForeignKey("books.book_id"))
     user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"))
-    time = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
+    time = db.Column(db.DateTime)
     note = db.Column(db.Text,nullable=True)
 
     book = db.relationship("Book", backref="puting")

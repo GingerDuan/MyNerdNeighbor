@@ -50,10 +50,9 @@
                 Neighborhood
               </a>
               <ul class="dropdown-menu bg-success" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/neighbor">Neighborpage</a></li>
+                <li><a class="dropdown-item" href="/neighbor_library">Library</a></li>
                 
-                <li><a class="dropdown-item" href="/neighborlibrary">Library</a></li>
-                <li><a class="dropdown-item" href="#">???</a></li>
+                <li><a class="dropdown-item" href="/neighbor_feed">Neighborhood</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/move">move my neighbor</a></li>
               </ul>
@@ -64,16 +63,17 @@
                 User
               </a>
               <ul class="dropdown-menu bg-success" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/user_shelves">bookshelf</a></li>
-                <li><a class="dropdown-item" href="#">book tracker</a></li>
+                <li><a class="dropdown-item" href="/user_profile">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="/logout">log out</a></li>
+                <li><a class="dropdown-item" href="/login_page">Log In</a></li>
+                <li><a class="dropdown-item" href="/register">Sign up</a></li>                
+                <li><a class="dropdown-item" href="/logout">Log Out</a></li>
               </ul>
             </li>
             
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/user_profile">My profile</a>
-            </li>
+            </li> -->
           </ul>
           
           <form method = "GET" action = "/search" class="d-flex" role="search">
@@ -85,15 +85,15 @@
       </div>
     </nav>
 
-    <div style = "margin-top:85px; align-content: center;"">
+    <div style = "margin-top:77px; align-content: center;">
       {% for msg in get_flashed_messages() %}
         <div class="alert alert-primary" style="text-align:center">
-         {{msg }}
+         {{msg}}
         </div>
       {% endfor %}
     </div>
     
-    <div class="container-fluid" >{% block body %}{% endblock %}</div>
+    <div class="container-fluid">{% block body %}{% endblock %}</div>
 
     {% block after_body %}{% endblock %}
    

@@ -24,10 +24,14 @@ function bookSearch(evt){
                 results.innerHTML=
             `<h3>Result</h3>
             <div>We found ${putings.length} books about "${keyword}"</div>
-            <div>
-           ${putings}
-            </div>`
-
+            
+            for (const puting of apiResponse.putings){
+                <a class="book_title" href="${puting.book.book_id}" target="_Blank">${puting.book.title}</a>
+                
+            }
+                    ${putings}
+                
+            `
             
               
                  

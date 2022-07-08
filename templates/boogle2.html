@@ -29,7 +29,7 @@
       <div class="col-6">
       <div style = "margin-bottom:10px; text-align: center;">
         <a class="btn btn-success" data-bs-toggle="collapse" href="#isbnbox" role="button" aria-expanded="false" aria-controls="collapseExample">
-          Search by ISBN code
+          Search by ISBN
         </a>
 
         
@@ -43,7 +43,7 @@
                 <div class="row">
                   <div class="col-9"><input class="form-control " type="text" placeholder="ISBN" name="isbn"> </div>
                   <div class="col-1"><input class= "btn btn-secondary" type="submit"></div>
-                  <a href="/user_profile" >what is ISBN?</a>
+                  <a href="https://en.wikipedia.org/wiki/ISBN" >what is ISBN?</a>
                 </div>
         
             </form>
@@ -56,22 +56,23 @@
       <div class="col-3"></div>
       <div class="col-6">
       <div style = "margin-bottom:10px; text-align: center;">
-        <a class="btn btn-info" data-bs-toggle="collapse" href="#authorbox" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <a class="btn btn-success" data-bs-toggle="collapse" href="#authorbox" role="button" aria-expanded="false" aria-controls="collapseExample">
           Search by author
         </a>
       </div>
 
       <div class="collapse" id="authorbox" style = "text-align: center;">
           <div class="card card-body" style="max-width: 30rem; text-align: center"> 
-            <form action="/search_isbn" method="GET" style="text-align: center">
+            <form action="/search_author" method="GET" style="text-align: center">
 
                 <div class="row">
-                  <div class="col-9"><input class="form-control " type="text" placeholder="author name" name="author"> </div>
+                  <div class="col-9"><input class="form-control " type="text" placeholder="author's name" name="author"> </div>
                   <div class="col-1"><input class= "btn btn-secondary" type="submit"></div>
                   
                 </div>
+              </form>
         </div>
-            </form>
+            
         </div>
       </div>
     </div>

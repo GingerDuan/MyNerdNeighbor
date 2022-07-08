@@ -7,10 +7,10 @@ def create_user(email, name, password,zipcode):
 
     user = User(email=email, name=name, password=password,zipcode=zipcode)
     #creat four default shelf when user create account
-    user.shelves.append(Shelf(name='bookshelf'))
-    user.shelves.append(Shelf(name='toread'))
+    user.shelves.append(Shelf(name='Own'))
+    user.shelves.append(Shelf(name='to-read'))
     user.shelves.append(Shelf(name='reading'))
-    user.shelves.append(Shelf(name='have read'))
+    user.shelves.append(Shelf(name='have-read'))
     
     db.session.add(user)
     db.session.commit()
@@ -75,11 +75,11 @@ def get_book_by_bookid(book_id):
 
 
 #puting
-def create_puting(shelf_id,book_id,user_id,note):
+def create_puting(shelf_id,book_id,user_id,note,time):
     """get a the book saved in shelf!!"""
 
 
-    puting = Puting(shelf_id = shelf_id,book_id = book_id,user_id = user_id,note=note)
+    puting = Puting(shelf_id = shelf_id,book_id = book_id,user_id = user_id,note=note,time=time)
 
     return puting
 
@@ -111,12 +111,11 @@ def get_puting_by_book_userid(book_id,user_id):
     putings = Puting.query.filter(Puting.book_id == book_id, Puting.user_id == user_id).all()
 
     return putings
-# def get_book_by_putingid(puting_id):
 
-#     puting = get_puting_by_putingid(puting_id)
-#     books = Book.query.filter_by(book_id = puting.book_id).all()
-    
-#     return books
+def get_puting_by_user_id(user_id):
+    putings = Puting.query.filter(Puting.user_id == user_id).order_by(Puting.time.desc())
+
+    return putings
 
 
 #get zipuser

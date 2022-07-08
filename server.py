@@ -41,15 +41,26 @@ def show_user_ownpage():
     """View users ownpage"""
     
     if "user_id" not in session:
-        flash("you did not log in")
+        flash("AHH,You did not log in!")
         return redirect('/')
     else:
         user_id = session["user_id"]
         user = crud.get_user_by_id(user_id)
 
         bookshelves = crud.get_shelf_by_userid(user_id)
+        putings = crud.get_puting_by_user_id(user_id)
         
-        return render_template("user_profile.html",user=user,bookshelves=bookshelves)
+        return render_template("user_profile.html",user=user,bookshelves=bookshelves,putings=putings)
+
+@app.route("/user_profile/<userid>")
+def show_users_page(userid):
+    """View users ownpage"""
+    
+    user = crud.get_user_by_id(userid)
+    bookshelves = crud.get_shelf_by_userid(userid)
+    putings = crud.get_puting_by_user_id(userid)  
+
+    return render_template("user_profile.html",user=user,bookshelves=bookshelves,putings=putings)
         
 
 @app.route("/user_shelves/")
@@ -124,14 +135,17 @@ def login():
 
     else: 
         flash("Sorry, passwords do not match!")
-        return redirect("/login")
+        return redirect("/login_page")
 
 @app.route("/logout")
 def logout():
     """Log user out, delete session"""
-    
-    del session['user_id']
-
+    if 'user_id' in session:
+        del session['user_id']
+        
+    else:
+        
+        flash("You are already log out!")
     return redirect('/')
 
 
@@ -161,23 +175,19 @@ def book_search():
 def author_search():
     """Send the request and get the api data"""
     
-    keyword = request.args.get('keyword','')
-    author = request.args.get('author','')
-
-    url = 'https://www.googleapis.com/books/v1/volumes?'
-    payload = { "q":keyword,
-                "inauthor":author,
-                'maxResults':30,
-                }
     
-    res = requests.get(url,params=payload)
-    data = res.json()
+    author = request.args.get('author')
 
-    if 'totalItems' in data:
-        return render_template('boogle_res.html', payload=payload,data = data,keyword =keyword)
-    else:
-        flash("you need type something")
+    if not author:
+        flash("You need type in some author")
         return redirect("/boogle2")
+    else:
+        url = f'https://www.googleapis.com/books/v1/volumes?q=inauthor:{author}&maxResults:30'
+        res = requests.get(url)
+        data = res.json()
+
+        return render_template('boogle_res.html',data = data,keyword =author,url=url)
+   
 
 @app.route("/search_isbn")
 def isbn_search():
@@ -262,7 +272,7 @@ def book_adder():
         if anyputing:
             return jsonify({"status":"this book has already in your shelf" })
         else:
-            puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id,user_id = user_id,note=note)
+            puting = crud.create_puting(shelf_id = shelf_id,book_id = anybook.book_id,user_id = user_id,note=note,time=datetime.now())
         
             db.session.add(puting)
             db.session.commit()
@@ -287,7 +297,7 @@ def book_adder():
         newbook = crud.create_book(googlebook_id=g_id,title=title,author=author,cover=cover)
         db.session.add(newbook)
         db.session.commit()
-        puting = crud.create_puting(shelf_id = shelf_id,book_id = newbook.book_id,user_id=user_id,note=note)
+        puting = crud.create_puting(shelf_id = shelf_id,book_id = newbook.book_id,user_id=user_id,note=note,time=datetime.now())
 
         db.session.add(puting)
         db.session.commit()
@@ -295,14 +305,14 @@ def book_adder():
 
 
 #neighborpage
-@app.route("/neighbor")
+@app.route("/neighbor_library")
 def show_ntighbor_books():
 
     user_id = session["user_id"]
+
     user = crud.get_user_by_id(user_id)
     zipusers = crud.get_users_in_zipcode(user_id)
     neighbor_num = crud.get_users_amount_in_zipcode(user_id)
-    
     putings = crud.get_own_putings_in_zipcode(user_id)
 
     return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
@@ -311,14 +321,24 @@ def show_ntighbor_books():
 def find_book_in_neighbor():
 
     user_id = session["user_id"]
-    
 
     keyword = request.args.get("keyword")
     zipbooks = crud.get_books_in_zipcode(user_id)
     putings_res = [book.title for book in zipbooks if keyword in book.title]
-
+    
     return jsonify({"putings":putings_res})
 
+@app.route("/neighbor_feed")
+def show_ntighbor():
+
+    user_id = session["user_id"]
+
+    user = crud.get_user_by_id(user_id)
+    zipusers = crud.get_users_in_zipcode(user_id)
+    neighbor_num = crud.get_users_amount_in_zipcode(user_id)
+    putings = crud.get_puting_in_zipcode(user_id)
+
+    return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
 
 
 #create a new book
@@ -438,6 +458,7 @@ def show_book_detail(id):
 
     #when guest hanging out
     else:
+        flash("You need login")
         own_putings = None
         others_putings = None
         user = None

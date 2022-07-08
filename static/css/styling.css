@@ -38,6 +38,13 @@ body{
   padding: 1rem;
 }
 
+.mask{
+  position:absolute;
+  background:rgba(0,0,0,.4);
+  
+  color:#fff
+}
+
 .gutters-sm {
   margin-right: -8px;
   margin-left: -8px;
@@ -61,4 +68,18 @@ body{
   box-shadow: none!important;
 }
 
+.text-info:link{
+  color: bisque;
+}
 
+.cut{
+  height: 70px;
+  
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.cut:hover{
+  overflow: visible;
+  height:max-content;
+}

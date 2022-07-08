@@ -23,6 +23,7 @@
 
 <div id="results" class = "container" style = "margin-bottom: 60px;">
 <h4>Results: we found {{data.totalItems}} results about "{{keyword}}"</h4>
+
     {%for book in data['items']%}
     <div class = "row bookContainer" style = "margin-top: 30px;">
 
@@ -103,7 +104,7 @@
                 </div>
                   
                     {%if 'description' in book['volumeInfo']%}
-                    <div class = ellip-block>Description:{{book.volumeInfo.description}}</div>
+                    <div class = "cut">Description:{{book.volumeInfo.description}}</div>
                     {%endif%}
                 
         
@@ -113,7 +114,7 @@
         
     {%endfor%}
     <hr>
-    <div class="card mb-3" >
+    <!-- <div class="card mb-3" >
         <div class="row g-0">
           <div class="col-md-4">
             <img src="..." class="img-fluid rounded-start" alt="...">
@@ -126,14 +127,14 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="card">
         
         <div class="card-body" style="text-align:center;">
           <h5 class="card-title">Cannot find the book you want?</h5>
           <p class="card-text">Search by details catagroy(author/isbn/title) or Create a book on your one</p>
-          <a href="/search_detail" class="btn btn-primary">Parameter Searching</a>
+          <a href="/boogle2" class="btn btn-primary">Parameter Searching</a>
           <a href="/upload" class="btn btn-primary">Create an own book</a>
         </div>
       </div>

@@ -2,8 +2,9 @@
 {% block title %}My Nerd Neighbor{% endblock %}
 
 {% block body %}
-
-<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+<!-- <div class="row"></div>
+<div ></div> -->
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-bottom:20px;">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -11,24 +12,27 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://pixabay.com/get/ga614424c3349d1a2aeb96635deeed93a7ff22d95829b2cccd3bd472291bf854ea5aa420eed978140440346a92e7f2ac7410eef02c3338ff32215df0bbc4a88eb30bb3a62db2e981c67abc8fa0da6ea04_1920.jpg" class="d-block w-100" alt="...">
+      <img src="/static/pic/books.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
+        <h5 >Personal book tracker</h5>
+        <p>Keep track on every book you touch</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="https://cdn.pixabay.com/photo/2016/01/27/04/32/books-1163695_960_720.jpg" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
+      <img src="/static/pic/town.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block mask">
+        <div style="color:white">
+          <h5 class="pp">Know you neighbor by book</h5>
+          <p>Find some nerd nearby, and engage your enighboorhood by book!</p>
+        </div>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="https://pixabay.com/get/g6efdcb0c1cc4bfd1f6478e5c33be6a46af60790660c7b82375e9cd2e7dd8e1acbf559ea0d49af829c9702b079e6628c9c2d4e948ef6e0c349e6f8c34c514651d8e0a888ad8d12e1bc88700171771f4ed_1920.jpg" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
+      <img src="/static/pic/books5.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block mask">
+        
+        <h5>Find a book and get it from next door</h5>
+        <p>Walking though your neighbor's bookshelf, exchange the book with your neighbor!</p>
       </div>
     </div>
   </div>
@@ -41,6 +45,75 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div> 
+
+
+    <div class="row" style="margin-left: 10px; margin-right:10px">
+      <!-- personal library page -->
+      <div class="col pic-card" style="min-width: 14rem;">
+        <div class="card">
+          <img src="/static/pic/logo1.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Personal library</h5>
+            <p class="card-text">Your private book Zone</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Virtual bookshelf</li>
+              <li class="list-group-item">To read</li>
+              <li class="list-group-item">Reading</li>
+              <li class="list-group-item">Want to read</li>
+            </ul>
+            <a href="/user_profile" class="btn btn-primary">Go to your book zoon</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      <!-- boogle -->
+      <div class="col pic-card" style="min-width: 14rem;">
+        <div class="card">
+          <img src="/static/pic/Boogle-logo.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Boogle</h5>
+            <p class="card-text">Find any book you want</p>
+            
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Search by keyword</li>
+            <li class="list-group-item">Search by ISBN</li>
+            <li class="list-group-item">Search by author</li>
+          </ul>
+          <div class="card-body">
+            <a href="/boogle2" class="btn btn-success">Go to Boogle</a>
+          </div>
+          
+        </div>
+      </div>
+          
+        <!-- neighbor page -->
+      <div class="col pic-card" style="min-width: 14rem;">
+        <div class="card">
+          <img src="/static/pic/mapmmn.png"card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Neighborhood</h5>
+            <p class="card-text">know your neighborhood by book!</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Nerds map</li>
+            <li class="list-group-item">Neighborbood library</li>
+            <li class="list-group-item">Neighbor page</li>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="card-link">Find a book nearby</a>
+            <a href="#" class="card-link">Neighbor page</a>
+          </div>
+        </div>
+      </div>
+
+      
+          
+          
+        
+      
+    </div>
 
 
   <div style = "text-align: center;">
