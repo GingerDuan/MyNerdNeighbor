@@ -308,14 +308,19 @@ def book_adder():
 @app.route("/neighbor_library")
 def show_ntighbor_books():
 
-    user_id = session["user_id"]
+    if "user_id" in session:
 
-    user = crud.get_user_by_id(user_id)
-    zipusers = crud.get_users_in_zipcode(user_id)
-    neighbor_num = crud.get_users_amount_in_zipcode(user_id)
-    putings = crud.get_own_putings_in_zipcode(user_id)
+        user_id = session["user_id"]
+        user = crud.get_user_by_id(user_id)
+        zipusers = crud.get_users_in_zipcode(user_id)
+        neighbor_num = crud.get_users_amount_in_zipcode(user_id)
+        putings = crud.get_own_putings_in_zipcode(user_id)
 
-    return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
+        return render_template('neighbor_library.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
+    
+    else:
+        flash("You need login")
+        return redirect("/")
 
 @app.route("/neighbor_search",methods=["GET"])
 def find_book_in_neighbor():
@@ -331,15 +336,19 @@ def find_book_in_neighbor():
 @app.route("/neighbor_feed")
 def show_ntighbor():
 
-    user_id = session["user_id"]
+    if "user_id" in session:
+        user_id = session["user_id"]
 
-    user = crud.get_user_by_id(user_id)
-    zipusers = crud.get_users_in_zipcode(user_id)
-    neighbor_num = crud.get_users_amount_in_zipcode(user_id)
-    putings = crud.get_puting_in_zipcode(user_id)
+        user = crud.get_user_by_id(user_id)
+        zipusers = crud.get_users_in_zipcode(user_id)
+        neighbor_num = crud.get_users_amount_in_zipcode(user_id)
+        putings = crud.get_puting_in_zipcode(user_id)
 
-    return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
-
+        return render_template('neighbor.html',zipusers=zipusers,user=user,neighbor_num=neighbor_num,putings=putings)
+    
+    else:
+        flash("You need login")
+        return redirect("/")
 
 #create a new book
 @app.route("/upload")
